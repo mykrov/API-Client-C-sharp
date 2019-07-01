@@ -18,7 +18,7 @@ namespace APIClient
 
     class Program
     {
-        
+
         public static void Main()
         {
             string urlbase = ConfigurationManager.AppSettings.Get("urlbase");
@@ -70,8 +70,8 @@ namespace APIClient
 
                 //Listado de Categorias
                 List<ADMCATEGORIA> categorias = (from c in db.ADMCATEGORIA
-                                                where (c.EWEB == "N" && c.ESTADO == "A")
-                                                select c).ToList();
+                                                 where (c.EWEB == "N" && c.ESTADO == "A")
+                                                 select c).ToList();
 
                 List<CatagoriaWeb> listacate = new List<CatagoriaWeb>();
                 foreach (var categoria in categorias)
@@ -84,15 +84,19 @@ namespace APIClient
 
                 }
 
-                Uri uClien = new Uri(urlbase+"api/usuarios");
-                Uri uCate = new Uri(urlbase+"api/categoria");
-
+                
+                
+                Uri uClien = new Uri(urlbase + "api/usuarios");
+                Uri uCate = new Uri(urlbase + "api/categoria");
+               
                 Task.Run(() => PostCategorias(listacate, uCate));
+                
                 Task.Run(() => PostClientes(usuariosw, uClien));
+
                 GetPedidos();
                 GetUsuarios("20-06-2019");
-                
-                
+
+
                 Console.ReadKey();
 
             }
@@ -147,7 +151,7 @@ namespace APIClient
             {
                 usuarios = content
             };
-            
+
             string myJson = JsonConvert.SerializeObject(data);
             using (var client = new HttpClient())
             {
@@ -159,11 +163,24 @@ namespace APIClient
                 string mycontent = await contentRes.ReadAsStringAsync();
                 var RootObjects = JsonConvert.DeserializeObject<List<clientResponse>>(mycontent);
 
+                using (BDADMSURTIOFFICEEntities db = new BDADMSURTIOFFICEEntities())
+                {
+                    foreach (var userRes in RootObjects)
+                    {
+                        if (userRes.status == "OK")
+                        {
+                            ADMCATEGORIA result = db.ADMCATEGORIA.Find(userRes.identify);
+                            result.EWEB = "S";
+                            db.SaveChanges();
+                        }
+                    }
+                }
+
                 int noGuardado = (from c in RootObjects where (c.status == "NoSaved") select c).Count();
                 int guardado = (from c in RootObjects where (c.status == "OK") select c).Count();
                 Console.WriteLine("-------");
-                Console.WriteLine("Envio de Usuarios Finalizado, total Guardado: "+guardado+", No Guardados: "+noGuardado);
-          
+                Console.WriteLine("Envio de Usuarios Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
+
             }
 
         }
@@ -184,15 +201,88 @@ namespace APIClient
 
             using (var client = new HttpClient())
             {
-                var response = await client.PostAsync(ul,new StringContent(myJson, Encoding.UTF8, "application/json"));
+                var response = await client.PostAsync(ul, new StringContent(myJson, Encoding.UTF8, "application/json"));
 
                 HttpContent contentRes = response.Content;
                 string mycontent = await contentRes.ReadAsStringAsync();
                 var RootObjects = JsonConvert.DeserializeObject<List<categoryResponse>>(mycontent);
+
+                using (BDADMSURTIOFFICEEntities db = new BDADMSURTIOFFICEEntities())
+                {
+                    foreach (var cateRes in RootObjects)
+                    {
+                        ADMCATEGORIA result = db.ADMCATEGORIA.Find(cateRes.categoria);
+                        result.EWEB = "S";
+                        db.SaveChanges();
+                    }
+
+
+                    int noGuardado = (from c in RootObjects where (c.status == "NoSaved") select c).Count();
+                    int guardado = (from c in RootObjects where (c.status == "OK") select c).Count();
+                    Console.WriteLine("-------");
+                    Console.WriteLine("Envio de Categorias Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
+                    string urlbase = ConfigurationManager.AppSettings.Get("urlbase");
+                    //Listado de Categorias
+                    List<ADMFAMILIA> familias = (from c in db.ADMFAMILIA
+                                                 where (c.EWEB == "N" && c.ESTADO == "A")
+                                                 select c).ToList();
+
+                    List<FamiliWeb> listfami = new List<FamiliWeb>();
+                    foreach (var familia in familias)
+                    {
+                        FamiliWeb famiSingle = new FamiliWeb();
+                        famiSingle.idfamilia = familia.CODIGO.Trim();
+                        famiSingle.nombre_familia = familia.NOMBRE.Trim();
+                        famiSingle.idcategoria = familia.CATEGORIA.Trim();
+                        famiSingle.estado = familia.ESTADO;
+                        listfami.Add(famiSingle);
+
+                    }
+                    Uri uFami = new Uri(urlbase + "api/familia");
+                    Task.Run(() => PostFamilias(listfami, uFami));
+
+                }
+            }
+        }
+
+        class familyResponse
+        {
+            public string familia { get; set; }
+            public string status { get; set; }
+        }
+        //Envio de Familia.
+        private static async Task PostFamilias(object content, Uri ul)
+        {
+            var data = new
+            {
+                familias = content
+            };
+
+            string myJson = JsonConvert.SerializeObject(data);
+
+            using (var client = new HttpClient())
+            {
+                var response = await client.PostAsync(ul, new StringContent(myJson, Encoding.UTF8, "application/json"));
+
+                HttpContent contentRes = response.Content;
+                string mycontent = await contentRes.ReadAsStringAsync();
+                
+                var RootObjects = JsonConvert.DeserializeObject<List<familyResponse>>(mycontent);
+
+                using (BDADMSURTIOFFICEEntities db = new BDADMSURTIOFFICEEntities())
+                {
+                    foreach (var famiRes in RootObjects)
+                    {
+                        ADMCATEGORIA result = db.ADMCATEGORIA.Find(famiRes.familia);
+                        result.EWEB = "S";
+                        db.SaveChanges();
+                    }
+                }
+
                 int noGuardado = (from c in RootObjects where (c.status == "NoSaved") select c).Count();
                 int guardado = (from c in RootObjects where (c.status == "OK") select c).Count();
                 Console.WriteLine("-------");
-                Console.WriteLine("Envio de Categorias Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
+                Console.WriteLine("Envio de Familias Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
 
             }
         }
