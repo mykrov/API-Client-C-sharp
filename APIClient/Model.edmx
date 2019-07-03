@@ -5,6 +5,70 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="BDADMSURTIOFFICEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMBODEGA' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="ADMBODEGA">
+          <Key>
+            <PropertyRef Name="NOCARGAEGRESO" />
+            <PropertyRef Name="NOCARGAINGRESO" />
+            <PropertyRef Name="NUMGUIAREMISION" />
+            <PropertyRef Name="NOPROCESO" />
+            <PropertyRef Name="SERIE" />
+            <PropertyRef Name="BODATS" />
+            <PropertyRef Name="NOCONTROLPACIENTE" />
+            <PropertyRef Name="NOIMPORTACION" />
+            <PropertyRef Name="numguiaremisionpos" />
+          </Key>
+          <Property Name="CODIGO" Type="int" />
+          <Property Name="NOMBRE" Type="varchar" MaxLength="80" />
+          <Property Name="DIRECCION" Type="varchar" MaxLength="80" />
+          <Property Name="CIUDAD" Type="varchar" MaxLength="80" />
+          <Property Name="BODEGUERO" Type="varchar" MaxLength="80" />
+          <Property Name="NOING" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="NOEGR" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="NOFACTURA" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="NOPEDIDO" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="NOCOM" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="NODCOM" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="NOAJI" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="NOAJE" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="NOTRAIN" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="NOTRAEG" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="ESTADO" Type="char" MaxLength="1" />
+          <Property Name="NOOCO" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="NONOTA" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="NCR" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="NCRINT" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="NORETENCION" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="NCRPROV" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="NOCARGAEGRESO" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="NOCARGAINGRESO" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="NUMGUIAREMISION" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="NOPROCESO" Type="int" Nullable="false" />
+          <Property Name="SERIE" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="NOAUTORIZACIONFAC" Type="varchar" MaxLength="50" />
+          <Property Name="FECHAVDESDEFAC" Type="smalldatetime" />
+          <Property Name="FECHAVHASTAFAC" Type="smalldatetime" />
+          <Property Name="NOAUTOSRIFAC" Type="varchar" MaxLength="50" />
+          <Property Name="NOAUTORIZACIONNCR" Type="varchar" MaxLength="50" />
+          <Property Name="FECHAVDESDENCR" Type="smalldatetime" />
+          <Property Name="FECHAVHASTANCR" Type="smalldatetime" />
+          <Property Name="NOAUTOSRINCR" Type="varchar" MaxLength="50" />
+          <Property Name="NOAUTORIZACIONNVT" Type="varchar" MaxLength="50" />
+          <Property Name="FECHAVDESDENVT" Type="smalldatetime" />
+          <Property Name="FECHAVHASTANVT" Type="smalldatetime" />
+          <Property Name="NOAUTOSRINVT" Type="varchar" MaxLength="50" />
+          <Property Name="NOAUTORIZACIONRET" Type="varchar" MaxLength="50" />
+          <Property Name="FECHAVDESDERET" Type="smalldatetime" />
+          <Property Name="FECHAVHASTARET" Type="smalldatetime" />
+          <Property Name="NOAUTOSRIRET" Type="varchar" MaxLength="50" />
+          <Property Name="BODATS" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="NOCONTROLPACIENTE" Type="int" Nullable="false" />
+          <Property Name="CODIGO_BODEGA" Type="varchar" MaxLength="10" />
+          <Property Name="NOIMPORTACION" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="numguiaremisionpos" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="TELEFONO" Type="varchar" MaxLength="20" />
+        </EntityType>
         <EntityType Name="ADMCABPEDIDO">
           <Key>
             <PropertyRef Name="SECUENCIAL" />
@@ -314,6 +378,342 @@
           <Property Name="EWEB" Type="char" MaxLength="1" />
           <Property Name="CODIGOSAP" Type="varchar" MaxLength="50" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROC' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="ADMPARAMETROC">
+          <Key>
+            <PropertyRef Name="CREDDEF" />
+            <PropertyRef Name="CUPOCARTERA" />
+            <PropertyRef Name="CONTROLDEPOCIERRE" />
+            <PropertyRef Name="COBRADOR" />
+            <PropertyRef Name="CONTROLRECIBO" />
+            <PropertyRef Name="GENERACUOTAS" />
+            <PropertyRef Name="IMPNCR2" />
+            <PropertyRef Name="REPETIRNRECIBO" />
+            <PropertyRef Name="CONTROLBASESRET" />
+            <PropertyRef Name="BENEDEFAULT" />
+            <PropertyRef Name="TIPOCLIENTE" />
+            <PropertyRef Name="NUMPACIENTE" />
+            <PropertyRef Name="NUMCONTRATO" />
+            <PropertyRef Name="NUMENVIOLAB" />
+            <PropertyRef Name="NUMDOCTOR" />
+            <PropertyRef Name="controlcupofvd" />
+            <PropertyRef Name="diasgraciavencuota" />
+            <PropertyRef Name="generandb" />
+            <PropertyRef Name="generapagondb" />
+            <PropertyRef Name="interes" />
+            <PropertyRef Name="porintmoradia" />
+            <PropertyRef Name="posbloqueofaccre" />
+          </Key>
+          <Property Name="MODULO" Type="char" MaxLength="80" />
+          <Property Name="NOMBRECIA" Type="char" MaxLength="80" />
+          <Property Name="ANIO" Type="int" />
+          <Property Name="SECUENCIAL" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="NUMHOJA" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="PROVINCIA" Type="char" MaxLength="20" />
+          <Property Name="CANTON" Type="char" MaxLength="20" />
+          <Property Name="PARROQUIA" Type="char" MaxLength="20" />
+          <Property Name="SECTOR" Type="char" MaxLength="20" />
+          <Property Name="INTEGCXC" Type="char" MaxLength="1" />
+          <Property Name="LETRAINI" Type="char" MaxLength="1" />
+          <Property Name="NUMCLIENTE" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="AUTOCLI" Type="char" MaxLength="1" />
+          <Property Name="INTCXCCON" Type="char" MaxLength="1" />
+          <Property Name="FECHACXC" Type="smalldatetime" />
+          <Property Name="GUIACOB" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="NOCOBRO" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="VALORNCR" Type="decimal" Precision="20" Scale="6" />
+          <Property Name="CAJAC" Type="char" MaxLength="1" />
+          <Property Name="AUTOCODIGO" Type="char" MaxLength="1" />
+          <Property Name="FECHACAJA" Type="char" MaxLength="1" />
+          <Property Name="CAMCRE" Type="char" MaxLength="1" />
+          <Property Name="CREDDEF" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="CUPOCARTERA" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="CONTROLDEPOCIERRE" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="COBRADOR" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="CONTROLRECIBO" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="GENERACUOTAS" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="IMPNCR2" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="REPETIRNRECIBO" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="CONTROLBASESRET" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="BENEDEFAULT" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="VENDEDORPOS" Type="varchar" MaxLength="50" />
+          <Property Name="CODVENPOS" Type="varchar" MaxLength="10" />
+          <Property Name="SUCURSALAUTO" Type="char" MaxLength="1" />
+          <Property Name="TIPOCLIENTE" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="NUMPACIENTE" Type="int" Nullable="false" />
+          <Property Name="NUMCONTRATO" Type="int" Nullable="false" />
+          <Property Name="NUMENVIOLAB" Type="int" Nullable="false" />
+          <Property Name="NUMDOCTOR" Type="int" Nullable="false" />
+          <Property Name="controlcupofvd" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="diasgraciavencuota" Type="int" Nullable="false" />
+          <Property Name="generandb" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="generapagondb" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="interes" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="porintmoradia" Type="float" Nullable="false" />
+          <Property Name="posbloqueofaccre" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="ADMPARAMETROV">
+          <Key>
+            <PropertyRef Name="CAMPRECIO" />
+            <PropertyRef Name="IVANVT" />
+            <PropertyRef Name="intconcaja" />
+            <PropertyRef Name="intnofac" />
+            <PropertyRef Name="NVTLIN" />
+            <PropertyRef Name="CONTROLCUPO" />
+            <PropertyRef Name="PRECIODEFAULT" />
+            <PropertyRef Name="BODEGAPOS" />
+            <PropertyRef Name="AUTOCODITEM" />
+            <PropertyRef Name="AUTOCALPRECIO" />
+            <PropertyRef Name="POSVENTACREDITO" />
+            <PropertyRef Name="POSINICIOCABECERA" />
+            <PropertyRef Name="POSINICIOPIE" />
+            <PropertyRef Name="POSINICIODETALLE" />
+            <PropertyRef Name="POSFACLIN" />
+            <PropertyRef Name="POSTIPODETALLE" />
+            <PropertyRef Name="POSINICIOINFOPOS" />
+            <PropertyRef Name="POSLINEAFINAL" />
+            <PropertyRef Name="POSVECESCOPIA" />
+            <PropertyRef Name="CONTROLVALVENCREDITO" />
+            <PropertyRef Name="CONTROLVALVENCONTADO" />
+            <PropertyRef Name="NUMEROAUTOVENTA" />
+            <PropertyRef Name="NLOCALIDAD" />
+            <PropertyRef Name="POSESQUEMAPRECIOS" />
+            <PropertyRef Name="FACTURAHASTA" />
+            <PropertyRef Name="OTRAEMPRWEB" />
+            <PropertyRef Name="POSIMPDATOSEMPRESA" />
+            <PropertyRef Name="POSDATOLINEA0" />
+            <PropertyRef Name="POSDATOPROPIETARIO" />
+            <PropertyRef Name="POSINICIOPIEDINAMICO" />
+            <PropertyRef Name="OCULTARCOLUMNACAJAS" />
+            <PropertyRef Name="DESCUENTOSENCADENA" />
+            <PropertyRef Name="RECARGAIVANVT" />
+            <PropertyRef Name="ESQUEMAPAGOCOMI" />
+            <PropertyRef Name="LONGITUDAUTOCODITEM" />
+            <PropertyRef Name="CONNFVD" />
+            <PropertyRef Name="POSPRECIOVENTA" />
+            <PropertyRef Name="LISTAPRECIO" />
+            <PropertyRef Name="LINEAREDONDEA" />
+            <PropertyRef Name="FACTURAXBODEGA" />
+            <PropertyRef Name="proteina" />
+            <PropertyRef Name="EPRECIO" />
+            <PropertyRef Name="UNASOLABODEGA" />
+            <PropertyRef Name="NOMBREBASE" />
+            <PropertyRef Name="VALORMAXCF" />
+            <PropertyRef Name="BODEGAFE" />
+            <PropertyRef Name="usarcodbar" />
+            <PropertyRef Name="controlprod" />
+            <PropertyRef Name="numeroorden" />
+            <PropertyRef Name="FACENTPARCIAL" />
+            <PropertyRef Name="MOSADVCAR" />
+            <PropertyRef Name="secuencialuniconcr" />
+            <PropertyRef Name="conservarpedido" />
+            <PropertyRef Name="IMPHOJAC" />
+            <PropertyRef Name="tienedetfac" />
+            <PropertyRef Name="NUMFACDELPEDIDO" />
+            <PropertyRef Name="usardecimales" />
+            <PropertyRef Name="posrangoprecio" />
+            <PropertyRef Name="numerotoma" />
+            <PropertyRef Name="tienedessol" />
+            <PropertyRef Name="facturanegativo" />
+            <PropertyRef Name="ESQUEMAFARMA" />
+            <PropertyRef Name="impresoracargapos" />
+            <PropertyRef Name="imprimemenahorro" />
+            <PropertyRef Name="imprimecodigopos" />
+            <PropertyRef Name="UNILEVER" />
+            <PropertyRef Name="CODDISTRIBUIDOR" />
+            <PropertyRef Name="campremantenimiento" />
+            <PropertyRef Name="FACNEDETEL" />
+            <PropertyRef Name="POSDOSLINEAS" />
+            <PropertyRef Name="poscontrolpreciocosto" />
+            <PropertyRef Name="posvendedor" />
+            <PropertyRef Name="cambiavenpos" />
+            <PropertyRef Name="CAMPRECIOPOS" />
+            <PropertyRef Name="cartera" />
+            <PropertyRef Name="controlcomisariato" />
+            <PropertyRef Name="DATOSCLIPOS" />
+            <PropertyRef Name="ESNOTAVENTA" />
+            <PropertyRef Name="ESRANCHO" />
+            <PropertyRef Name="FACSERSOS" />
+            <PropertyRef Name="INGPREAJI" />
+            <PropertyRef Name="itemcredihogar" />
+            <PropertyRef Name="nedetel" />
+            <PropertyRef Name="numeroplantilla" />
+            <PropertyRef Name="porintcreditomensual" />
+            <PropertyRef Name="posconalumno" />
+            <PropertyRef Name="POSCONSERVICIO" />
+            <PropertyRef Name="POSGENERAANTNCR" />
+            <PropertyRef Name="posmostrarmarca" />
+            <PropertyRef Name="tipodocventa" />
+          </Key>
+          <Property Name="NOMBRECIA" Type="char" MaxLength="80" />
+          <Property Name="MODULO" Type="char" MaxLength="80" />
+          <Property Name="ANIO" Type="numeric" Precision="4" Scale="0" />
+          <Property Name="TIPOCOSTO" Type="char" MaxLength="1" />
+          <Property Name="FACLIN" Type="int" />
+          <Property Name="SECUENCIAL" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="NUMGUIA" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="IVA" Type="float" />
+          <Property Name="CATEGORIA" Type="char" MaxLength="20" />
+          <Property Name="FAMILIA" Type="char" MaxLength="20" />
+          <Property Name="LINEA" Type="char" MaxLength="20" />
+          <Property Name="MARCA" Type="char" MaxLength="20" />
+          <Property Name="MONEDA" Type="char" MaxLength="20" />
+          <Property Name="INTEGCXC" Type="char" MaxLength="1" />
+          <Property Name="BODFAC" Type="int" />
+          <Property Name="NUMCONDI" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="INTVENCON" Type="char" MaxLength="1" />
+          <Property Name="CLIENTE" Type="char" MaxLength="10" />
+          <Property Name="TIPOMETA" Type="char" MaxLength="1" />
+          <Property Name="SERIE" Type="char" MaxLength="10" />
+          <Property Name="NOAUTO" Type="char" MaxLength="30" />
+          <Property Name="FECHAVAL" Type="smalldatetime" />
+          <Property Name="IMPPOS" Type="char" MaxLength="80" />
+          <Property Name="RANGOIMP" Type="int" />
+          <Property Name="ACTPOS" Type="char" MaxLength="1" />
+          <Property Name="CANGUI" Type="char" MaxLength="1" />
+          <Property Name="FACSTK" Type="char" MaxLength="1" />
+          <Property Name="IMPSRI" Type="char" MaxLength="1" />
+          <Property Name="POSIMP" Type="char" MaxLength="20" />
+          <Property Name="PORCOM" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="CARVEN" Type="char" MaxLength="1" />
+          <Property Name="VARVEN" Type="char" MaxLength="1" />
+          <Property Name="IMPCABGUI" Type="char" MaxLength="1" />
+          <Property Name="NUMGRUPO" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="BODAUTO" Type="int" />
+          <Property Name="NUMCARGA" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="CPAG" Type="char" MaxLength="1" />
+          <Property Name="ACTCOND" Type="char" MaxLength="1" />
+          <Property Name="NUMCOTI" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="GENDFA" Type="char" MaxLength="1" />
+          <Property Name="CONFAC" Type="char" MaxLength="1" />
+          <Property Name="BUSCA1" Type="char" MaxLength="1" />
+          <Property Name="BUSCA2" Type="char" MaxLength="1" />
+          <Property Name="MPORUTI" Type="char" MaxLength="1" />
+          <Property Name="AUTOCODIGO" Type="char" MaxLength="1" />
+          <Property Name="DESACT" Type="char" MaxLength="1" />
+          <Property Name="NOAUTORET" Type="varchar" MaxLength="30" />
+          <Property Name="SERIERET" Type="varchar" MaxLength="10" />
+          <Property Name="FECHAVALRET" Type="smalldatetime" />
+          <Property Name="CAMPRECIO" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="NOAUTONVT" Type="varchar" MaxLength="30" />
+          <Property Name="SERIENVT" Type="varchar" MaxLength="30" />
+          <Property Name="FECHAVALNVT" Type="smalldatetime" />
+          <Property Name="NOAUTONCR" Type="varchar" MaxLength="30" />
+          <Property Name="SERIENCR" Type="varchar" MaxLength="30" />
+          <Property Name="FECHAVALNCR" Type="smalldatetime" />
+          <Property Name="IVANVT" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="intconcaja" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="intnofac" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="NUMGUIATRANS" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="NVTLIN" Type="int" Nullable="false" />
+          <Property Name="CONTROLCUPO" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="PRECIODEFAULT" Type="int" Nullable="false" />
+          <Property Name="BODEGAPOS" Type="int" Nullable="false" />
+          <Property Name="AUTOCODITEM" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="AUTOCALPRECIO" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="POSVENTACREDITO" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="POSINICIOCABECERA" Type="int" Nullable="false" />
+          <Property Name="POSINICIOPIE" Type="int" Nullable="false" />
+          <Property Name="POSINICIODETALLE" Type="int" Nullable="false" />
+          <Property Name="POSFACLIN" Type="int" Nullable="false" />
+          <Property Name="POSTIPODETALLE" Type="int" Nullable="false" />
+          <Property Name="POSINICIOINFOPOS" Type="int" Nullable="false" />
+          <Property Name="POSLINEAFINAL" Type="int" Nullable="false" />
+          <Property Name="POSVECESCOPIA" Type="int" Nullable="false" />
+          <Property Name="CONTROLVALVENCREDITO" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="CONTROLVALVENCONTADO" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="NUMEROAUTOVENTA" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="NLOCALIDAD" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="POSESQUEMAPRECIOS" Type="int" Nullable="false" />
+          <Property Name="FACTURAHASTA" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="OTRAEMPRWEB" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="RUTADOMI" Type="varchar" MaxLength="50" />
+          <Property Name="POSIMPDATOSEMPRESA" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="POSDATOLINEA0" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="POSDATOPROPIETARIO" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="POSINICIOPIEDINAMICO" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="OCULTARCOLUMNACAJAS" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="DESCUENTOSENCADENA" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="RECARGAIVANVT" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="GRUPTOVENTA" Type="varchar" MaxLength="200" />
+          <Property Name="ESQUEMAPAGOCOMI" Type="int" Nullable="false" />
+          <Property Name="LONGITUDAUTOCODITEM" Type="int" Nullable="false" />
+          <Property Name="CONNFVD" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="CENTROCOSTO" Type="char" MaxLength="1" />
+          <Property Name="POSPRECIOVENTA" Type="int" Nullable="false" />
+          <Property Name="mensajefac" Type="varchar" MaxLength="250" />
+          <Property Name="LISTAPRECIO" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="LINEAREDONDEA" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="FACTURAXBODEGA" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ttesqcomi" Type="int" />
+          <Property Name="cnfvd" Type="char" MaxLength="1" />
+          <Property Name="coculcolumca" Type="char" MaxLength="1" />
+          <Property Name="chabdescad" Type="char" MaxLength="1" />
+          <Property Name="crecivanv" Type="char" MaxLength="1" />
+          <Property Name="clongcodi" Type="int" />
+          <Property Name="cautocalprecio" Type="char" MaxLength="1" />
+          <Property Name="cautocoditem" Type="char" MaxLength="1" />
+          <Property Name="NUMPROVINCIAS" Type="int" />
+          <Property Name="serieguia" Type="char" MaxLength="6" />
+          <Property Name="IMPRIMESERIE" Type="char" MaxLength="1" />
+          <Property Name="proteina" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="EPRECIO" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="UNASOLABODEGA" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="FACTURAELECTRONICA" Type="char" MaxLength="1" />
+          <Property Name="NOMBRESERVIDOR" Type="varchar" MaxLength="100" />
+          <Property Name="NOMBREBASE" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="VALORMAXCF" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="BODEGAFE" Type="int" Nullable="false" />
+          <Property Name="usarcodbar" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="conexionvb" Type="varchar" MaxLength="20" />
+          <Property Name="controlprod" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="numeroorden" Type="char" MaxLength="100" Nullable="false" />
+          <Property Name="FACENTPARCIAL" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="MOSADVCAR" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="secuencialuniconcr" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="conservarpedido" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="IMPHOJAC" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="tienedetfac" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="NUMFACDELPEDIDO" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="usardecimales" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="posrangoprecio" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="numerotoma" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="tienedessol" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="facturanegativo" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ESQUEMAFARMA" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="impresoracargapos" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="imprimemenahorro" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="imprimecodigopos" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="UNILEVER" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="CODDISTRIBUIDOR" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="campremantenimiento" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="FACNEDETEL" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="POSDOSLINEAS" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="poscontrolpreciocosto" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="posvendedor" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="cambiavenpos" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="CAMPRECIOPOS" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="cartera" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="controlcomisariato" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="DATOSCLIPOS" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ESNOTAVENTA" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ESRANCHO" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="FACSERSOS" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="INGPREAJI" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="itemcredihogar" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="nedetel" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="numeroplantilla" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="odbcempresa" Type="varchar" MaxLength="10" />
+          <Property Name="porintcreditomensual" Type="float" Nullable="false" />
+          <Property Name="posconalumno" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="POSCONSERVICIO" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="POSGENERAANTNCR" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="posmostrarmarca" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="tipodocventa" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
         <EntityContainer Name="BDADMSURTIOFFICEModelStoreContainer">
           <EntitySet Name="ADMCABPEDIDO" EntityType="Self.ADMCABPEDIDO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ADMCATEGORIA" EntityType="Self.ADMCATEGORIA" Schema="dbo" store:Type="Tables" />
@@ -322,6 +722,279 @@
           <EntitySet Name="ADMFAMILIA" EntityType="Self.ADMFAMILIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ADMITEM" EntityType="Self.ADMITEM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ADMMARCA" EntityType="Self.ADMMARCA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ADMBODEGA" EntityType="Self.ADMBODEGA" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ADMBODEGA].[CODIGO] AS [CODIGO], 
+    [ADMBODEGA].[NOMBRE] AS [NOMBRE], 
+    [ADMBODEGA].[DIRECCION] AS [DIRECCION], 
+    [ADMBODEGA].[CIUDAD] AS [CIUDAD], 
+    [ADMBODEGA].[BODEGUERO] AS [BODEGUERO], 
+    [ADMBODEGA].[NOING] AS [NOING], 
+    [ADMBODEGA].[NOEGR] AS [NOEGR], 
+    [ADMBODEGA].[NOFACTURA] AS [NOFACTURA], 
+    [ADMBODEGA].[NOPEDIDO] AS [NOPEDIDO], 
+    [ADMBODEGA].[NOCOM] AS [NOCOM], 
+    [ADMBODEGA].[NODCOM] AS [NODCOM], 
+    [ADMBODEGA].[NOAJI] AS [NOAJI], 
+    [ADMBODEGA].[NOAJE] AS [NOAJE], 
+    [ADMBODEGA].[NOTRAIN] AS [NOTRAIN], 
+    [ADMBODEGA].[NOTRAEG] AS [NOTRAEG], 
+    [ADMBODEGA].[ESTADO] AS [ESTADO], 
+    [ADMBODEGA].[NOOCO] AS [NOOCO], 
+    [ADMBODEGA].[NONOTA] AS [NONOTA], 
+    [ADMBODEGA].[NCR] AS [NCR], 
+    [ADMBODEGA].[NCRINT] AS [NCRINT], 
+    [ADMBODEGA].[NORETENCION] AS [NORETENCION], 
+    [ADMBODEGA].[NCRPROV] AS [NCRPROV], 
+    [ADMBODEGA].[NOCARGAEGRESO] AS [NOCARGAEGRESO], 
+    [ADMBODEGA].[NOCARGAINGRESO] AS [NOCARGAINGRESO], 
+    [ADMBODEGA].[NUMGUIAREMISION] AS [NUMGUIAREMISION], 
+    [ADMBODEGA].[NOPROCESO] AS [NOPROCESO], 
+    [ADMBODEGA].[SERIE] AS [SERIE], 
+    [ADMBODEGA].[NOAUTORIZACIONFAC] AS [NOAUTORIZACIONFAC], 
+    [ADMBODEGA].[FECHAVDESDEFAC] AS [FECHAVDESDEFAC], 
+    [ADMBODEGA].[FECHAVHASTAFAC] AS [FECHAVHASTAFAC], 
+    [ADMBODEGA].[NOAUTOSRIFAC] AS [NOAUTOSRIFAC], 
+    [ADMBODEGA].[NOAUTORIZACIONNCR] AS [NOAUTORIZACIONNCR], 
+    [ADMBODEGA].[FECHAVDESDENCR] AS [FECHAVDESDENCR], 
+    [ADMBODEGA].[FECHAVHASTANCR] AS [FECHAVHASTANCR], 
+    [ADMBODEGA].[NOAUTOSRINCR] AS [NOAUTOSRINCR], 
+    [ADMBODEGA].[NOAUTORIZACIONNVT] AS [NOAUTORIZACIONNVT], 
+    [ADMBODEGA].[FECHAVDESDENVT] AS [FECHAVDESDENVT], 
+    [ADMBODEGA].[FECHAVHASTANVT] AS [FECHAVHASTANVT], 
+    [ADMBODEGA].[NOAUTOSRINVT] AS [NOAUTOSRINVT], 
+    [ADMBODEGA].[NOAUTORIZACIONRET] AS [NOAUTORIZACIONRET], 
+    [ADMBODEGA].[FECHAVDESDERET] AS [FECHAVDESDERET], 
+    [ADMBODEGA].[FECHAVHASTARET] AS [FECHAVHASTARET], 
+    [ADMBODEGA].[NOAUTOSRIRET] AS [NOAUTOSRIRET], 
+    [ADMBODEGA].[BODATS] AS [BODATS], 
+    [ADMBODEGA].[NOCONTROLPACIENTE] AS [NOCONTROLPACIENTE], 
+    [ADMBODEGA].[CODIGO_BODEGA] AS [CODIGO_BODEGA], 
+    [ADMBODEGA].[NOIMPORTACION] AS [NOIMPORTACION], 
+    [ADMBODEGA].[numguiaremisionpos] AS [numguiaremisionpos], 
+    [ADMBODEGA].[TELEFONO] AS [TELEFONO]
+    FROM [dbo].[ADMBODEGA] AS [ADMBODEGA]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ADMPARAMETROC" EntityType="Self.ADMPARAMETROC" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ADMPARAMETROC].[MODULO] AS [MODULO], 
+    [ADMPARAMETROC].[NOMBRECIA] AS [NOMBRECIA], 
+    [ADMPARAMETROC].[ANIO] AS [ANIO], 
+    [ADMPARAMETROC].[SECUENCIAL] AS [SECUENCIAL], 
+    [ADMPARAMETROC].[NUMHOJA] AS [NUMHOJA], 
+    [ADMPARAMETROC].[PROVINCIA] AS [PROVINCIA], 
+    [ADMPARAMETROC].[CANTON] AS [CANTON], 
+    [ADMPARAMETROC].[PARROQUIA] AS [PARROQUIA], 
+    [ADMPARAMETROC].[SECTOR] AS [SECTOR], 
+    [ADMPARAMETROC].[INTEGCXC] AS [INTEGCXC], 
+    [ADMPARAMETROC].[LETRAINI] AS [LETRAINI], 
+    [ADMPARAMETROC].[NUMCLIENTE] AS [NUMCLIENTE], 
+    [ADMPARAMETROC].[AUTOCLI] AS [AUTOCLI], 
+    [ADMPARAMETROC].[INTCXCCON] AS [INTCXCCON], 
+    [ADMPARAMETROC].[FECHACXC] AS [FECHACXC], 
+    [ADMPARAMETROC].[GUIACOB] AS [GUIACOB], 
+    [ADMPARAMETROC].[NOCOBRO] AS [NOCOBRO], 
+    [ADMPARAMETROC].[VALORNCR] AS [VALORNCR], 
+    [ADMPARAMETROC].[CAJAC] AS [CAJAC], 
+    [ADMPARAMETROC].[AUTOCODIGO] AS [AUTOCODIGO], 
+    [ADMPARAMETROC].[FECHACAJA] AS [FECHACAJA], 
+    [ADMPARAMETROC].[CAMCRE] AS [CAMCRE], 
+    [ADMPARAMETROC].[CREDDEF] AS [CREDDEF], 
+    [ADMPARAMETROC].[CUPOCARTERA] AS [CUPOCARTERA], 
+    [ADMPARAMETROC].[CONTROLDEPOCIERRE] AS [CONTROLDEPOCIERRE], 
+    [ADMPARAMETROC].[COBRADOR] AS [COBRADOR], 
+    [ADMPARAMETROC].[CONTROLRECIBO] AS [CONTROLRECIBO], 
+    [ADMPARAMETROC].[GENERACUOTAS] AS [GENERACUOTAS], 
+    [ADMPARAMETROC].[IMPNCR2] AS [IMPNCR2], 
+    [ADMPARAMETROC].[REPETIRNRECIBO] AS [REPETIRNRECIBO], 
+    [ADMPARAMETROC].[CONTROLBASESRET] AS [CONTROLBASESRET], 
+    [ADMPARAMETROC].[BENEDEFAULT] AS [BENEDEFAULT], 
+    [ADMPARAMETROC].[VENDEDORPOS] AS [VENDEDORPOS], 
+    [ADMPARAMETROC].[CODVENPOS] AS [CODVENPOS], 
+    [ADMPARAMETROC].[SUCURSALAUTO] AS [SUCURSALAUTO], 
+    [ADMPARAMETROC].[TIPOCLIENTE] AS [TIPOCLIENTE], 
+    [ADMPARAMETROC].[NUMPACIENTE] AS [NUMPACIENTE], 
+    [ADMPARAMETROC].[NUMCONTRATO] AS [NUMCONTRATO], 
+    [ADMPARAMETROC].[NUMENVIOLAB] AS [NUMENVIOLAB], 
+    [ADMPARAMETROC].[NUMDOCTOR] AS [NUMDOCTOR], 
+    [ADMPARAMETROC].[controlcupofvd] AS [controlcupofvd], 
+    [ADMPARAMETROC].[diasgraciavencuota] AS [diasgraciavencuota], 
+    [ADMPARAMETROC].[generandb] AS [generandb], 
+    [ADMPARAMETROC].[generapagondb] AS [generapagondb], 
+    [ADMPARAMETROC].[interes] AS [interes], 
+    [ADMPARAMETROC].[porintmoradia] AS [porintmoradia], 
+    [ADMPARAMETROC].[posbloqueofaccre] AS [posbloqueofaccre]
+    FROM [dbo].[ADMPARAMETROC] AS [ADMPARAMETROC]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ADMPARAMETROV" EntityType="Self.ADMPARAMETROV" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ADMPARAMETROV].[NOMBRECIA] AS [NOMBRECIA], 
+    [ADMPARAMETROV].[MODULO] AS [MODULO], 
+    [ADMPARAMETROV].[ANIO] AS [ANIO], 
+    [ADMPARAMETROV].[TIPOCOSTO] AS [TIPOCOSTO], 
+    [ADMPARAMETROV].[FACLIN] AS [FACLIN], 
+    [ADMPARAMETROV].[SECUENCIAL] AS [SECUENCIAL], 
+    [ADMPARAMETROV].[NUMGUIA] AS [NUMGUIA], 
+    [ADMPARAMETROV].[IVA] AS [IVA], 
+    [ADMPARAMETROV].[CATEGORIA] AS [CATEGORIA], 
+    [ADMPARAMETROV].[FAMILIA] AS [FAMILIA], 
+    [ADMPARAMETROV].[LINEA] AS [LINEA], 
+    [ADMPARAMETROV].[MARCA] AS [MARCA], 
+    [ADMPARAMETROV].[MONEDA] AS [MONEDA], 
+    [ADMPARAMETROV].[INTEGCXC] AS [INTEGCXC], 
+    [ADMPARAMETROV].[BODFAC] AS [BODFAC], 
+    [ADMPARAMETROV].[NUMCONDI] AS [NUMCONDI], 
+    [ADMPARAMETROV].[INTVENCON] AS [INTVENCON], 
+    [ADMPARAMETROV].[CLIENTE] AS [CLIENTE], 
+    [ADMPARAMETROV].[TIPOMETA] AS [TIPOMETA], 
+    [ADMPARAMETROV].[SERIE] AS [SERIE], 
+    [ADMPARAMETROV].[NOAUTO] AS [NOAUTO], 
+    [ADMPARAMETROV].[FECHAVAL] AS [FECHAVAL], 
+    [ADMPARAMETROV].[IMPPOS] AS [IMPPOS], 
+    [ADMPARAMETROV].[RANGOIMP] AS [RANGOIMP], 
+    [ADMPARAMETROV].[ACTPOS] AS [ACTPOS], 
+    [ADMPARAMETROV].[CANGUI] AS [CANGUI], 
+    [ADMPARAMETROV].[FACSTK] AS [FACSTK], 
+    [ADMPARAMETROV].[IMPSRI] AS [IMPSRI], 
+    [ADMPARAMETROV].[POSIMP] AS [POSIMP], 
+    [ADMPARAMETROV].[PORCOM] AS [PORCOM], 
+    [ADMPARAMETROV].[CARVEN] AS [CARVEN], 
+    [ADMPARAMETROV].[VARVEN] AS [VARVEN], 
+    [ADMPARAMETROV].[IMPCABGUI] AS [IMPCABGUI], 
+    [ADMPARAMETROV].[NUMGRUPO] AS [NUMGRUPO], 
+    [ADMPARAMETROV].[BODAUTO] AS [BODAUTO], 
+    [ADMPARAMETROV].[NUMCARGA] AS [NUMCARGA], 
+    [ADMPARAMETROV].[CPAG] AS [CPAG], 
+    [ADMPARAMETROV].[ACTCOND] AS [ACTCOND], 
+    [ADMPARAMETROV].[NUMCOTI] AS [NUMCOTI], 
+    [ADMPARAMETROV].[GENDFA] AS [GENDFA], 
+    [ADMPARAMETROV].[CONFAC] AS [CONFAC], 
+    [ADMPARAMETROV].[BUSCA1] AS [BUSCA1], 
+    [ADMPARAMETROV].[BUSCA2] AS [BUSCA2], 
+    [ADMPARAMETROV].[MPORUTI] AS [MPORUTI], 
+    [ADMPARAMETROV].[AUTOCODIGO] AS [AUTOCODIGO], 
+    [ADMPARAMETROV].[DESACT] AS [DESACT], 
+    [ADMPARAMETROV].[NOAUTORET] AS [NOAUTORET], 
+    [ADMPARAMETROV].[SERIERET] AS [SERIERET], 
+    [ADMPARAMETROV].[FECHAVALRET] AS [FECHAVALRET], 
+    [ADMPARAMETROV].[CAMPRECIO] AS [CAMPRECIO], 
+    [ADMPARAMETROV].[NOAUTONVT] AS [NOAUTONVT], 
+    [ADMPARAMETROV].[SERIENVT] AS [SERIENVT], 
+    [ADMPARAMETROV].[FECHAVALNVT] AS [FECHAVALNVT], 
+    [ADMPARAMETROV].[NOAUTONCR] AS [NOAUTONCR], 
+    [ADMPARAMETROV].[SERIENCR] AS [SERIENCR], 
+    [ADMPARAMETROV].[FECHAVALNCR] AS [FECHAVALNCR], 
+    [ADMPARAMETROV].[IVANVT] AS [IVANVT], 
+    [ADMPARAMETROV].[intconcaja] AS [intconcaja], 
+    [ADMPARAMETROV].[intnofac] AS [intnofac], 
+    [ADMPARAMETROV].[NUMGUIATRANS] AS [NUMGUIATRANS], 
+    [ADMPARAMETROV].[NVTLIN] AS [NVTLIN], 
+    [ADMPARAMETROV].[CONTROLCUPO] AS [CONTROLCUPO], 
+    [ADMPARAMETROV].[PRECIODEFAULT] AS [PRECIODEFAULT], 
+    [ADMPARAMETROV].[BODEGAPOS] AS [BODEGAPOS], 
+    [ADMPARAMETROV].[AUTOCODITEM] AS [AUTOCODITEM], 
+    [ADMPARAMETROV].[AUTOCALPRECIO] AS [AUTOCALPRECIO], 
+    [ADMPARAMETROV].[POSVENTACREDITO] AS [POSVENTACREDITO], 
+    [ADMPARAMETROV].[POSINICIOCABECERA] AS [POSINICIOCABECERA], 
+    [ADMPARAMETROV].[POSINICIOPIE] AS [POSINICIOPIE], 
+    [ADMPARAMETROV].[POSINICIODETALLE] AS [POSINICIODETALLE], 
+    [ADMPARAMETROV].[POSFACLIN] AS [POSFACLIN], 
+    [ADMPARAMETROV].[POSTIPODETALLE] AS [POSTIPODETALLE], 
+    [ADMPARAMETROV].[POSINICIOINFOPOS] AS [POSINICIOINFOPOS], 
+    [ADMPARAMETROV].[POSLINEAFINAL] AS [POSLINEAFINAL], 
+    [ADMPARAMETROV].[POSVECESCOPIA] AS [POSVECESCOPIA], 
+    [ADMPARAMETROV].[CONTROLVALVENCREDITO] AS [CONTROLVALVENCREDITO], 
+    [ADMPARAMETROV].[CONTROLVALVENCONTADO] AS [CONTROLVALVENCONTADO], 
+    [ADMPARAMETROV].[NUMEROAUTOVENTA] AS [NUMEROAUTOVENTA], 
+    [ADMPARAMETROV].[NLOCALIDAD] AS [NLOCALIDAD], 
+    [ADMPARAMETROV].[POSESQUEMAPRECIOS] AS [POSESQUEMAPRECIOS], 
+    [ADMPARAMETROV].[FACTURAHASTA] AS [FACTURAHASTA], 
+    [ADMPARAMETROV].[OTRAEMPRWEB] AS [OTRAEMPRWEB], 
+    [ADMPARAMETROV].[RUTADOMI] AS [RUTADOMI], 
+    [ADMPARAMETROV].[POSIMPDATOSEMPRESA] AS [POSIMPDATOSEMPRESA], 
+    [ADMPARAMETROV].[POSDATOLINEA0] AS [POSDATOLINEA0], 
+    [ADMPARAMETROV].[POSDATOPROPIETARIO] AS [POSDATOPROPIETARIO], 
+    [ADMPARAMETROV].[POSINICIOPIEDINAMICO] AS [POSINICIOPIEDINAMICO], 
+    [ADMPARAMETROV].[OCULTARCOLUMNACAJAS] AS [OCULTARCOLUMNACAJAS], 
+    [ADMPARAMETROV].[DESCUENTOSENCADENA] AS [DESCUENTOSENCADENA], 
+    [ADMPARAMETROV].[RECARGAIVANVT] AS [RECARGAIVANVT], 
+    [ADMPARAMETROV].[GRUPTOVENTA] AS [GRUPTOVENTA], 
+    [ADMPARAMETROV].[ESQUEMAPAGOCOMI] AS [ESQUEMAPAGOCOMI], 
+    [ADMPARAMETROV].[LONGITUDAUTOCODITEM] AS [LONGITUDAUTOCODITEM], 
+    [ADMPARAMETROV].[CONNFVD] AS [CONNFVD], 
+    [ADMPARAMETROV].[CENTROCOSTO] AS [CENTROCOSTO], 
+    [ADMPARAMETROV].[POSPRECIOVENTA] AS [POSPRECIOVENTA], 
+    [ADMPARAMETROV].[mensajefac] AS [mensajefac], 
+    [ADMPARAMETROV].[LISTAPRECIO] AS [LISTAPRECIO], 
+    [ADMPARAMETROV].[LINEAREDONDEA] AS [LINEAREDONDEA], 
+    [ADMPARAMETROV].[FACTURAXBODEGA] AS [FACTURAXBODEGA], 
+    [ADMPARAMETROV].[ttesqcomi] AS [ttesqcomi], 
+    [ADMPARAMETROV].[cnfvd] AS [cnfvd], 
+    [ADMPARAMETROV].[coculcolumca] AS [coculcolumca], 
+    [ADMPARAMETROV].[chabdescad] AS [chabdescad], 
+    [ADMPARAMETROV].[crecivanv] AS [crecivanv], 
+    [ADMPARAMETROV].[clongcodi] AS [clongcodi], 
+    [ADMPARAMETROV].[cautocalprecio] AS [cautocalprecio], 
+    [ADMPARAMETROV].[cautocoditem] AS [cautocoditem], 
+    [ADMPARAMETROV].[NUMPROVINCIAS] AS [NUMPROVINCIAS], 
+    [ADMPARAMETROV].[serieguia] AS [serieguia], 
+    [ADMPARAMETROV].[IMPRIMESERIE] AS [IMPRIMESERIE], 
+    [ADMPARAMETROV].[proteina] AS [proteina], 
+    [ADMPARAMETROV].[EPRECIO] AS [EPRECIO], 
+    [ADMPARAMETROV].[UNASOLABODEGA] AS [UNASOLABODEGA], 
+    [ADMPARAMETROV].[FACTURAELECTRONICA] AS [FACTURAELECTRONICA], 
+    [ADMPARAMETROV].[NOMBRESERVIDOR] AS [NOMBRESERVIDOR], 
+    [ADMPARAMETROV].[NOMBREBASE] AS [NOMBREBASE], 
+    [ADMPARAMETROV].[VALORMAXCF] AS [VALORMAXCF], 
+    [ADMPARAMETROV].[BODEGAFE] AS [BODEGAFE], 
+    [ADMPARAMETROV].[usarcodbar] AS [usarcodbar], 
+    [ADMPARAMETROV].[conexionvb] AS [conexionvb], 
+    [ADMPARAMETROV].[controlprod] AS [controlprod], 
+    [ADMPARAMETROV].[numeroorden] AS [numeroorden], 
+    [ADMPARAMETROV].[FACENTPARCIAL] AS [FACENTPARCIAL], 
+    [ADMPARAMETROV].[MOSADVCAR] AS [MOSADVCAR], 
+    [ADMPARAMETROV].[secuencialuniconcr] AS [secuencialuniconcr], 
+    [ADMPARAMETROV].[conservarpedido] AS [conservarpedido], 
+    [ADMPARAMETROV].[IMPHOJAC] AS [IMPHOJAC], 
+    [ADMPARAMETROV].[tienedetfac] AS [tienedetfac], 
+    [ADMPARAMETROV].[NUMFACDELPEDIDO] AS [NUMFACDELPEDIDO], 
+    [ADMPARAMETROV].[usardecimales] AS [usardecimales], 
+    [ADMPARAMETROV].[posrangoprecio] AS [posrangoprecio], 
+    [ADMPARAMETROV].[numerotoma] AS [numerotoma], 
+    [ADMPARAMETROV].[tienedessol] AS [tienedessol], 
+    [ADMPARAMETROV].[facturanegativo] AS [facturanegativo], 
+    [ADMPARAMETROV].[ESQUEMAFARMA] AS [ESQUEMAFARMA], 
+    [ADMPARAMETROV].[impresoracargapos] AS [impresoracargapos], 
+    [ADMPARAMETROV].[imprimemenahorro] AS [imprimemenahorro], 
+    [ADMPARAMETROV].[imprimecodigopos] AS [imprimecodigopos], 
+    [ADMPARAMETROV].[UNILEVER] AS [UNILEVER], 
+    [ADMPARAMETROV].[CODDISTRIBUIDOR] AS [CODDISTRIBUIDOR], 
+    [ADMPARAMETROV].[campremantenimiento] AS [campremantenimiento], 
+    [ADMPARAMETROV].[FACNEDETEL] AS [FACNEDETEL], 
+    [ADMPARAMETROV].[POSDOSLINEAS] AS [POSDOSLINEAS], 
+    [ADMPARAMETROV].[poscontrolpreciocosto] AS [poscontrolpreciocosto], 
+    [ADMPARAMETROV].[posvendedor] AS [posvendedor], 
+    [ADMPARAMETROV].[cambiavenpos] AS [cambiavenpos], 
+    [ADMPARAMETROV].[CAMPRECIOPOS] AS [CAMPRECIOPOS], 
+    [ADMPARAMETROV].[cartera] AS [cartera], 
+    [ADMPARAMETROV].[controlcomisariato] AS [controlcomisariato], 
+    [ADMPARAMETROV].[DATOSCLIPOS] AS [DATOSCLIPOS], 
+    [ADMPARAMETROV].[ESNOTAVENTA] AS [ESNOTAVENTA], 
+    [ADMPARAMETROV].[ESRANCHO] AS [ESRANCHO], 
+    [ADMPARAMETROV].[FACSERSOS] AS [FACSERSOS], 
+    [ADMPARAMETROV].[INGPREAJI] AS [INGPREAJI], 
+    [ADMPARAMETROV].[itemcredihogar] AS [itemcredihogar], 
+    [ADMPARAMETROV].[nedetel] AS [nedetel], 
+    [ADMPARAMETROV].[numeroplantilla] AS [numeroplantilla], 
+    [ADMPARAMETROV].[odbcempresa] AS [odbcempresa], 
+    [ADMPARAMETROV].[porintcreditomensual] AS [porintcreditomensual], 
+    [ADMPARAMETROV].[posconalumno] AS [posconalumno], 
+    [ADMPARAMETROV].[POSCONSERVICIO] AS [POSCONSERVICIO], 
+    [ADMPARAMETROV].[POSGENERAANTNCR] AS [POSGENERAANTNCR], 
+    [ADMPARAMETROV].[posmostrarmarca] AS [posmostrarmarca], 
+    [ADMPARAMETROV].[tipodocventa] AS [tipodocventa]
+    FROM [dbo].[ADMPARAMETROV] AS [ADMPARAMETROV]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -564,6 +1237,9 @@
           <EntitySet Name="ADMMARCA" EntityType="Self.ADMMARCA" />
           <EntitySet Name="ADMCABPEDIDO" EntityType="BDADMSURTIOFFICEModel.ADMCABPEDIDO" />
           <EntitySet Name="ADMDETPEDIDO" EntityType="BDADMSURTIOFFICEModel.ADMDETPEDIDO" />
+          <EntitySet Name="ADMPARAMETROV" EntityType="BDADMSURTIOFFICEModel.ADMPARAMETROV" />
+          <EntitySet Name="ADMBODEGA" EntityType="BDADMSURTIOFFICEModel.ADMBODEGA" />
+          <EntitySet Name="ADMPARAMETROC" EntityType="BDADMSURTIOFFICEModel.ADMPARAMETROC" />
         </EntityContainer>
         <EntityType Name="ADMCABPEDIDO">
           <Key>
@@ -644,6 +1320,400 @@
           <Property Name="lista" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="lote" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="tipoproducto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ADMPARAMETROV">
+          <Key>
+            <PropertyRef Name="CAMPRECIO" />
+            <PropertyRef Name="IVANVT" />
+            <PropertyRef Name="intconcaja" />
+            <PropertyRef Name="intnofac" />
+            <PropertyRef Name="NVTLIN" />
+            <PropertyRef Name="CONTROLCUPO" />
+            <PropertyRef Name="PRECIODEFAULT" />
+            <PropertyRef Name="BODEGAPOS" />
+            <PropertyRef Name="AUTOCODITEM" />
+            <PropertyRef Name="AUTOCALPRECIO" />
+            <PropertyRef Name="POSVENTACREDITO" />
+            <PropertyRef Name="POSINICIOCABECERA" />
+            <PropertyRef Name="POSINICIOPIE" />
+            <PropertyRef Name="POSINICIODETALLE" />
+            <PropertyRef Name="POSFACLIN" />
+            <PropertyRef Name="POSTIPODETALLE" />
+            <PropertyRef Name="POSINICIOINFOPOS" />
+            <PropertyRef Name="POSLINEAFINAL" />
+            <PropertyRef Name="POSVECESCOPIA" />
+            <PropertyRef Name="CONTROLVALVENCREDITO" />
+            <PropertyRef Name="CONTROLVALVENCONTADO" />
+            <PropertyRef Name="NUMEROAUTOVENTA" />
+            <PropertyRef Name="NLOCALIDAD" />
+            <PropertyRef Name="POSESQUEMAPRECIOS" />
+            <PropertyRef Name="FACTURAHASTA" />
+            <PropertyRef Name="OTRAEMPRWEB" />
+            <PropertyRef Name="POSIMPDATOSEMPRESA" />
+            <PropertyRef Name="POSDATOLINEA0" />
+            <PropertyRef Name="POSDATOPROPIETARIO" />
+            <PropertyRef Name="POSINICIOPIEDINAMICO" />
+            <PropertyRef Name="OCULTARCOLUMNACAJAS" />
+            <PropertyRef Name="DESCUENTOSENCADENA" />
+            <PropertyRef Name="RECARGAIVANVT" />
+            <PropertyRef Name="ESQUEMAPAGOCOMI" />
+            <PropertyRef Name="LONGITUDAUTOCODITEM" />
+            <PropertyRef Name="CONNFVD" />
+            <PropertyRef Name="POSPRECIOVENTA" />
+            <PropertyRef Name="LISTAPRECIO" />
+            <PropertyRef Name="LINEAREDONDEA" />
+            <PropertyRef Name="FACTURAXBODEGA" />
+            <PropertyRef Name="proteina" />
+            <PropertyRef Name="EPRECIO" />
+            <PropertyRef Name="UNASOLABODEGA" />
+            <PropertyRef Name="NOMBREBASE" />
+            <PropertyRef Name="VALORMAXCF" />
+            <PropertyRef Name="BODEGAFE" />
+            <PropertyRef Name="usarcodbar" />
+            <PropertyRef Name="controlprod" />
+            <PropertyRef Name="numeroorden" />
+            <PropertyRef Name="FACENTPARCIAL" />
+            <PropertyRef Name="MOSADVCAR" />
+            <PropertyRef Name="secuencialuniconcr" />
+            <PropertyRef Name="conservarpedido" />
+            <PropertyRef Name="IMPHOJAC" />
+            <PropertyRef Name="tienedetfac" />
+            <PropertyRef Name="NUMFACDELPEDIDO" />
+            <PropertyRef Name="usardecimales" />
+            <PropertyRef Name="posrangoprecio" />
+            <PropertyRef Name="numerotoma" />
+            <PropertyRef Name="tienedessol" />
+            <PropertyRef Name="facturanegativo" />
+            <PropertyRef Name="ESQUEMAFARMA" />
+            <PropertyRef Name="impresoracargapos" />
+            <PropertyRef Name="imprimemenahorro" />
+            <PropertyRef Name="imprimecodigopos" />
+            <PropertyRef Name="UNILEVER" />
+            <PropertyRef Name="CODDISTRIBUIDOR" />
+            <PropertyRef Name="campremantenimiento" />
+            <PropertyRef Name="FACNEDETEL" />
+            <PropertyRef Name="POSDOSLINEAS" />
+            <PropertyRef Name="poscontrolpreciocosto" />
+            <PropertyRef Name="posvendedor" />
+            <PropertyRef Name="cambiavenpos" />
+            <PropertyRef Name="CAMPRECIOPOS" />
+            <PropertyRef Name="cartera" />
+            <PropertyRef Name="controlcomisariato" />
+            <PropertyRef Name="DATOSCLIPOS" />
+            <PropertyRef Name="ESNOTAVENTA" />
+            <PropertyRef Name="ESRANCHO" />
+            <PropertyRef Name="FACSERSOS" />
+            <PropertyRef Name="INGPREAJI" />
+            <PropertyRef Name="itemcredihogar" />
+            <PropertyRef Name="nedetel" />
+            <PropertyRef Name="numeroplantilla" />
+            <PropertyRef Name="porintcreditomensual" />
+            <PropertyRef Name="posconalumno" />
+            <PropertyRef Name="POSCONSERVICIO" />
+            <PropertyRef Name="POSGENERAANTNCR" />
+            <PropertyRef Name="posmostrarmarca" />
+            <PropertyRef Name="tipodocventa" />
+          </Key>
+          <Property Name="NOMBRECIA" Type="String" MaxLength="80" FixedLength="true" Unicode="false" />
+          <Property Name="MODULO" Type="String" MaxLength="80" FixedLength="true" Unicode="false" />
+          <Property Name="ANIO" Type="Decimal" Precision="4" Scale="0" />
+          <Property Name="TIPOCOSTO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="FACLIN" Type="Int32" />
+          <Property Name="SECUENCIAL" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="NUMGUIA" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="IVA" Type="Double" />
+          <Property Name="CATEGORIA" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="FAMILIA" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="LINEA" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="MARCA" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="MONEDA" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="INTEGCXC" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="BODFAC" Type="Int32" />
+          <Property Name="NUMCONDI" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="INTVENCON" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CLIENTE" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="TIPOMETA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="SERIE" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="NOAUTO" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
+          <Property Name="FECHAVAL" Type="DateTime" Precision="0" />
+          <Property Name="IMPPOS" Type="String" MaxLength="80" FixedLength="true" Unicode="false" />
+          <Property Name="RANGOIMP" Type="Int32" />
+          <Property Name="ACTPOS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CANGUI" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="FACSTK" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="IMPSRI" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="POSIMP" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="PORCOM" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="CARVEN" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="VARVEN" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="IMPCABGUI" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="NUMGRUPO" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="BODAUTO" Type="Int32" />
+          <Property Name="NUMCARGA" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="CPAG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ACTCOND" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="NUMCOTI" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="GENDFA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CONFAC" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="BUSCA1" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="BUSCA2" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="MPORUTI" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="AUTOCODIGO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DESACT" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="NOAUTORET" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="SERIERET" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="FECHAVALRET" Type="DateTime" Precision="0" />
+          <Property Name="CAMPRECIO" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="NOAUTONVT" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="SERIENVT" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="FECHAVALNVT" Type="DateTime" Precision="0" />
+          <Property Name="NOAUTONCR" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="SERIENCR" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="FECHAVALNCR" Type="DateTime" Precision="0" />
+          <Property Name="IVANVT" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="intconcaja" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="intnofac" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="NUMGUIATRANS" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="NVTLIN" Type="Int32" Nullable="false" />
+          <Property Name="CONTROLCUPO" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="PRECIODEFAULT" Type="Int32" Nullable="false" />
+          <Property Name="BODEGAPOS" Type="Int32" Nullable="false" />
+          <Property Name="AUTOCODITEM" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="AUTOCALPRECIO" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="POSVENTACREDITO" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="POSINICIOCABECERA" Type="Int32" Nullable="false" />
+          <Property Name="POSINICIOPIE" Type="Int32" Nullable="false" />
+          <Property Name="POSINICIODETALLE" Type="Int32" Nullable="false" />
+          <Property Name="POSFACLIN" Type="Int32" Nullable="false" />
+          <Property Name="POSTIPODETALLE" Type="Int32" Nullable="false" />
+          <Property Name="POSINICIOINFOPOS" Type="Int32" Nullable="false" />
+          <Property Name="POSLINEAFINAL" Type="Int32" Nullable="false" />
+          <Property Name="POSVECESCOPIA" Type="Int32" Nullable="false" />
+          <Property Name="CONTROLVALVENCREDITO" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CONTROLVALVENCONTADO" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="NUMEROAUTOVENTA" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="NLOCALIDAD" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="POSESQUEMAPRECIOS" Type="Int32" Nullable="false" />
+          <Property Name="FACTURAHASTA" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="OTRAEMPRWEB" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="RUTADOMI" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="POSIMPDATOSEMPRESA" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="POSDATOLINEA0" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="POSDATOPROPIETARIO" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="POSINICIOPIEDINAMICO" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="OCULTARCOLUMNACAJAS" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DESCUENTOSENCADENA" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="RECARGAIVANVT" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="GRUPTOVENTA" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ESQUEMAPAGOCOMI" Type="Int32" Nullable="false" />
+          <Property Name="LONGITUDAUTOCODITEM" Type="Int32" Nullable="false" />
+          <Property Name="CONNFVD" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CENTROCOSTO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="POSPRECIOVENTA" Type="Int32" Nullable="false" />
+          <Property Name="mensajefac" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="LISTAPRECIO" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="LINEAREDONDEA" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="FACTURAXBODEGA" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ttesqcomi" Type="Int32" />
+          <Property Name="cnfvd" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="coculcolumca" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="chabdescad" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="crecivanv" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="clongcodi" Type="Int32" />
+          <Property Name="cautocalprecio" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="cautocoditem" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="NUMPROVINCIAS" Type="Int32" />
+          <Property Name="serieguia" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="IMPRIMESERIE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="proteina" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="EPRECIO" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="UNASOLABODEGA" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="FACTURAELECTRONICA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="NOMBRESERVIDOR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="NOMBREBASE" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="VALORMAXCF" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="BODEGAFE" Type="Int32" Nullable="false" />
+          <Property Name="usarcodbar" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="conexionvb" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="controlprod" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="numeroorden" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="false" />
+          <Property Name="FACENTPARCIAL" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="MOSADVCAR" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="secuencialuniconcr" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="conservarpedido" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="IMPHOJAC" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="tienedetfac" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="NUMFACDELPEDIDO" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="usardecimales" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="posrangoprecio" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="numerotoma" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="tienedessol" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="facturanegativo" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ESQUEMAFARMA" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="impresoracargapos" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="imprimemenahorro" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="imprimecodigopos" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="UNILEVER" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CODDISTRIBUIDOR" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="campremantenimiento" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="FACNEDETEL" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="POSDOSLINEAS" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="poscontrolpreciocosto" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="posvendedor" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="cambiavenpos" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CAMPRECIOPOS" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="cartera" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="controlcomisariato" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DATOSCLIPOS" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ESNOTAVENTA" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ESRANCHO" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="FACSERSOS" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="INGPREAJI" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="itemcredihogar" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="nedetel" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="numeroplantilla" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
+          <Property Name="odbcempresa" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="porintcreditomensual" Type="Double" Nullable="false" />
+          <Property Name="posconalumno" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="POSCONSERVICIO" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="POSGENERAANTNCR" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="posmostrarmarca" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="tipodocventa" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ADMBODEGA">
+          <Key>
+            <PropertyRef Name="NOCARGAEGRESO" />
+            <PropertyRef Name="NOCARGAINGRESO" />
+            <PropertyRef Name="NUMGUIAREMISION" />
+            <PropertyRef Name="NOPROCESO" />
+            <PropertyRef Name="SERIE" />
+            <PropertyRef Name="BODATS" />
+            <PropertyRef Name="NOCONTROLPACIENTE" />
+            <PropertyRef Name="NOIMPORTACION" />
+            <PropertyRef Name="numguiaremisionpos" />
+          </Key>
+          <Property Name="CODIGO" Type="Int32" />
+          <Property Name="NOMBRE" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="DIRECCION" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="CIUDAD" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="BODEGUERO" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="NOING" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="NOEGR" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="NOFACTURA" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="NOPEDIDO" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="NOCOM" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="NODCOM" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="NOAJI" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="NOAJE" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="NOTRAIN" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="NOTRAEG" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="ESTADO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="NOOCO" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="NONOTA" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="NCR" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="NCRINT" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="NORETENCION" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="NCRPROV" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="NOCARGAEGRESO" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="NOCARGAINGRESO" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="NUMGUIAREMISION" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="NOPROCESO" Type="Int32" Nullable="false" />
+          <Property Name="SERIE" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="NOAUTORIZACIONFAC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FECHAVDESDEFAC" Type="DateTime" Precision="0" />
+          <Property Name="FECHAVHASTAFAC" Type="DateTime" Precision="0" />
+          <Property Name="NOAUTOSRIFAC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NOAUTORIZACIONNCR" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FECHAVDESDENCR" Type="DateTime" Precision="0" />
+          <Property Name="FECHAVHASTANCR" Type="DateTime" Precision="0" />
+          <Property Name="NOAUTOSRINCR" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NOAUTORIZACIONNVT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FECHAVDESDENVT" Type="DateTime" Precision="0" />
+          <Property Name="FECHAVHASTANVT" Type="DateTime" Precision="0" />
+          <Property Name="NOAUTOSRINVT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NOAUTORIZACIONRET" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FECHAVDESDERET" Type="DateTime" Precision="0" />
+          <Property Name="FECHAVHASTARET" Type="DateTime" Precision="0" />
+          <Property Name="NOAUTOSRIRET" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BODATS" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="NOCONTROLPACIENTE" Type="Int32" Nullable="false" />
+          <Property Name="CODIGO_BODEGA" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NOIMPORTACION" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="numguiaremisionpos" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
+          <Property Name="TELEFONO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ADMPARAMETROC">
+          <Key>
+            <PropertyRef Name="CREDDEF" />
+            <PropertyRef Name="CUPOCARTERA" />
+            <PropertyRef Name="CONTROLDEPOCIERRE" />
+            <PropertyRef Name="COBRADOR" />
+            <PropertyRef Name="CONTROLRECIBO" />
+            <PropertyRef Name="GENERACUOTAS" />
+            <PropertyRef Name="IMPNCR2" />
+            <PropertyRef Name="REPETIRNRECIBO" />
+            <PropertyRef Name="CONTROLBASESRET" />
+            <PropertyRef Name="BENEDEFAULT" />
+            <PropertyRef Name="TIPOCLIENTE" />
+            <PropertyRef Name="NUMPACIENTE" />
+            <PropertyRef Name="NUMCONTRATO" />
+            <PropertyRef Name="NUMENVIOLAB" />
+            <PropertyRef Name="NUMDOCTOR" />
+            <PropertyRef Name="controlcupofvd" />
+            <PropertyRef Name="diasgraciavencuota" />
+            <PropertyRef Name="generandb" />
+            <PropertyRef Name="generapagondb" />
+            <PropertyRef Name="interes" />
+            <PropertyRef Name="porintmoradia" />
+            <PropertyRef Name="posbloqueofaccre" />
+          </Key>
+          <Property Name="MODULO" Type="String" MaxLength="80" FixedLength="true" Unicode="false" />
+          <Property Name="NOMBRECIA" Type="String" MaxLength="80" FixedLength="true" Unicode="false" />
+          <Property Name="ANIO" Type="Int32" />
+          <Property Name="SECUENCIAL" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="NUMHOJA" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="PROVINCIA" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="CANTON" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="PARROQUIA" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="SECTOR" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="INTEGCXC" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="LETRAINI" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="NUMCLIENTE" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="AUTOCLI" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="INTCXCCON" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="FECHACXC" Type="DateTime" Precision="0" />
+          <Property Name="GUIACOB" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="NOCOBRO" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="VALORNCR" Type="Decimal" Precision="20" Scale="6" />
+          <Property Name="CAJAC" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="AUTOCODIGO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="FECHACAJA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CAMCRE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CREDDEF" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="CUPOCARTERA" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="CONTROLDEPOCIERRE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="COBRADOR" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="CONTROLRECIBO" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="GENERACUOTAS" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="IMPNCR2" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="REPETIRNRECIBO" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="CONTROLBASESRET" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="BENEDEFAULT" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="VENDEDORPOS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CODVENPOS" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SUCURSALAUTO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="TIPOCLIENTE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="NUMPACIENTE" Type="Int32" Nullable="false" />
+          <Property Name="NUMCONTRATO" Type="Int32" Nullable="false" />
+          <Property Name="NUMENVIOLAB" Type="Int32" Nullable="false" />
+          <Property Name="NUMDOCTOR" Type="Int32" Nullable="false" />
+          <Property Name="controlcupofvd" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="diasgraciavencuota" Type="Int32" Nullable="false" />
+          <Property Name="generandb" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="generapagondb" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="interes" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="porintmoradia" Type="Double" Nullable="false" />
+          <Property Name="posbloqueofaccre" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -961,6 +2031,285 @@
                 <ScalarProperty Name="ITEM" ColumnName="ITEM" />
                 <ScalarProperty Name="SECUENCIAL" ColumnName="SECUENCIAL" />
                 <ScalarProperty Name="LINEA" ColumnName="LINEA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ADMPARAMETROV">
+            <EntityTypeMapping TypeName="BDADMSURTIOFFICEModel.ADMPARAMETROV">
+              <MappingFragment StoreEntitySet="ADMPARAMETROV">
+                <ScalarProperty Name="tipodocventa" ColumnName="tipodocventa" />
+                <ScalarProperty Name="posmostrarmarca" ColumnName="posmostrarmarca" />
+                <ScalarProperty Name="POSGENERAANTNCR" ColumnName="POSGENERAANTNCR" />
+                <ScalarProperty Name="POSCONSERVICIO" ColumnName="POSCONSERVICIO" />
+                <ScalarProperty Name="posconalumno" ColumnName="posconalumno" />
+                <ScalarProperty Name="porintcreditomensual" ColumnName="porintcreditomensual" />
+                <ScalarProperty Name="odbcempresa" ColumnName="odbcempresa" />
+                <ScalarProperty Name="numeroplantilla" ColumnName="numeroplantilla" />
+                <ScalarProperty Name="nedetel" ColumnName="nedetel" />
+                <ScalarProperty Name="itemcredihogar" ColumnName="itemcredihogar" />
+                <ScalarProperty Name="INGPREAJI" ColumnName="INGPREAJI" />
+                <ScalarProperty Name="FACSERSOS" ColumnName="FACSERSOS" />
+                <ScalarProperty Name="ESRANCHO" ColumnName="ESRANCHO" />
+                <ScalarProperty Name="ESNOTAVENTA" ColumnName="ESNOTAVENTA" />
+                <ScalarProperty Name="DATOSCLIPOS" ColumnName="DATOSCLIPOS" />
+                <ScalarProperty Name="controlcomisariato" ColumnName="controlcomisariato" />
+                <ScalarProperty Name="cartera" ColumnName="cartera" />
+                <ScalarProperty Name="CAMPRECIOPOS" ColumnName="CAMPRECIOPOS" />
+                <ScalarProperty Name="cambiavenpos" ColumnName="cambiavenpos" />
+                <ScalarProperty Name="posvendedor" ColumnName="posvendedor" />
+                <ScalarProperty Name="poscontrolpreciocosto" ColumnName="poscontrolpreciocosto" />
+                <ScalarProperty Name="POSDOSLINEAS" ColumnName="POSDOSLINEAS" />
+                <ScalarProperty Name="FACNEDETEL" ColumnName="FACNEDETEL" />
+                <ScalarProperty Name="campremantenimiento" ColumnName="campremantenimiento" />
+                <ScalarProperty Name="CODDISTRIBUIDOR" ColumnName="CODDISTRIBUIDOR" />
+                <ScalarProperty Name="UNILEVER" ColumnName="UNILEVER" />
+                <ScalarProperty Name="imprimecodigopos" ColumnName="imprimecodigopos" />
+                <ScalarProperty Name="imprimemenahorro" ColumnName="imprimemenahorro" />
+                <ScalarProperty Name="impresoracargapos" ColumnName="impresoracargapos" />
+                <ScalarProperty Name="ESQUEMAFARMA" ColumnName="ESQUEMAFARMA" />
+                <ScalarProperty Name="facturanegativo" ColumnName="facturanegativo" />
+                <ScalarProperty Name="tienedessol" ColumnName="tienedessol" />
+                <ScalarProperty Name="numerotoma" ColumnName="numerotoma" />
+                <ScalarProperty Name="posrangoprecio" ColumnName="posrangoprecio" />
+                <ScalarProperty Name="usardecimales" ColumnName="usardecimales" />
+                <ScalarProperty Name="NUMFACDELPEDIDO" ColumnName="NUMFACDELPEDIDO" />
+                <ScalarProperty Name="tienedetfac" ColumnName="tienedetfac" />
+                <ScalarProperty Name="IMPHOJAC" ColumnName="IMPHOJAC" />
+                <ScalarProperty Name="conservarpedido" ColumnName="conservarpedido" />
+                <ScalarProperty Name="secuencialuniconcr" ColumnName="secuencialuniconcr" />
+                <ScalarProperty Name="MOSADVCAR" ColumnName="MOSADVCAR" />
+                <ScalarProperty Name="FACENTPARCIAL" ColumnName="FACENTPARCIAL" />
+                <ScalarProperty Name="numeroorden" ColumnName="numeroorden" />
+                <ScalarProperty Name="controlprod" ColumnName="controlprod" />
+                <ScalarProperty Name="conexionvb" ColumnName="conexionvb" />
+                <ScalarProperty Name="usarcodbar" ColumnName="usarcodbar" />
+                <ScalarProperty Name="BODEGAFE" ColumnName="BODEGAFE" />
+                <ScalarProperty Name="VALORMAXCF" ColumnName="VALORMAXCF" />
+                <ScalarProperty Name="NOMBREBASE" ColumnName="NOMBREBASE" />
+                <ScalarProperty Name="NOMBRESERVIDOR" ColumnName="NOMBRESERVIDOR" />
+                <ScalarProperty Name="FACTURAELECTRONICA" ColumnName="FACTURAELECTRONICA" />
+                <ScalarProperty Name="UNASOLABODEGA" ColumnName="UNASOLABODEGA" />
+                <ScalarProperty Name="EPRECIO" ColumnName="EPRECIO" />
+                <ScalarProperty Name="proteina" ColumnName="proteina" />
+                <ScalarProperty Name="IMPRIMESERIE" ColumnName="IMPRIMESERIE" />
+                <ScalarProperty Name="serieguia" ColumnName="serieguia" />
+                <ScalarProperty Name="NUMPROVINCIAS" ColumnName="NUMPROVINCIAS" />
+                <ScalarProperty Name="cautocoditem" ColumnName="cautocoditem" />
+                <ScalarProperty Name="cautocalprecio" ColumnName="cautocalprecio" />
+                <ScalarProperty Name="clongcodi" ColumnName="clongcodi" />
+                <ScalarProperty Name="crecivanv" ColumnName="crecivanv" />
+                <ScalarProperty Name="chabdescad" ColumnName="chabdescad" />
+                <ScalarProperty Name="coculcolumca" ColumnName="coculcolumca" />
+                <ScalarProperty Name="cnfvd" ColumnName="cnfvd" />
+                <ScalarProperty Name="ttesqcomi" ColumnName="ttesqcomi" />
+                <ScalarProperty Name="FACTURAXBODEGA" ColumnName="FACTURAXBODEGA" />
+                <ScalarProperty Name="LINEAREDONDEA" ColumnName="LINEAREDONDEA" />
+                <ScalarProperty Name="LISTAPRECIO" ColumnName="LISTAPRECIO" />
+                <ScalarProperty Name="mensajefac" ColumnName="mensajefac" />
+                <ScalarProperty Name="POSPRECIOVENTA" ColumnName="POSPRECIOVENTA" />
+                <ScalarProperty Name="CENTROCOSTO" ColumnName="CENTROCOSTO" />
+                <ScalarProperty Name="CONNFVD" ColumnName="CONNFVD" />
+                <ScalarProperty Name="LONGITUDAUTOCODITEM" ColumnName="LONGITUDAUTOCODITEM" />
+                <ScalarProperty Name="ESQUEMAPAGOCOMI" ColumnName="ESQUEMAPAGOCOMI" />
+                <ScalarProperty Name="GRUPTOVENTA" ColumnName="GRUPTOVENTA" />
+                <ScalarProperty Name="RECARGAIVANVT" ColumnName="RECARGAIVANVT" />
+                <ScalarProperty Name="DESCUENTOSENCADENA" ColumnName="DESCUENTOSENCADENA" />
+                <ScalarProperty Name="OCULTARCOLUMNACAJAS" ColumnName="OCULTARCOLUMNACAJAS" />
+                <ScalarProperty Name="POSINICIOPIEDINAMICO" ColumnName="POSINICIOPIEDINAMICO" />
+                <ScalarProperty Name="POSDATOPROPIETARIO" ColumnName="POSDATOPROPIETARIO" />
+                <ScalarProperty Name="POSDATOLINEA0" ColumnName="POSDATOLINEA0" />
+                <ScalarProperty Name="POSIMPDATOSEMPRESA" ColumnName="POSIMPDATOSEMPRESA" />
+                <ScalarProperty Name="RUTADOMI" ColumnName="RUTADOMI" />
+                <ScalarProperty Name="OTRAEMPRWEB" ColumnName="OTRAEMPRWEB" />
+                <ScalarProperty Name="FACTURAHASTA" ColumnName="FACTURAHASTA" />
+                <ScalarProperty Name="POSESQUEMAPRECIOS" ColumnName="POSESQUEMAPRECIOS" />
+                <ScalarProperty Name="NLOCALIDAD" ColumnName="NLOCALIDAD" />
+                <ScalarProperty Name="NUMEROAUTOVENTA" ColumnName="NUMEROAUTOVENTA" />
+                <ScalarProperty Name="CONTROLVALVENCONTADO" ColumnName="CONTROLVALVENCONTADO" />
+                <ScalarProperty Name="CONTROLVALVENCREDITO" ColumnName="CONTROLVALVENCREDITO" />
+                <ScalarProperty Name="POSVECESCOPIA" ColumnName="POSVECESCOPIA" />
+                <ScalarProperty Name="POSLINEAFINAL" ColumnName="POSLINEAFINAL" />
+                <ScalarProperty Name="POSINICIOINFOPOS" ColumnName="POSINICIOINFOPOS" />
+                <ScalarProperty Name="POSTIPODETALLE" ColumnName="POSTIPODETALLE" />
+                <ScalarProperty Name="POSFACLIN" ColumnName="POSFACLIN" />
+                <ScalarProperty Name="POSINICIODETALLE" ColumnName="POSINICIODETALLE" />
+                <ScalarProperty Name="POSINICIOPIE" ColumnName="POSINICIOPIE" />
+                <ScalarProperty Name="POSINICIOCABECERA" ColumnName="POSINICIOCABECERA" />
+                <ScalarProperty Name="POSVENTACREDITO" ColumnName="POSVENTACREDITO" />
+                <ScalarProperty Name="AUTOCALPRECIO" ColumnName="AUTOCALPRECIO" />
+                <ScalarProperty Name="AUTOCODITEM" ColumnName="AUTOCODITEM" />
+                <ScalarProperty Name="BODEGAPOS" ColumnName="BODEGAPOS" />
+                <ScalarProperty Name="PRECIODEFAULT" ColumnName="PRECIODEFAULT" />
+                <ScalarProperty Name="CONTROLCUPO" ColumnName="CONTROLCUPO" />
+                <ScalarProperty Name="NVTLIN" ColumnName="NVTLIN" />
+                <ScalarProperty Name="NUMGUIATRANS" ColumnName="NUMGUIATRANS" />
+                <ScalarProperty Name="intnofac" ColumnName="intnofac" />
+                <ScalarProperty Name="intconcaja" ColumnName="intconcaja" />
+                <ScalarProperty Name="IVANVT" ColumnName="IVANVT" />
+                <ScalarProperty Name="FECHAVALNCR" ColumnName="FECHAVALNCR" />
+                <ScalarProperty Name="SERIENCR" ColumnName="SERIENCR" />
+                <ScalarProperty Name="NOAUTONCR" ColumnName="NOAUTONCR" />
+                <ScalarProperty Name="FECHAVALNVT" ColumnName="FECHAVALNVT" />
+                <ScalarProperty Name="SERIENVT" ColumnName="SERIENVT" />
+                <ScalarProperty Name="NOAUTONVT" ColumnName="NOAUTONVT" />
+                <ScalarProperty Name="CAMPRECIO" ColumnName="CAMPRECIO" />
+                <ScalarProperty Name="FECHAVALRET" ColumnName="FECHAVALRET" />
+                <ScalarProperty Name="SERIERET" ColumnName="SERIERET" />
+                <ScalarProperty Name="NOAUTORET" ColumnName="NOAUTORET" />
+                <ScalarProperty Name="DESACT" ColumnName="DESACT" />
+                <ScalarProperty Name="AUTOCODIGO" ColumnName="AUTOCODIGO" />
+                <ScalarProperty Name="MPORUTI" ColumnName="MPORUTI" />
+                <ScalarProperty Name="BUSCA2" ColumnName="BUSCA2" />
+                <ScalarProperty Name="BUSCA1" ColumnName="BUSCA1" />
+                <ScalarProperty Name="CONFAC" ColumnName="CONFAC" />
+                <ScalarProperty Name="GENDFA" ColumnName="GENDFA" />
+                <ScalarProperty Name="NUMCOTI" ColumnName="NUMCOTI" />
+                <ScalarProperty Name="ACTCOND" ColumnName="ACTCOND" />
+                <ScalarProperty Name="CPAG" ColumnName="CPAG" />
+                <ScalarProperty Name="NUMCARGA" ColumnName="NUMCARGA" />
+                <ScalarProperty Name="BODAUTO" ColumnName="BODAUTO" />
+                <ScalarProperty Name="NUMGRUPO" ColumnName="NUMGRUPO" />
+                <ScalarProperty Name="IMPCABGUI" ColumnName="IMPCABGUI" />
+                <ScalarProperty Name="VARVEN" ColumnName="VARVEN" />
+                <ScalarProperty Name="CARVEN" ColumnName="CARVEN" />
+                <ScalarProperty Name="PORCOM" ColumnName="PORCOM" />
+                <ScalarProperty Name="POSIMP" ColumnName="POSIMP" />
+                <ScalarProperty Name="IMPSRI" ColumnName="IMPSRI" />
+                <ScalarProperty Name="FACSTK" ColumnName="FACSTK" />
+                <ScalarProperty Name="CANGUI" ColumnName="CANGUI" />
+                <ScalarProperty Name="ACTPOS" ColumnName="ACTPOS" />
+                <ScalarProperty Name="RANGOIMP" ColumnName="RANGOIMP" />
+                <ScalarProperty Name="IMPPOS" ColumnName="IMPPOS" />
+                <ScalarProperty Name="FECHAVAL" ColumnName="FECHAVAL" />
+                <ScalarProperty Name="NOAUTO" ColumnName="NOAUTO" />
+                <ScalarProperty Name="SERIE" ColumnName="SERIE" />
+                <ScalarProperty Name="TIPOMETA" ColumnName="TIPOMETA" />
+                <ScalarProperty Name="CLIENTE" ColumnName="CLIENTE" />
+                <ScalarProperty Name="INTVENCON" ColumnName="INTVENCON" />
+                <ScalarProperty Name="NUMCONDI" ColumnName="NUMCONDI" />
+                <ScalarProperty Name="BODFAC" ColumnName="BODFAC" />
+                <ScalarProperty Name="INTEGCXC" ColumnName="INTEGCXC" />
+                <ScalarProperty Name="MONEDA" ColumnName="MONEDA" />
+                <ScalarProperty Name="MARCA" ColumnName="MARCA" />
+                <ScalarProperty Name="LINEA" ColumnName="LINEA" />
+                <ScalarProperty Name="FAMILIA" ColumnName="FAMILIA" />
+                <ScalarProperty Name="CATEGORIA" ColumnName="CATEGORIA" />
+                <ScalarProperty Name="IVA" ColumnName="IVA" />
+                <ScalarProperty Name="NUMGUIA" ColumnName="NUMGUIA" />
+                <ScalarProperty Name="SECUENCIAL" ColumnName="SECUENCIAL" />
+                <ScalarProperty Name="FACLIN" ColumnName="FACLIN" />
+                <ScalarProperty Name="TIPOCOSTO" ColumnName="TIPOCOSTO" />
+                <ScalarProperty Name="ANIO" ColumnName="ANIO" />
+                <ScalarProperty Name="MODULO" ColumnName="MODULO" />
+                <ScalarProperty Name="NOMBRECIA" ColumnName="NOMBRECIA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ADMBODEGA">
+            <EntityTypeMapping TypeName="BDADMSURTIOFFICEModel.ADMBODEGA">
+              <MappingFragment StoreEntitySet="ADMBODEGA">
+                <ScalarProperty Name="TELEFONO" ColumnName="TELEFONO" />
+                <ScalarProperty Name="numguiaremisionpos" ColumnName="numguiaremisionpos" />
+                <ScalarProperty Name="NOIMPORTACION" ColumnName="NOIMPORTACION" />
+                <ScalarProperty Name="CODIGO_BODEGA" ColumnName="CODIGO_BODEGA" />
+                <ScalarProperty Name="NOCONTROLPACIENTE" ColumnName="NOCONTROLPACIENTE" />
+                <ScalarProperty Name="BODATS" ColumnName="BODATS" />
+                <ScalarProperty Name="NOAUTOSRIRET" ColumnName="NOAUTOSRIRET" />
+                <ScalarProperty Name="FECHAVHASTARET" ColumnName="FECHAVHASTARET" />
+                <ScalarProperty Name="FECHAVDESDERET" ColumnName="FECHAVDESDERET" />
+                <ScalarProperty Name="NOAUTORIZACIONRET" ColumnName="NOAUTORIZACIONRET" />
+                <ScalarProperty Name="NOAUTOSRINVT" ColumnName="NOAUTOSRINVT" />
+                <ScalarProperty Name="FECHAVHASTANVT" ColumnName="FECHAVHASTANVT" />
+                <ScalarProperty Name="FECHAVDESDENVT" ColumnName="FECHAVDESDENVT" />
+                <ScalarProperty Name="NOAUTORIZACIONNVT" ColumnName="NOAUTORIZACIONNVT" />
+                <ScalarProperty Name="NOAUTOSRINCR" ColumnName="NOAUTOSRINCR" />
+                <ScalarProperty Name="FECHAVHASTANCR" ColumnName="FECHAVHASTANCR" />
+                <ScalarProperty Name="FECHAVDESDENCR" ColumnName="FECHAVDESDENCR" />
+                <ScalarProperty Name="NOAUTORIZACIONNCR" ColumnName="NOAUTORIZACIONNCR" />
+                <ScalarProperty Name="NOAUTOSRIFAC" ColumnName="NOAUTOSRIFAC" />
+                <ScalarProperty Name="FECHAVHASTAFAC" ColumnName="FECHAVHASTAFAC" />
+                <ScalarProperty Name="FECHAVDESDEFAC" ColumnName="FECHAVDESDEFAC" />
+                <ScalarProperty Name="NOAUTORIZACIONFAC" ColumnName="NOAUTORIZACIONFAC" />
+                <ScalarProperty Name="SERIE" ColumnName="SERIE" />
+                <ScalarProperty Name="NOPROCESO" ColumnName="NOPROCESO" />
+                <ScalarProperty Name="NUMGUIAREMISION" ColumnName="NUMGUIAREMISION" />
+                <ScalarProperty Name="NOCARGAINGRESO" ColumnName="NOCARGAINGRESO" />
+                <ScalarProperty Name="NOCARGAEGRESO" ColumnName="NOCARGAEGRESO" />
+                <ScalarProperty Name="NCRPROV" ColumnName="NCRPROV" />
+                <ScalarProperty Name="NORETENCION" ColumnName="NORETENCION" />
+                <ScalarProperty Name="NCRINT" ColumnName="NCRINT" />
+                <ScalarProperty Name="NCR" ColumnName="NCR" />
+                <ScalarProperty Name="NONOTA" ColumnName="NONOTA" />
+                <ScalarProperty Name="NOOCO" ColumnName="NOOCO" />
+                <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+                <ScalarProperty Name="NOTRAEG" ColumnName="NOTRAEG" />
+                <ScalarProperty Name="NOTRAIN" ColumnName="NOTRAIN" />
+                <ScalarProperty Name="NOAJE" ColumnName="NOAJE" />
+                <ScalarProperty Name="NOAJI" ColumnName="NOAJI" />
+                <ScalarProperty Name="NODCOM" ColumnName="NODCOM" />
+                <ScalarProperty Name="NOCOM" ColumnName="NOCOM" />
+                <ScalarProperty Name="NOPEDIDO" ColumnName="NOPEDIDO" />
+                <ScalarProperty Name="NOFACTURA" ColumnName="NOFACTURA" />
+                <ScalarProperty Name="NOEGR" ColumnName="NOEGR" />
+                <ScalarProperty Name="NOING" ColumnName="NOING" />
+                <ScalarProperty Name="BODEGUERO" ColumnName="BODEGUERO" />
+                <ScalarProperty Name="CIUDAD" ColumnName="CIUDAD" />
+                <ScalarProperty Name="DIRECCION" ColumnName="DIRECCION" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ADMPARAMETROC">
+            <EntityTypeMapping TypeName="BDADMSURTIOFFICEModel.ADMPARAMETROC">
+              <MappingFragment StoreEntitySet="ADMPARAMETROC">
+                <ScalarProperty Name="posbloqueofaccre" ColumnName="posbloqueofaccre" />
+                <ScalarProperty Name="porintmoradia" ColumnName="porintmoradia" />
+                <ScalarProperty Name="interes" ColumnName="interes" />
+                <ScalarProperty Name="generapagondb" ColumnName="generapagondb" />
+                <ScalarProperty Name="generandb" ColumnName="generandb" />
+                <ScalarProperty Name="diasgraciavencuota" ColumnName="diasgraciavencuota" />
+                <ScalarProperty Name="controlcupofvd" ColumnName="controlcupofvd" />
+                <ScalarProperty Name="NUMDOCTOR" ColumnName="NUMDOCTOR" />
+                <ScalarProperty Name="NUMENVIOLAB" ColumnName="NUMENVIOLAB" />
+                <ScalarProperty Name="NUMCONTRATO" ColumnName="NUMCONTRATO" />
+                <ScalarProperty Name="NUMPACIENTE" ColumnName="NUMPACIENTE" />
+                <ScalarProperty Name="TIPOCLIENTE" ColumnName="TIPOCLIENTE" />
+                <ScalarProperty Name="SUCURSALAUTO" ColumnName="SUCURSALAUTO" />
+                <ScalarProperty Name="CODVENPOS" ColumnName="CODVENPOS" />
+                <ScalarProperty Name="VENDEDORPOS" ColumnName="VENDEDORPOS" />
+                <ScalarProperty Name="BENEDEFAULT" ColumnName="BENEDEFAULT" />
+                <ScalarProperty Name="CONTROLBASESRET" ColumnName="CONTROLBASESRET" />
+                <ScalarProperty Name="REPETIRNRECIBO" ColumnName="REPETIRNRECIBO" />
+                <ScalarProperty Name="IMPNCR2" ColumnName="IMPNCR2" />
+                <ScalarProperty Name="GENERACUOTAS" ColumnName="GENERACUOTAS" />
+                <ScalarProperty Name="CONTROLRECIBO" ColumnName="CONTROLRECIBO" />
+                <ScalarProperty Name="COBRADOR" ColumnName="COBRADOR" />
+                <ScalarProperty Name="CONTROLDEPOCIERRE" ColumnName="CONTROLDEPOCIERRE" />
+                <ScalarProperty Name="CUPOCARTERA" ColumnName="CUPOCARTERA" />
+                <ScalarProperty Name="CREDDEF" ColumnName="CREDDEF" />
+                <ScalarProperty Name="CAMCRE" ColumnName="CAMCRE" />
+                <ScalarProperty Name="FECHACAJA" ColumnName="FECHACAJA" />
+                <ScalarProperty Name="AUTOCODIGO" ColumnName="AUTOCODIGO" />
+                <ScalarProperty Name="CAJAC" ColumnName="CAJAC" />
+                <ScalarProperty Name="VALORNCR" ColumnName="VALORNCR" />
+                <ScalarProperty Name="NOCOBRO" ColumnName="NOCOBRO" />
+                <ScalarProperty Name="GUIACOB" ColumnName="GUIACOB" />
+                <ScalarProperty Name="FECHACXC" ColumnName="FECHACXC" />
+                <ScalarProperty Name="INTCXCCON" ColumnName="INTCXCCON" />
+                <ScalarProperty Name="AUTOCLI" ColumnName="AUTOCLI" />
+                <ScalarProperty Name="NUMCLIENTE" ColumnName="NUMCLIENTE" />
+                <ScalarProperty Name="LETRAINI" ColumnName="LETRAINI" />
+                <ScalarProperty Name="INTEGCXC" ColumnName="INTEGCXC" />
+                <ScalarProperty Name="SECTOR" ColumnName="SECTOR" />
+                <ScalarProperty Name="PARROQUIA" ColumnName="PARROQUIA" />
+                <ScalarProperty Name="CANTON" ColumnName="CANTON" />
+                <ScalarProperty Name="PROVINCIA" ColumnName="PROVINCIA" />
+                <ScalarProperty Name="NUMHOJA" ColumnName="NUMHOJA" />
+                <ScalarProperty Name="SECUENCIAL" ColumnName="SECUENCIAL" />
+                <ScalarProperty Name="ANIO" ColumnName="ANIO" />
+                <ScalarProperty Name="NOMBRECIA" ColumnName="NOMBRECIA" />
+                <ScalarProperty Name="MODULO" ColumnName="MODULO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

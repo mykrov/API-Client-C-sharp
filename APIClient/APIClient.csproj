@@ -57,6 +57,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ADMBODEGA.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="ADMCABPEDIDO.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -78,9 +81,16 @@
     <Compile Include="ADMMARCA.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="ADMPARAMETROC.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ADMPARAMETROV.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="CatagoriaWeb.cs" />
     <Compile Include="ClienteWeb.cs" />
     <Compile Include="FamiliWeb.cs" />
+    <Compile Include="MarcaWeb.cs" />
     <Compile Include="Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -96,6 +106,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
+    <Compile Include="PedidoWeb.cs" />
+    <Compile Include="ProductoWeb.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Respuesta.cs" />

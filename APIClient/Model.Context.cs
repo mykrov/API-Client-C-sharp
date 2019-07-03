@@ -32,5 +32,8 @@ namespace APIClient
         public virtual DbSet<ADMMARCA> ADMMARCA { get; set; }
         public virtual DbSet<ADMCABPEDIDO> ADMCABPEDIDO { get; set; }
         public virtual DbSet<ADMDETPEDIDO> ADMDETPEDIDO { get; set; }
+        public virtual DbSet<ADMPARAMETROV> ADMPARAMETROV { get; set; }
+        public virtual DbSet<ADMBODEGA> ADMBODEGA { get; set; }
+        public virtual DbSet<ADMPARAMETROC> ADMPARAMETROC { get; set; }
     }
 }

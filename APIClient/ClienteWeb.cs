@@ -32,4 +32,11 @@ namespace APIClient
         public string idtipo { get; set; }
         public string ingreso { get; set; }
     }
+
+    class ClienteRes
+    {
+        public string status { get; set; }
+        public string fecha { get; set; }
+        public List<ClienteWeb> usuariosw { get; set; }
+    }
 }
