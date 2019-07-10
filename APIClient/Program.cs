@@ -147,13 +147,14 @@ namespace APIClient
                 Uri uMarca = new Uri(urlbase + "api/marca");
                 Uri uProducto = new Uri(urlbase + "api/productos");
 
-                //.Run(() => PostCategorias(listacate, uCate));
-               // Task.Run(() => PostClientes(usuariosw, uClien));
-                Task.Run(() => PostMarcas(marcalist, uMarca));
+                //Task.Run(() => PostCategorias(listacate, uCate));
+                //Task.Run(() => PostClientes(usuariosw, uClien));
+                //Task.Run(() => PostMarcas(marcalist, uMarca));
                 //Task.Run(() => PostProducto(listaPro, uProducto));
 
-                //GetPedidos();
-                //GetUsuarios("20-06-2019");
+                GetPedidos();
+                GetUsuarios("20-06-2019");
+                //GetUsuarios(DateTime.Now.Date.ToString("dd-MM-yyyy"));
                 Console.ReadKey();
 
             }
@@ -170,6 +171,7 @@ namespace APIClient
                     HttpContent content = response.Content;
                     string mycontent = await content.ReadAsStringAsync();
                     var RootObjects = JsonConvert.DeserializeObject<PedidoResponse>(mycontent);
+                    int contadorCabeceras = 0;
 
                     using (BDADMSURTIOFFICEEntities db = new BDADMSURTIOFFICEEntities())
                     {
@@ -186,14 +188,14 @@ namespace APIClient
                             {
                                 foreach (var pedido in RootObjects.pedidos)
                                 {
-                                    var tipoCliente = (from c in db.ADMCLIENTE where (c.CODIGO == pedido.idsuario) select c).FirstOrDefault();
+                                    var Cliente = (from c in db.ADMCLIENTE where (c.RUC == pedido.ruc) select c).FirstOrDefault();
 
                                     ADMCABPEDIDO ped = new ADMCABPEDIDO();
-                                    ped.TIPO = "WEB";
+                                    ped.TIPO = "PED";
                                     ped.BODEGA = parametroV.BODFAC.Value;
                                     ped.NUMERO = Numfactura + 1;
-                                    ped.SECUENCIAL = secuencial + 1;
-                                    ped.CLIENTE = pedido.idsuario;
+                                    ped.SECUENCIAL = secuencial + 1;    
+                                    ped.CLIENTE = Cliente.CODIGO;
                                     ped.VENDEDOR = parametroC.CODVENPOS;
                                     ped.FECHA = Convert.ToDateTime(pedido.fecha);
                                     ped.ESTADO = "WEB";
@@ -216,9 +218,9 @@ namespace APIClient
                                     ped.FECHALIBERACION = null;
                                     ped.HORALIBERACION = null;
                                     ped.OPERLIBERACION = null;
-                                    ped.TRANSPORTE = null;
-                                    ped.RECARGO = null;
-                                    ped.TIPOCLIENTE = tipoCliente.TIPO;
+                                    ped.TRANSPORTE = 0;
+                                    ped.RECARGO = 0;    
+                                    ped.TIPOCLIENTE = Cliente.TIPO;
                                     ped.SUCURSAL = "";
                                     ped.ESMOVIL = "N";
                                     ped.SECAUTOPEDMOVIL = null;
@@ -228,25 +230,82 @@ namespace APIClient
                                     ped.CODIGOPEDIDO = 0;
 
                                     db.ADMCABPEDIDO.Add(ped);
-                                }
+                                    contadorCabeceras++;
+                                    Numfactura++;
+                                    secuencial++;
 
+                                    //cabeceras que se regresan con el estado "P" a la WEB.
+                                    List<CabeceraWeb> CabecerasProcesados = new List<CabeceraWeb>();
+                                   
+                                    pedido.estado = "P";
+                                    CabecerasProcesados.Add(pedido);
+
+                                    //Lista Detalles de la Actual Cabecera para almacenar en ADM.
+                                    List<DetalleWeb> detalles = (from c in RootObjects.detalles where (c.idventa == pedido.idventas) select c).ToList();
+                                    int linea = 0;
+                                    foreach (var detaw in detalles)
+                                    {
+                                        string idPro = Convert.ToString(detaw.idproducto);
+                                        ADMITEM producto = (from c in db.ADMITEM where (c.ITEM == idPro) select c).First();
+                                        decimal factor = producto.FACTOR.Value;
+                                        decimal res = detaw.cantidad / factor;
+                                        
+                                        ADMDETPEDIDO detal = new ADMDETPEDIDO();
+                                        detal.LINEA = linea + 1;
+                                        detal.SECUENCIAL = ped.SECUENCIAL;
+                                        detal.ITEM = Convert.ToString(detaw.idproducto);
+
+                                        if (res >= 1)
+                                        {
+                                            detal.CANTIC = Convert.ToInt32(Math.Truncate(res));
+                                        }
+                                        else
+                                        {
+                                            detal.CANTIC = 0;
+                                        }
+                                        detal.CANTIU = Convert.ToInt32(Math.Truncate(detaw.cantidad % factor));
+                                        detal.CANTFUN = detaw.cantidad;
+                                        detal.COSTOP = producto.COSTOP;
+                                        detal.COSTOU = producto.COSTOU;
+                                        detal.PORDES = 0;
+                                        detal.PORDES2 = 0;
+                                        detal.DESCUENTO = 0;
+                                        detal.FORMAVTA = "V";
+                                        detal.PRECIO = detaw.precio;
+                                        detal.SUBTOTAL = detaw.subtotal;
+                                        detal.IVA = detaw.iva;
+                                        detal.NETO = detaw.valor_neto;
+                                        detal.ESTADO = null;
+                                        detal.FACTURADO = null;
+                                        detal.GRAVAIVA = detaw.graba_iva;
+                                        detal.TIPOPEDIDO = null;
+                                        detal.TIPOITEM = "B";
+                                        detal.LINGENCONDICION = 0;
+                                        detal.DETALLE = "Pedido Web";
+                                        detal.lote = "";
+                                        db.ADMDETPEDIDO.Add(detal);
+                                        linea++;
+                                    }
+                                    detalles.Clear();
+                                }
+                                
+                                //db.Database.ExecuteSqlCommand("UPDATE ADMPARAMETROC set NUMCLIENTE = @num", new SqlParameter("@num", numCliente));
+                                db.SaveChanges();
                                 trans.Commit();
 
+                                Console.WriteLine("-------");
+                                Console.WriteLine("Se obtuvieron: " + RootObjects.pedidos.Count() + " Pedidos, Guardados : "+contadorCabeceras);
                             }
                             catch (Exception e)
                             {
-
+                                trans.Rollback();
+                                Console.WriteLine("Error en almancenar pedidos");
                                 Console.WriteLine(e);
                             }
                         }
                     }
-                    Console.WriteLine("-------");
-                    Console.WriteLine(RootObjects.detalles);
-
-
                 }
             }
-
         }
 
         //Obtener usuarios por fecha
@@ -269,7 +328,7 @@ namespace APIClient
                         int totalUsersGet = RootObjects.usuariosw.Count();
                         int savedUsers = 0;
                         int repeatRuc = 0;
-
+                        
                        // db.Database.Log = Console.Write;
                         using (DbContextTransaction trans = db.Database.BeginTransaction())
                         {
@@ -282,6 +341,7 @@ namespace APIClient
                                     if (ruc == 0)
                                     {
                                         string numeroTemp = "";
+
                                         ADMCLIENTE nUser = new ADMCLIENTE();
                                         if (numCliente.ToString().Length == 6)
                                         {
@@ -291,6 +351,7 @@ namespace APIClient
                                         {
                                             numeroTemp = Convert.ToInt32(numCliente + 1).ToString("D6");
                                         }
+
                                         nUser.CODIGO = clienteLetra + numeroTemp;
                                         nUser.RAZONSOCIAL = usuario.nombre + " " + usuario.apellido;
                                         nUser.CLIENTEWEB = "N";
@@ -302,10 +363,16 @@ namespace APIClient
                                         nUser.TELEFONOS = usuario.celular1 + "," + usuario.celular2;
                                         nUser.EMAIL = usuario.correo;
                                         nUser.TIPO = usuario.idtipo;
-                                        nUser.PROVINCIA = usuario.ciudad;
+                                        nUser.PROVINCIA = "P0001";
+                                        nUser.CANTON = "C0001";
+                                        nUser.PARROQUIA = "P0030";
+                                        nUser.SECTOR = "S0050";
+                                        nUser.TIPONEGO = "N0001";
+                                        nUser.RUTA = "R0001";
                                         nUser.FECHAING = Convert.ToDateTime(usuario.ingreso);
+                                        nUser.FECNAC = Convert.ToDateTime(usuario.ingreso);
                                         nUser.ESTADO = "A";
-                                        nUser.VENDEDOR = "ADM";
+                                        nUser.VENDEDOR = parametroC.CODVENPOS;
                                         nUser.FORMAPAG = "20";
                                         nUser.IVA = "S";
                                         nUser.BACKORDER = "N";
@@ -315,8 +382,7 @@ namespace APIClient
                                         nUser.PORDESSUGERIDO = 0;
                                         nUser.CONFINAL = "N";
                                         nUser.CLASE = "A";
-                                        nUser.OBSERVACION = usuario.referencia;
-                                        nUser.TIPONEGO = "N0002";
+                                        nUser.OBSERVACION = "Cliente guardado por WEB";
                                         nUser.FACTURAELECTRONICA = 0;
                                         nUser.CLAVEFE = "";
                                         nUser.SUBIRWEB = "";
@@ -334,6 +400,16 @@ namespace APIClient
                                         nUser.TIPODOC = usuario.identificacion.Substring(0, 1).ToUpper();
                                         nUser.TIPOCONTRIBUYENTE = "PNNC";
                                         nUser.EWEB = "S";
+                                        nUser.CUPO = 9999;
+                                        nUser.GRUPO = "";
+                                        nUser.ORDEN = 1;
+                                        nUser.CODFRE = "10";
+                                        nUser.CREDITO = "N";
+                                        nUser.FAX = "";
+                                        nUser.DIA = 2;
+                                        nUser.FECDESDE = Convert.ToDateTime(usuario.ingreso);
+
+                                        nUser.CTACLIENTE = "";
                                         nUser.grupocliente = "";
                                         nUser.grupocredito = "";
 
@@ -348,10 +424,8 @@ namespace APIClient
                                         repeatRuc++;
                                     }
                                    
-
                                 }
 
-                                //db.ADMPARAMETROC.Add(parametroC);
                                 db.Database.ExecuteSqlCommand("UPDATE ADMPARAMETROC set NUMCLIENTE = @num", new SqlParameter("@num", numCliente));
                                 db.SaveChanges();
                                 trans.Commit();
@@ -362,13 +436,11 @@ namespace APIClient
                                 trans.Rollback();
                                 Console.WriteLine(e);           
                             }
+                            Console.WriteLine("-------");
                             Console.WriteLine("Se obtuvieron "+totalUsersGet+" Usuarios de la Web, "+savedUsers+" fueron almacenados en ADM; "+repeatRuc+" RUC repetidos." );
                         }
                    
                     }
-
-                    Console.WriteLine("-------");
-                    Console.WriteLine(mycontent);
 
                 }
             }
@@ -611,6 +683,5 @@ namespace APIClient
 
             }
         }
-
     }
 }

@@ -8,7 +8,7 @@ namespace APIClient
 {
     public class CabeceraWeb
     {
-        public int idventa { get; set; }
+        public int idventas { get; set; }
         public int iddetalle_venta { get; set; }
         public  double subtotal { get; set; }
         public double iva { get; set; }
@@ -20,6 +20,7 @@ namespace APIClient
         public string Graba_iva { get; set; }
         public string  token { get; set; }
         public string idsuario { get; set; }
+        public string ruc { get; set; }
     }
 
     public class DetalleWeb
@@ -38,6 +39,7 @@ namespace APIClient
         public string idusuario { get; set; }
         public string  estado { get; set; }
         public int idventa { get; set; }
+      
 
     }
 
