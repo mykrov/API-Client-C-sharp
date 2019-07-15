@@ -10,6 +10,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -23,6 +24,8 @@ namespace APIClient
         public static void Main()
         {
             string urlbase = ConfigurationManager.AppSettings.Get("urlbase");
+            
+
 
             using (BDADMSURTIOFFICEEntities db = new BDADMSURTIOFFICEEntities())
             {
@@ -103,8 +106,8 @@ namespace APIClient
 
                 //listado de Productos
                 List<ADMITEM> productos = (from c in db.ADMITEM
-                                                 where (c.EWEB == "N" && c.ESTADO == "A")
-                                                 select c).ToList();
+                                           where (c.EWEB == "N" && c.ESTADO == "A")
+                                           select c).ToList();
 
                 List<ProductoWeb> listaPro = new List<ProductoWeb>();
                 foreach (var item in productos)
@@ -147,15 +150,17 @@ namespace APIClient
                 Uri uMarca = new Uri(urlbase + "api/marca");
                 Uri uProducto = new Uri(urlbase + "api/productos");
 
-                //Task.Run(() => PostCategorias(listacate, uCate));
-                //Task.Run(() => PostClientes(usuariosw, uClien));
-                //Task.Run(() => PostMarcas(marcalist, uMarca));
-                //Task.Run(() => PostProducto(listaPro, uProducto));
+                Task.Run(() => PostCategorias(listacate, uCate));
+                Task.Run(() => PostClientes(usuariosw, uClien));
+                Task.Run(() => PostMarcas(marcalist, uMarca));
+                Task.Run(() => PostProducto(listaPro, uProducto));
 
                 GetPedidos();
-                GetUsuarios("20-06-2019");
-                //GetUsuarios(DateTime.Now.Date.ToString("dd-MM-yyyy"));
+                GetUsuarios(DateTime.Now.Date.ToString("dd-MM-yyyy"));
+                //GetUsuarios("12-07-2019");
                 Console.ReadKey();
+
+                //Thread.Sleep(25000);
 
             }
         }
@@ -182,6 +187,9 @@ namespace APIClient
                         decimal Numfactura = bodega.NOFACTURA.Value;
                         decimal secuencial = parametroV.SECUENCIAL.Value;
 
+                        //cabeceras que se regresan con el estado "P" a la WEB.
+                        List<CabeceraWeb> CabecerasProcesados = new List<CabeceraWeb>();
+
                         using (var trans = db.Database.BeginTransaction())
                         {
                             try
@@ -194,11 +202,11 @@ namespace APIClient
                                     ped.TIPO = "PED";
                                     ped.BODEGA = parametroV.BODFAC.Value;
                                     ped.NUMERO = Numfactura + 1;
-                                    ped.SECUENCIAL = secuencial + 1;    
+                                    ped.SECUENCIAL = secuencial + 1;
                                     ped.CLIENTE = Cliente.CODIGO;
                                     ped.VENDEDOR = parametroC.CODVENPOS;
                                     ped.FECHA = Convert.ToDateTime(pedido.fecha);
-                                    ped.ESTADO = "WEB";
+                                    ped.ESTADO = "CAR";
                                     ped.SUBTOTAL = pedido.subtotal;
                                     ped.DESCUENTO = 0;
                                     ped.IVA = pedido.iva;
@@ -219,7 +227,7 @@ namespace APIClient
                                     ped.HORALIBERACION = null;
                                     ped.OPERLIBERACION = null;
                                     ped.TRANSPORTE = 0;
-                                    ped.RECARGO = 0;    
+                                    ped.RECARGO = 0;
                                     ped.TIPOCLIENTE = Cliente.TIPO;
                                     ped.SUCURSAL = "";
                                     ped.ESMOVIL = "N";
@@ -233,10 +241,7 @@ namespace APIClient
                                     contadorCabeceras++;
                                     Numfactura++;
                                     secuencial++;
-
-                                    //cabeceras que se regresan con el estado "P" a la WEB.
-                                    List<CabeceraWeb> CabecerasProcesados = new List<CabeceraWeb>();
-                                   
+                                                                       
                                     pedido.estado = "P";
                                     CabecerasProcesados.Add(pedido);
 
@@ -249,7 +254,7 @@ namespace APIClient
                                         ADMITEM producto = (from c in db.ADMITEM where (c.ITEM == idPro) select c).First();
                                         decimal factor = producto.FACTOR.Value;
                                         decimal res = detaw.cantidad / factor;
-                                        
+
                                         ADMDETPEDIDO detal = new ADMDETPEDIDO();
                                         detal.LINEA = linea + 1;
                                         detal.SECUENCIAL = ped.SECUENCIAL;
@@ -288,13 +293,18 @@ namespace APIClient
                                     }
                                     detalles.Clear();
                                 }
-                                
-                                //db.Database.ExecuteSqlCommand("UPDATE ADMPARAMETROC set NUMCLIENTE = @num", new SqlParameter("@num", numCliente));
+
+                                db.Database.ExecuteSqlCommand("UPDATE ADMPARAMETROV set SECUENCIAL = @num", new SqlParameter("@num", secuencial));
+                                db.Database.ExecuteSqlCommand("UPDATE ADMBODEGA set NOFACTURA = @num", new SqlParameter("@num", Numfactura));
                                 db.SaveChanges();
                                 trans.Commit();
-
+                          
                                 Console.WriteLine("-------");
-                                Console.WriteLine("Se obtuvieron: " + RootObjects.pedidos.Count() + " Pedidos, Guardados : "+contadorCabeceras);
+                                Console.WriteLine("Se obtuvieron: " + RootObjects.pedidos.Count() + " Pedidos, Guardados : " + contadorCabeceras);
+
+                                //Envio de Cabeceras para actualizar en WEB.
+                                Uri uPutProductos = new Uri(urlbase + "api/actualizarcab");
+                                await Task.Run(() => PutCabeceras(CabecerasProcesados, uPutProductos));
                             }
                             catch (Exception e)
                             {
@@ -308,10 +318,39 @@ namespace APIClient
             }
         }
 
+        //actualizar las cabeceras de pedidos en la WEB.
+        public async static  Task PutCabeceras(object content, Uri ul)
+            {
+            var data = new
+            {
+                pedidos = content
+            };
+                       
+            string myJson = JsonConvert.SerializeObject(data);
+            using (var client = new HttpClient())
+            {
+                var response = await client.PutAsync(ul,new StringContent(myJson, Encoding.UTF8, "application/json"));
+                
+                HttpContent contentRes = response.Content;
+                string mycontent = await contentRes.ReadAsStringAsync();
+                //Console.WriteLine(mycontent);
+                var RootObjects = JsonConvert.DeserializeObject<List<clientResponse>>(mycontent);
+                            
+                int actualizados = (from c in RootObjects where (c.status == "Update") select c).Count();
+                int noActualizado = (from c in RootObjects where (c.status == "NoFinded") select c).Count();
+                Console.WriteLine("-------");
+                Console.WriteLine("Actualizacion de pedido en web Finalizado, total: " + actualizados + ", No Actualizados: " + noActualizado);
+
+            }
+
+        }
+
+
         //Obtener usuarios por fecha
         async static void GetUsuarios(string date)
         {
             string urlbase = ConfigurationManager.AppSettings.Get("urlbase");
+
             using (HttpClient client = new HttpClient())
             {
                 using (HttpResponseMessage response = await client.GetAsync(urlbase + "api/usuarios/" + date))
@@ -319,7 +358,8 @@ namespace APIClient
                     HttpContent content = response.Content;
                     string mycontent = await content.ReadAsStringAsync();
                     var RootObjects = JsonConvert.DeserializeObject<ClienteRes>(mycontent);
-                   
+                    string cliBase = ConfigurationManager.AppSettings.Get("ClienteBase");
+
                     using (BDADMSURTIOFFICEEntities db = new BDADMSURTIOFFICEEntities())
                     {
                         ADMPARAMETROC parametroC = db.ADMPARAMETROC.First();
@@ -328,8 +368,10 @@ namespace APIClient
                         int totalUsersGet = RootObjects.usuariosw.Count();
                         int savedUsers = 0;
                         int repeatRuc = 0;
-                        
-                       // db.Database.Log = Console.Write;
+
+                        ADMCLIENTE baseCli = db.ADMCLIENTE.Find(cliBase);
+
+                        // db.Database.Log = Console.Write;
                         using (DbContextTransaction trans = db.Database.BeginTransaction())
                         {
                             try
@@ -354,76 +396,76 @@ namespace APIClient
 
                                         nUser.CODIGO = clienteLetra + numeroTemp;
                                         nUser.RAZONSOCIAL = usuario.nombre + " " + usuario.apellido;
-                                        nUser.CLIENTEWEB = "N";
-                                        nUser.CLIENTEDOMI = "N";
-                                        nUser.NEGOCIO = "FINAL";
+                                        nUser.CLIENTEWEB = baseCli.CLIENTEWEB;
+                                        nUser.CLIENTEDOMI = baseCli.CLIENTEDOMI;
+                                        nUser.NEGOCIO = baseCli.NEGOCIO;
                                         nUser.REPRESENTA = usuario.nombre + " " + usuario.apellido;
                                         nUser.RUC = usuario.numero_identificacion;
                                         nUser.DIRECCION = usuario.direccion;
                                         nUser.TELEFONOS = usuario.celular1 + "," + usuario.celular2;
                                         nUser.EMAIL = usuario.correo;
                                         nUser.TIPO = usuario.idtipo;
-                                        nUser.PROVINCIA = "P0001";
-                                        nUser.CANTON = "C0001";
-                                        nUser.PARROQUIA = "P0030";
-                                        nUser.SECTOR = "S0050";
-                                        nUser.TIPONEGO = "N0001";
-                                        nUser.RUTA = "R0001";
+                                        nUser.PROVINCIA = baseCli.PROVINCIA;
+                                        nUser.CANTON = baseCli.CANTON;
+                                        nUser.PARROQUIA = baseCli.PARROQUIA;
+                                        nUser.SECTOR = baseCli.SECTOR;
+                                        nUser.TIPONEGO = baseCli.TIPONEGO;
+                                        nUser.RUTA = baseCli.RUTA;
                                         nUser.FECHAING = Convert.ToDateTime(usuario.ingreso);
                                         nUser.FECNAC = Convert.ToDateTime(usuario.ingreso);
-                                        nUser.ESTADO = "A";
+                                        nUser.ESTADO = baseCli.ESTADO;
                                         nUser.VENDEDOR = parametroC.CODVENPOS;
-                                        nUser.FORMAPAG = "20";
-                                        nUser.IVA = "S";
-                                        nUser.BACKORDER = "N";
-                                        nUser.RETENPED = "N";
-                                        nUser.RETIENEFUENTE = "N";
-                                        nUser.RETIENEIVA = "N";
-                                        nUser.PORDESSUGERIDO = 0;
-                                        nUser.CONFINAL = "N";
-                                        nUser.CLASE = "A";
-                                        nUser.OBSERVACION = "Cliente guardado por WEB";
-                                        nUser.FACTURAELECTRONICA = 0;
-                                        nUser.CLAVEFE = "";
-                                        nUser.SUBIRWEB = "";
-                                        nUser.TDCREDITO = "99";
-                                        nUser.DIASCREDIT = 0;
-                                        nUser.TIPOCUENTA = "C0001";
-                                        nUser.TIPOPERSONA = "N";
-                                        nUser.ZONA = "CEN";
-                                        nUser.TIPOPERSONAADICIONAL = "Natural";
-                                        nUser.PAGOCUOTAS = "N";
-                                        nUser.SEXO = "M";
-                                        nUser.ESTADOPARAWEB = "X";
-                                        nUser.CLIRELACIONADO = "N";
-                                        nUser.VENDEDORAUX = "";
+                                        nUser.FORMAPAG = baseCli.FORMAPAG;
+                                        nUser.IVA = baseCli.IVA;
+                                        nUser.BACKORDER = baseCli.BACKORDER;
+                                        nUser.RETENPED = baseCli.RETENPED;
+                                        nUser.RETIENEFUENTE = baseCli.RETIENEFUENTE;
+                                        nUser.RETIENEIVA = baseCli.RETIENEIVA;
+                                        nUser.PORDESSUGERIDO = baseCli.PORDESSUGERIDO;
+                                        nUser.CONFINAL = baseCli.CONFINAL;
+                                        nUser.CLASE = baseCli.CLASE;
+                                        nUser.OBSERVACION = baseCli.OBSERVACION;
+                                        nUser.FACTURAELECTRONICA = baseCli.FACTURAELECTRONICA;
+                                        nUser.CLAVEFE = baseCli.CLAVEFE;
+                                        nUser.SUBIRWEB = baseCli.SUBIRWEB;
+                                        nUser.TDCREDITO = baseCli.TDCREDITO;
+                                        nUser.DIASCREDIT = baseCli.DIASCREDIT;
+                                        nUser.TIPOCUENTA = baseCli.TIPOCUENTA;
+                                        nUser.TIPOPERSONA = baseCli.TIPOPERSONA;
+                                        
+                                        nUser.ZONA = baseCli.ZONA;
+                                        nUser.TIPOPERSONAADICIONAL = baseCli.TIPOPERSONAADICIONAL;
+                                        nUser.PAGOCUOTAS = baseCli.PAGOCUOTAS;
+                                        nUser.SEXO = baseCli.SEXO;
+                                        nUser.ESTADOPARAWEB = baseCli.ESTADOPARAWEB;
+                                        nUser.CLIRELACIONADO = baseCli.CLIRELACIONADO;
+                                        nUser.VENDEDORAUX = baseCli.VENDEDORAUX;
                                         nUser.TIPODOC = usuario.identificacion.Substring(0, 1).ToUpper();
-                                        nUser.TIPOCONTRIBUYENTE = "PNNC";
-                                        nUser.EWEB = "S";
-                                        nUser.CUPO = 9999;
-                                        nUser.GRUPO = "";
-                                        nUser.ORDEN = 1;
-                                        nUser.CODFRE = "10";
-                                        nUser.CREDITO = "N";
-                                        nUser.FAX = "";
-                                        nUser.DIA = 2;
+                                        nUser.TIPOCONTRIBUYENTE = baseCli.TIPOCONTRIBUYENTE;
+                                        nUser.EWEB = baseCli.EWEB;
+                                        nUser.CUPO = baseCli.CUPO;
+                                        nUser.GRUPO = baseCli.GRUPO;
+                                        nUser.ORDEN = baseCli.ORDEN;
+                                        nUser.CODFRE = baseCli.CODFRE;
+                                        nUser.CREDITO = baseCli.CREDITO;
+                                        nUser.FAX = baseCli.FAX;
+                                        nUser.DIA = baseCli.DIA;
+                                        nUser.FECMOD = Convert.ToDateTime(usuario.ingreso);
                                         nUser.FECDESDE = Convert.ToDateTime(usuario.ingreso);
-
-                                        nUser.CTACLIENTE = "";
-                                        nUser.grupocliente = "";
-                                        nUser.grupocredito = "";
+                                        nUser.CTACLIENTE = baseCli.CTACLIENTE;
+                                        nUser.grupocliente = baseCli.grupocliente;
+                                        nUser.grupocredito = baseCli.grupocredito;
 
                                         db.ADMCLIENTE.Add(nUser);
                                         db.SaveChanges();
                                         numCliente++;
                                         savedUsers++;
-
                                     }
                                     else
                                     {
                                         repeatRuc++;
                                     }
-                                   
+
                                 }
 
                                 db.Database.ExecuteSqlCommand("UPDATE ADMPARAMETROC set NUMCLIENTE = @num", new SqlParameter("@num", numCliente));
@@ -434,12 +476,12 @@ namespace APIClient
                             catch (Exception e)
                             {
                                 trans.Rollback();
-                                Console.WriteLine(e);           
+                                Console.WriteLine(e);
                             }
                             Console.WriteLine("-------");
-                            Console.WriteLine("Se obtuvieron "+totalUsersGet+" Usuarios de la Web, "+savedUsers+" fueron almacenados en ADM; "+repeatRuc+" RUC repetidos." );
+                            Console.WriteLine("Se obtuvieron " + totalUsersGet + " Usuarios de la Web, " + savedUsers + " fueron almacenados en ADM; " + repeatRuc + " RUC repetidos.");
                         }
-                   
+
                     }
 
                 }
@@ -473,15 +515,33 @@ namespace APIClient
 
                 using (BDADMSURTIOFFICEEntities db = new BDADMSURTIOFFICEEntities())
                 {
-                    foreach (var userRes in RootObjects)
+                    using (DbContextTransaction trans = db.Database.BeginTransaction())
                     {
-                        if (userRes.status == "OK")
+                        try
                         {
-                            ADMCATEGORIA result = db.ADMCATEGORIA.Find(userRes.identify);
-                            result.EWEB = "S";
-                            db.SaveChanges();
+                            foreach (var userRes in RootObjects)
+                            {
+                                if (userRes.status == "OK")
+                                {
+                                    ADMCLIENTE result = (from c in db.ADMCLIENTE
+                                                         where (c.RUC == userRes.identify)
+                                                         select c).First();
+                                    result.EWEB = "S";
+                                    //db.ADMCLIENTE.Add(result);
+                                    db.SaveChanges();
+                                }
+                            }
+                            trans.Commit();
                         }
+                        catch (Exception e)
+                        {
+                            trans.Rollback();
+                            Console.WriteLine(e);
+                            throw e;
+                        }
+                       
                     }
+                       
                 }
 
                 int noGuardado = (from c in RootObjects where (c.status == "NoSaved") select c).Count();
@@ -532,7 +592,7 @@ namespace APIClient
                     Console.WriteLine("-------");
                     Console.WriteLine("Envio de Categorias Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
                     string urlbase = ConfigurationManager.AppSettings.Get("urlbase");
-                   
+
                     //Listado de Categorias
                     List<ADMFAMILIA> familias = (from c in db.ADMFAMILIA
                                                  where (c.EWEB == "N" && c.ESTADO == "A")
@@ -577,7 +637,7 @@ namespace APIClient
 
                 HttpContent contentRes = response.Content;
                 string mycontent = await contentRes.ReadAsStringAsync();
-                
+
                 var RootObjects = JsonConvert.DeserializeObject<List<familyResponse>>(mycontent);
 
                 using (BDADMSURTIOFFICEEntities db = new BDADMSURTIOFFICEEntities())
