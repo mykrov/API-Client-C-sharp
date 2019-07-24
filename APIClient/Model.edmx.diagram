@@ -4,17 +4,17 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="23a1e2e7214946d09389351182bead32" Name="Diagram1">
-        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMCATEGORIA" Width="1.5" PointX="0.5" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMCLIENTE" Width="1.5" PointX="2.5" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMFAMILIA" Width="1.5" PointX="4.5" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMITEM" Width="1.5" PointX="4.375" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMMARCA" Width="1.5" PointX="6.875" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMCABPEDIDO" Width="1.5" PointX="6.375" PointY="4.75" />
-        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMDETPEDIDO" Width="1.5" PointX="8.375" PointY="4.75" />
-        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMPARAMETROV" Width="1.5" PointX="10.375" PointY="0.75" />
-        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMBODEGA" Width="1.5" PointX="12.375" PointY="0.75" />
-        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMPARAMETROC" Width="1.5" PointX="12.375" PointY="12.75" />
+      <Diagram DiagramId="d9f008d71b6043fa995c3decaec27627" Name="Diagram1" ZoomLevel="63">
+        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMCABPEDIDO" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMCATEGORIA" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMCLIENTE" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMDETPEDIDO" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMFAMILIA" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMITEM" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMMARCA" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMBODEGA" Width="1.5" PointX="8.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMPARAMETROC" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMPARAMETROV" Width="1.5" PointX="10.75" PointY="11.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -124,5 +124,7 @@ namespace APIClient
         public string numero { get; set; }
         public string tipodocumento { get; set; }
         public string TipoLocalidad { get; set; }
+        public string correoCarro { get; set; }
+        public string claveCarro { get; set; }
     }
 }

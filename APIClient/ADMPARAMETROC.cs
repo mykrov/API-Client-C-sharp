@@ -61,5 +61,6 @@ namespace APIClient
         public string interes { get; set; }
         public double porintmoradia { get; set; }
         public string posbloqueofaccre { get; set; }
+        public string CLIENTEMODELOCARRO { get; set; }
     }
 }

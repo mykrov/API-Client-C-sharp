@@ -24,7 +24,7 @@ namespace APIClient
         public static void Main()
         {
             string urlbase = ConfigurationManager.AppSettings.Get("urlbase");
-            
+
 
 
             using (BDADMSURTIOFFICEEntities db = new BDADMSURTIOFFICEEntities())
@@ -43,8 +43,8 @@ namespace APIClient
                     cliw.activacion = "habilitar";
                     cliw.nombre = item.RAZONSOCIAL.Trim();
                     cliw.apellido = item.RAZONSOCIAL.Trim();
-                    cliw.contrasenia = item.RUC.Trim();
-                    cliw.correo = item.EMAIL.Trim();
+                    cliw.contrasenia = item.claveCarro;
+                    cliw.correo = item.correoCarro;
                     cliw.identificacion = "RUC";
                     cliw.numero_identificacion = item.RUC.Trim();
                     if (item.DIRECCION.Trim().Length > 45)
@@ -106,7 +106,8 @@ namespace APIClient
 
                 //listado de Productos
                 List<ADMITEM> productos = (from c in db.ADMITEM
-                                           where (c.EWEB == "N" && c.ESTADO == "A")
+                                           where (c.CARRO == "S" && c.ESTAENCARRO == "N"
+                                           && c.ESTADO == "A")
                                            select c).ToList();
 
                 List<ProductoWeb> listaPro = new List<ProductoWeb>();
@@ -143,27 +144,80 @@ namespace APIClient
                     listaPro.Add(Prosingle);
 
                 }
+                //ConsoleColor background = Console.BackgroundColor;
+                //ConsoleColor foreground = Console.ForegroundColor;
+                //Console.ForegroundColor = ConsoleColor.Red;
+                //Console.BackgroundColor = ConsoleColor.White;
+                //Console.Clear();
+
+                //List<ADMCLIPRECIO> clientePrecios = new List<ADMCLIPRECIO>();
+
+
+                var clientePrecios = db.Database.SqlQuery<ADMCLIPRECIO>("SELECT * FROM ADMCLIPRECIO").ToList();
+              
+                using (StreamWriter file = new StreamWriter(@"log.txt", true))
+                {
+                    file.WriteLine("\n0-0-0-0-0-0--0-0-0-0-0-0-0-0-0-0-0-0-0-0--0-0-0-0-0-0-0-0-0");
+                    file.WriteLine("Inicio del Proceso: " + DateTime.Now.ToString("dd-MM-yyyy, hh':'mm tt"));
+                    file.Close();
+                }
 
 
                 Uri uClien = new Uri(urlbase + "api/usuarios");
                 Uri uCate = new Uri(urlbase + "api/categoria");
                 Uri uMarca = new Uri(urlbase + "api/marca");
                 Uri uProducto = new Uri(urlbase + "api/productos");
+                Uri uTipoCliente = new Uri(urlbase + "api/tipocliente");
 
-                Task.Run(() => PostCategorias(listacate, uCate));
-                Task.Run(() => PostClientes(usuariosw, uClien));
-                Task.Run(() => PostMarcas(marcalist, uMarca));
-                Task.Run(() => PostProducto(listaPro, uProducto));
 
-                GetPedidos();
-                GetUsuarios(DateTime.Now.Date.ToString("dd-MM-yyyy"));
+
+                //Chequear que el servidor de API web esta Up.
+                HttpClient client4 = new HttpClient();
+                client4.Timeout = TimeSpan.FromSeconds(10);
+
+                // Issue a request
+                client4.GetAsync(urlbase + "/api/pedidos").ContinueWith(
+                    getTask =>
+                    {
+                        if (getTask.IsCanceled)
+                        {
+                            using (StreamWriter file = new StreamWriter(@"log.txt", true))
+                            {
+                                file.WriteLine("Peticion Cancelada");
+                                file.Close();
+                            }
+                        }
+                        else if (getTask.IsFaulted)
+                        {
+                            using (StreamWriter file = new StreamWriter(@"log.txt", true))
+                            {
+                                file.WriteLine("No se puede comunicar con el Servidor API");
+                                file.Close();
+                            }
+                        }
+                        else
+                        {
+                            Task.Run(() => PostCategorias(listacate, uCate));
+                            Task.Run(() => PostClientes(usuariosw, uClien));
+                            Task.Run(() => PostMarcas(marcalist, uMarca));
+                            Task.Run(() => PostProducto(listaPro, uProducto));
+                            Task.Run(() => PostClientePrecio(clientePrecios, uTipoCliente));
+
+                            GetPedidos();
+                            GetUsuarios(DateTime.Now.Date.ToString("dd-MM-yyyy"));
+                            HttpResponseMessage response = getTask.Result;
+
+                        }
+                    });
+
                 //GetUsuarios("12-07-2019");
-                Console.ReadKey();
+                //Console.ReadKey();
 
-                //Thread.Sleep(25000);
+                Thread.Sleep(20000);
 
             }
         }
+
 
         //Obtener Pedidos 
         async static void GetPedidos()
@@ -241,7 +295,7 @@ namespace APIClient
                                     contadorCabeceras++;
                                     Numfactura++;
                                     secuencial++;
-                                                                       
+
                                     pedido.estado = "P";
                                     CabecerasProcesados.Add(pedido);
 
@@ -294,13 +348,21 @@ namespace APIClient
                                     detalles.Clear();
                                 }
 
-                                db.Database.ExecuteSqlCommand("UPDATE ADMPARAMETROV set SECUENCIAL = @num", new SqlParameter("@num", secuencial));
-                                db.Database.ExecuteSqlCommand("UPDATE ADMBODEGA set NOFACTURA = @num", new SqlParameter("@num", Numfactura));
+                                int res1 = db.CARROPRO("Secuencial", secuencial);
+                                int res2 = db.CARROPRO("NumeroFactura", Numfactura);
+                                //db.Database.ExecuteSqlCommand("UPDATE ADMPARAMETROV set SECUENCIAL = @num", new SqlParameter("@num", secuencial));
+                                //db.Database.ExecuteSqlCommand("UPDATE ADMBODEGA set NOFACTURA = @num", new SqlParameter("@num", Numfactura));
                                 db.SaveChanges();
                                 trans.Commit();
-                          
-                                Console.WriteLine("-------");
-                                Console.WriteLine("Se obtuvieron: " + RootObjects.pedidos.Count() + " Pedidos, Guardados : " + contadorCabeceras);
+
+                                using (StreamWriter file = new StreamWriter(@"log.txt", true))
+                                {
+                                    file.WriteLine("Se obtuvieron: " + RootObjects.pedidos.Count() + " Pedidos, Guardados : " + contadorCabeceras);
+                                    file.Close();
+                                }
+
+                                //Console.WriteLine("-------");
+                                //Console.WriteLine("Se obtuvieron: " + RootObjects.pedidos.Count() + " Pedidos, Guardados : " + contadorCabeceras);
 
                                 //Envio de Cabeceras para actualizar en WEB.
                                 Uri uPutProductos = new Uri(urlbase + "api/actualizarcab");
@@ -309,8 +371,13 @@ namespace APIClient
                             catch (Exception e)
                             {
                                 trans.Rollback();
-                                Console.WriteLine("Error en almancenar pedidos");
-                                Console.WriteLine(e);
+                                using (StreamWriter file = new StreamWriter(@"log.txt", true))
+                                {
+                                    file.WriteLine("Error en almancenar pedidos:" + e);
+                                    file.Close();
+                                }
+                                //Console.WriteLine("Error en almancenar pedidos");
+                                //Console.WriteLine(e);
                             }
                         }
                     }
@@ -319,27 +386,33 @@ namespace APIClient
         }
 
         //actualizar las cabeceras de pedidos en la WEB.
-        public async static  Task PutCabeceras(object content, Uri ul)
-            {
+        public async static Task PutCabeceras(object content, Uri ul)
+        {
             var data = new
             {
                 pedidos = content
             };
-                       
+
             string myJson = JsonConvert.SerializeObject(data);
             using (var client = new HttpClient())
             {
-                var response = await client.PutAsync(ul,new StringContent(myJson, Encoding.UTF8, "application/json"));
-                
+                var response = await client.PutAsync(ul, new StringContent(myJson, Encoding.UTF8, "application/json"));
+
                 HttpContent contentRes = response.Content;
                 string mycontent = await contentRes.ReadAsStringAsync();
                 //Console.WriteLine(mycontent);
                 var RootObjects = JsonConvert.DeserializeObject<List<clientResponse>>(mycontent);
-                            
+
                 int actualizados = (from c in RootObjects where (c.status == "Update") select c).Count();
                 int noActualizado = (from c in RootObjects where (c.status == "NoFinded") select c).Count();
-                Console.WriteLine("-------");
-                Console.WriteLine("Actualizacion de pedido en web Finalizado, total: " + actualizados + ", No Actualizados: " + noActualizado);
+
+                using (StreamWriter file = new StreamWriter(@"log.txt", true))
+                {
+                    file.WriteLine("Actualizacion de pedido en web Finalizado, total: " + actualizados + ", No Actualizados: " + noActualizado);
+                    file.Close();
+                }
+                //Console.WriteLine("-------");
+                //Console.WriteLine("Actualizacion de pedido en web Finalizado, total: " + actualizados + ", No Actualizados: " + noActualizado);
 
             }
 
@@ -369,7 +442,8 @@ namespace APIClient
                         int savedUsers = 0;
                         int repeatRuc = 0;
 
-                        ADMCLIENTE baseCli = db.ADMCLIENTE.Find(cliBase);
+                        ADMCLIENTE baseCli = db.ADMCLIENTE.Find(parametroC.CLIENTEMODELOCARRO);
+
 
                         // db.Database.Log = Console.Write;
                         using (DbContextTransaction trans = db.Database.BeginTransaction())
@@ -402,7 +476,7 @@ namespace APIClient
                                         nUser.REPRESENTA = usuario.nombre + " " + usuario.apellido;
                                         nUser.RUC = usuario.numero_identificacion;
                                         nUser.DIRECCION = usuario.direccion;
-                                        nUser.TELEFONOS = usuario.celular1 + "," + usuario.celular2;
+                                        nUser.TELEFONOS = usuario.celular1;
                                         nUser.EMAIL = usuario.correo;
                                         nUser.TIPO = usuario.idtipo;
                                         nUser.PROVINCIA = baseCli.PROVINCIA;
@@ -432,7 +506,7 @@ namespace APIClient
                                         nUser.DIASCREDIT = baseCli.DIASCREDIT;
                                         nUser.TIPOCUENTA = baseCli.TIPOCUENTA;
                                         nUser.TIPOPERSONA = baseCli.TIPOPERSONA;
-                                        
+
                                         nUser.ZONA = baseCli.ZONA;
                                         nUser.TIPOPERSONAADICIONAL = baseCli.TIPOPERSONAADICIONAL;
                                         nUser.PAGOCUOTAS = baseCli.PAGOCUOTAS;
@@ -463,23 +537,58 @@ namespace APIClient
                                     }
                                     else
                                     {
+                                        //actualizar correo y contraseña de clientes desde la web -> AMD.
+                                        ADMCLIENTE cliente = (from c in db.ADMCLIENTE
+                                                              where (c.RUC == usuario.numero_identificacion)
+                                                              select c).First();
+
+                                        //Verificar si tiene establecida la fecha de modificacion
+                                        if (cliente.FECMOD != null)
+                                        {
+                                            DateTime f2 = DateTime.Now.AddHours(1);
+                                            var lapso = (f2 - DateTime.Now).TotalHours;
+                                            //si ha transcurrido 1 hora desde la ultima actualizacion
+                                            if (lapso >= 1)
+                                            {
+                                                cliente.claveCarro = usuario.contrasenia;
+                                                cliente.correoCarro = usuario.correo;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            cliente.claveCarro = usuario.contrasenia;
+                                            cliente.correoCarro = usuario.correo;
+                                            cliente.FECMOD = DateTime.Now;
+                                        }
+                                        db.SaveChanges();
                                         repeatRuc++;
                                     }
 
                                 }
-
-                                db.Database.ExecuteSqlCommand("UPDATE ADMPARAMETROC set NUMCLIENTE = @num", new SqlParameter("@num", numCliente));
+                                int res3 = db.CARROPRO("NumeroCliente", numCliente);
+                                //db.Database.ExecuteSqlCommand("UPDATE ADMPARAMETROC set NUMCLIENTE = @num", new SqlParameter("@num", numCliente));
                                 db.SaveChanges();
                                 trans.Commit();
 
                             }
                             catch (Exception e)
                             {
+
                                 trans.Rollback();
-                                Console.WriteLine(e);
+                                //Console.WriteLine(e);
+                                using (StreamWriter file = new StreamWriter(@"log.txt", true))
+                                {
+                                    file.WriteLine("Error GetUsuarios: " + e);
+                                    file.Close();
+                                }
                             }
-                            Console.WriteLine("-------");
-                            Console.WriteLine("Se obtuvieron " + totalUsersGet + " Usuarios de la Web, " + savedUsers + " fueron almacenados en ADM; " + repeatRuc + " RUC repetidos.");
+                            using (StreamWriter file = new StreamWriter(@"log.txt", true))
+                            {
+                                file.WriteLine("Se obtuvieron " + totalUsersGet + " Usuarios de la Web, " + savedUsers + " nuevos fueron almacenados en ADM; " + repeatRuc + " RUC repetidos/Actualizados.");
+                                file.Close();
+                            }
+                            //Console.WriteLine("-------");
+                            //Console.WriteLine("Se obtuvieron " + totalUsersGet + " Usuarios de la Web, " + savedUsers + " fueron almacenados en ADM; " + repeatRuc + " RUC repetidos.");
                         }
 
                     }
@@ -535,19 +644,32 @@ namespace APIClient
                         }
                         catch (Exception e)
                         {
+
                             trans.Rollback();
-                            Console.WriteLine(e);
+                            using (StreamWriter file = new StreamWriter(@"log.txt", true))
+                            {
+                                file.WriteLine("Error al PostClientes: " + e);
+                                file.Close();
+                            }
+                            //Console.WriteLine(e);
                             throw e;
                         }
-                       
+
                     }
-                       
+
                 }
 
                 int noGuardado = (from c in RootObjects where (c.status == "NoSaved") select c).Count();
                 int guardado = (from c in RootObjects where (c.status == "OK") select c).Count();
-                Console.WriteLine("-------");
-                Console.WriteLine("Envio de Usuarios Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
+
+                using (StreamWriter file = new StreamWriter(@"log.txt", true))
+                {
+                    file.WriteLine("Envio de Usuarios Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
+                    file.Close();
+                }
+
+                //Console.WriteLine("-------");
+                //Console.WriteLine("Envio de Usuarios Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
 
             }
 
@@ -589,8 +711,14 @@ namespace APIClient
 
                     int noGuardado = (from c in RootObjects where (c.status == "NoSaved") select c).Count();
                     int guardado = (from c in RootObjects where (c.status == "OK") select c).Count();
-                    Console.WriteLine("-------");
-                    Console.WriteLine("Envio de Categorias Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
+
+                    using (StreamWriter file = new StreamWriter(@"log.txt", true))
+                    {
+                        file.WriteLine("Envio de Categorias Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
+                        file.Close();
+                    }
+                    //Console.WriteLine("-------");
+                    //Console.WriteLine("Envio de Categorias Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
                     string urlbase = ConfigurationManager.AppSettings.Get("urlbase");
 
                     //Listado de Categorias
@@ -652,8 +780,14 @@ namespace APIClient
 
                 int noGuardado = (from c in RootObjects where (c.status == "NoSaved") select c).Count();
                 int guardado = (from c in RootObjects where (c.status == "OK") select c).Count();
-                Console.WriteLine("-------");
-                Console.WriteLine("Envio de Familias Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
+
+                using (StreamWriter file = new StreamWriter(@"log.txt", true))
+                {
+                    file.WriteLine("Envio de Familias Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
+                    file.Close();
+                }
+                //Console.WriteLine("-------");
+                //Console.WriteLine("Envio de Familias Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
 
             }
         }
@@ -694,8 +828,13 @@ namespace APIClient
 
                 int noGuardado = (from c in RootObjects where (c.status == "NoSaved") select c).Count();
                 int guardado = (from c in RootObjects where (c.status == "OK") select c).Count();
-                Console.WriteLine("-------");
-                Console.WriteLine("Envio de Marcas Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
+                using (StreamWriter file = new StreamWriter(@"log.txt", true))
+                {
+                    file.WriteLine("Envio de Marcas Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
+                    file.Close();
+                }
+                //Console.WriteLine("-------");
+                //Console.WriteLine("Envio de Marcas Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
 
             }
         }
@@ -731,17 +870,71 @@ namespace APIClient
                     foreach (var productRes in RootObjects)
                     {
                         ADMITEM result = db.ADMITEM.Find(productRes.product);
-                        result.EWEB = "S";
+                        result.ESTAENCARRO = "S";
                         db.SaveChanges();
                     }
                 }
 
                 int noGuardado = (from c in RootObjects where (c.status == "NoSaved") select c).Count();
                 int guardado = (from c in RootObjects where (c.status == "OK") select c).Count();
-                Console.WriteLine("-------");
-                Console.WriteLine("Envio de Productos Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
+
+                using (StreamWriter file = new StreamWriter(@"log.txt", true))
+                {
+                    file.WriteLine("Envio de Productos Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
+                    file.Close();
+                }
+
+                //Console.WriteLine("-------");
+                //Console.WriteLine("Envio de Productos Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
 
             }
+        }
+
+
+        class tipoclientResponse
+        {
+            public string tiposClientes { get; set; }
+            public string status { get; set; }
+        }
+        //Envio de tipos de Clientes-Precio
+        private static async Task PostClientePrecio(object content, Uri ul)
+        {
+            var data = new
+            {
+                clientePrecio = content
+            };
+
+            string myJson = JsonConvert.SerializeObject(data);
+
+            using (var client = new HttpClient())
+            {
+                var response = await client.PostAsync(ul, new StringContent(myJson, Encoding.UTF8, "application/json"));
+
+                HttpContent contentRes = response.Content;
+                string mycontent = await contentRes.ReadAsStringAsync();
+                
+               
+
+                var RootObjects = JsonConvert.DeserializeObject<List<tipoclientResponse>>(mycontent);
+               
+                //using (BDADMSURTIOFFICEEntities db = new BDADMSURTIOFFICEEntities())
+                //{
+
+                //}
+
+                int actualizado = (from c in RootObjects where (c.status == "Updated") select c).Count();
+                int guardado = (from c in RootObjects where (c.status == "Created") select c).Count();
+              
+
+                using (StreamWriter file = new StreamWriter(@"log.txt", true))
+                {
+                    Console.WriteLine(actualizado);
+                    file.WriteLine("Envio de TiposClientes Finalizado, total Guardado: " + guardado + ", Actualizados: " + actualizado);
+                    file.Close();
+                }
+
+            }
+
         }
     }
 }

@@ -12,6 +12,8 @@ namespace APIClient
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class BDADMSURTIOFFICEEntities : DbContext
     {
@@ -25,15 +27,29 @@ namespace APIClient
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<ADMCABPEDIDO> ADMCABPEDIDO { get; set; }
         public virtual DbSet<ADMCATEGORIA> ADMCATEGORIA { get; set; }
         public virtual DbSet<ADMCLIENTE> ADMCLIENTE { get; set; }
+        public virtual DbSet<ADMDETPEDIDO> ADMDETPEDIDO { get; set; }
         public virtual DbSet<ADMFAMILIA> ADMFAMILIA { get; set; }
         public virtual DbSet<ADMITEM> ADMITEM { get; set; }
         public virtual DbSet<ADMMARCA> ADMMARCA { get; set; }
-        public virtual DbSet<ADMCABPEDIDO> ADMCABPEDIDO { get; set; }
-        public virtual DbSet<ADMDETPEDIDO> ADMDETPEDIDO { get; set; }
-        public virtual DbSet<ADMPARAMETROV> ADMPARAMETROV { get; set; }
         public virtual DbSet<ADMBODEGA> ADMBODEGA { get; set; }
         public virtual DbSet<ADMPARAMETROC> ADMPARAMETROC { get; set; }
+        public virtual DbSet<ADMPARAMETROV> ADMPARAMETROV { get; set; }
+       
+    
+        public virtual int CARROPRO(string action, Nullable<decimal> num)
+        {
+            var actionParameter = action != null ?
+                new ObjectParameter("Action", action) :
+                new ObjectParameter("Action", typeof(string));
+    
+            var numParameter = num.HasValue ?
+                new ObjectParameter("num", num) :
+                new ObjectParameter("num", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CARROPRO", actionParameter, numParameter);
+        }
     }
 }

@@ -57,7 +57,7 @@ namespace APIClient
         public double PORUTIPRE1 { get; set; }
         public double PORUTIPRE2 { get; set; }
         public double PORUTIPRE3 { get; set; }
-        public double PORUTIPRE4 { get; set; }
+        public Nullable<double> PORUTIPRE4 { get; set; }
         public double PORUTIPRE5 { get; set; }
         public double LITROS { get; set; }
         public string WEB { get; set; }
@@ -89,5 +89,7 @@ namespace APIClient
         public Nullable<double> PRECIO0 { get; set; }
         public string subcategoria { get; set; }
         public string TIPOPRODUCTO { get; set; }
+        public string CARRO { get; set; }
+        public string ESTAENCARRO { get; set; }
     }
 }
