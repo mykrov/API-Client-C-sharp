@@ -19,7 +19,7 @@ namespace APIClient
         public string  estado { get; set; }
         public string Graba_iva { get; set; }
         public string  token { get; set; }
-        public string idsuario { get; set; }
+        public string idusuario { get; set; }
         public string ruc { get; set; }
     }
 

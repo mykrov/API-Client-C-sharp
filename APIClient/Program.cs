@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Dynamic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -243,6 +244,8 @@ namespace APIClient
 
                         //cabeceras que se regresan con el estado "P" a la WEB.
                         List<CabeceraWeb> CabecerasProcesados = new List<CabeceraWeb>();
+                        IFormatProvider culture = new CultureInfo("en-US", true);
+                        
 
                         using (var trans = db.Database.BeginTransaction())
                         {
@@ -259,7 +262,7 @@ namespace APIClient
                                     ped.SECUENCIAL = secuencial + 1;
                                     ped.CLIENTE = Cliente.CODIGO;
                                     ped.VENDEDOR = parametroC.CODVENPOS;
-                                    ped.FECHA = Convert.ToDateTime(pedido.fecha);
+                                    ped.FECHA = DateTime.ParseExact(pedido.fecha, "dd/MM/yyyy", culture); ;
                                     ped.ESTADO = "CAR";
                                     ped.SUBTOTAL = pedido.subtotal;
                                     ped.DESCUENTO = 0;
@@ -297,6 +300,7 @@ namespace APIClient
                                     secuencial++;
 
                                     pedido.estado = "P";
+                                    //pedido.idusuario = pedido.idusuario;
                                     CabecerasProcesados.Add(pedido);
 
                                     //Lista Detalles de la Actual Cabecera para almacenar en ADM.
@@ -355,6 +359,10 @@ namespace APIClient
                                 db.SaveChanges();
                                 trans.Commit();
 
+                                //Envio de Cabeceras para actualizar en WEB.
+                                Uri uPutProductos = new Uri(urlbase + "api/actualizarcab");
+                                await Task.Run(() => PutCabeceras(CabecerasProcesados, uPutProductos));
+
                                 using (StreamWriter file = new StreamWriter(@"log.txt", true))
                                 {
                                     file.WriteLine("Se obtuvieron: " + RootObjects.pedidos.Count() + " Pedidos, Guardados : " + contadorCabeceras);
@@ -364,9 +372,8 @@ namespace APIClient
                                 //Console.WriteLine("-------");
                                 //Console.WriteLine("Se obtuvieron: " + RootObjects.pedidos.Count() + " Pedidos, Guardados : " + contadorCabeceras);
 
-                                //Envio de Cabeceras para actualizar en WEB.
-                                Uri uPutProductos = new Uri(urlbase + "api/actualizarcab");
-                                await Task.Run(() => PutCabeceras(CabecerasProcesados, uPutProductos));
+                               
+                               
                             }
                             catch (Exception e)
                             {
@@ -396,10 +403,11 @@ namespace APIClient
             string myJson = JsonConvert.SerializeObject(data);
             using (var client = new HttpClient())
             {
-                var response = await client.PutAsync(ul, new StringContent(myJson, Encoding.UTF8, "application/json"));
+                var response = await client.PostAsync(ul, new StringContent(myJson, Encoding.UTF8, "application/json"));
 
                 HttpContent contentRes = response.Content;
                 string mycontent = await contentRes.ReadAsStringAsync();
+               
                 //Console.WriteLine(mycontent);
                 var RootObjects = JsonConvert.DeserializeObject<List<clientResponse>>(mycontent);
 
@@ -928,7 +936,7 @@ namespace APIClient
 
                 using (StreamWriter file = new StreamWriter(@"log.txt", true))
                 {
-                    Console.WriteLine(actualizado);
+                    //Console.WriteLine(actualizado);
                     file.WriteLine("Envio de TiposClientes Finalizado, total Guardado: " + guardado + ", Actualizados: " + actualizado);
                     file.Close();
                 }
