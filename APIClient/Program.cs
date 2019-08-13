@@ -21,12 +21,11 @@ namespace APIClient
 
     class Program
     {
+        public static String TOKEN = "";
 
         public static void Main()
         {
             string urlbase = ConfigurationManager.AppSettings.Get("urlbase");
-
-
 
             using (BDADMSURTIOFFICEEntities db = new BDADMSURTIOFFICEEntities())
             {
@@ -163,13 +162,12 @@ namespace APIClient
                     file.Close();
                 }
 
-
+                //direcciones de  Url's
                 Uri uClien = new Uri(urlbase + "api/usuarios");
                 Uri uCate = new Uri(urlbase + "api/categoria");
                 Uri uMarca = new Uri(urlbase + "api/marca");
                 Uri uProducto = new Uri(urlbase + "api/productos");
                 Uri uTipoCliente = new Uri(urlbase + "api/tipocliente");
-
 
 
                 //Chequear que el servidor de API web esta Up.
@@ -198,16 +196,26 @@ namespace APIClient
                         }
                         else
                         {
-                            Task.Run(() => PostCategorias(listacate, uCate));
-                            Task.Run(() => PostClientes(usuariosw, uClien));
-                            Task.Run(() => PostMarcas(marcalist, uMarca));
-                            Task.Run(() => PostProducto(listaPro, uProducto));
-                            Task.Run(() => PostClientePrecio(clientePrecios, uTipoCliente));
+                            
+                            string tokenApi = ConfigurationManager.AppSettings.Get("token");
+                            string userEmail = ConfigurationManager.AppSettings.Get("userEmail");
+                            string userPassword = ConfigurationManager.AppSettings.Get("userPassword");
+                            Uri lin = new Uri(urlbase + "api/login");
 
-                            GetPedidos();
-                            GetUsuarios(DateTime.Now.Date.ToString("dd-MM-yyyy"));
-                            HttpResponseMessage response = getTask.Result;
-
+                            if (TOKEN == "")
+                            {
+                                //una tarea se ejecuta al finalizar la predecesora.
+                                Task<string> tokenValid = Task.Run(() => LoginApi(lin, userEmail, userPassword));
+                                Task usuarios = tokenValid.ContinueWith(x => GetUsuarios(DateTime.Now.Date.ToString("dd-MM-yyyy")));
+                                Task pedidos = usuarios.ContinueWith(x => GetPedidos());
+                                Task a = pedidos.ContinueWith(x => PostCategorias(listacate, uCate));
+                                Task b = a.ContinueWith(x => PostClientes(usuariosw, uClien));
+                                Task c = b.ContinueWith(x => PostMarcas(marcalist, uMarca));
+                                Task d = c.ContinueWith(x => PostProducto(listaPro, uProducto));
+                                Task e = d.ContinueWith(x => PostClientePrecio(clientePrecios, uTipoCliente));
+                            }
+                            
+                                HttpResponseMessage response = getTask.Result;
                         }
                     });
 
@@ -219,6 +227,41 @@ namespace APIClient
             }
         }
 
+        class JWTLogin
+        {
+            public string token { get; set; }
+            public string type { get; set; }
+            public string expires { get; set; }
+        }
+
+        //Login - Obtener Json Web Token
+        async static Task<string> LoginApi(Uri ul, string email2, string password2)
+        {
+            var data = new
+            {
+                email = email2,
+                password = password2,
+            };
+                        
+            using (HttpClient client = new HttpClient())
+            {
+                string myJson = JsonConvert.SerializeObject(data);
+                var response = await client.PostAsync(ul,new StringContent(myJson, Encoding.UTF8, "application/json"));
+                HttpContent contentRes = response.Content;
+                string mycontent = await contentRes.ReadAsStringAsync();
+                var RootObjects = JsonConvert.DeserializeObject<JWTLogin>(mycontent);
+
+                TOKEN = RootObjects.token;
+                using (StreamWriter file = new StreamWriter(@"log.txt", true))
+                {
+                    file.WriteLine("Token Usado: " + TOKEN);
+                    file.Close();
+                }
+                //Console.WriteLine(TOKEN);
+                return TOKEN;
+            }
+        }
+
 
         //Obtener Pedidos 
         async static void GetPedidos()
@@ -226,6 +269,7 @@ namespace APIClient
             string urlbase = ConfigurationManager.AppSettings.Get("urlbase");
             using (HttpClient client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TOKEN);
                 using (HttpResponseMessage response = await client.GetAsync(urlbase + "api/pedidos"))
                 {
                     HttpContent content = response.Content;
@@ -372,8 +416,6 @@ namespace APIClient
                                 //Console.WriteLine("-------");
                                 //Console.WriteLine("Se obtuvieron: " + RootObjects.pedidos.Count() + " Pedidos, Guardados : " + contadorCabeceras);
 
-                               
-                               
                             }
                             catch (Exception e)
                             {
@@ -403,6 +445,7 @@ namespace APIClient
             string myJson = JsonConvert.SerializeObject(data);
             using (var client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TOKEN);
                 var response = await client.PostAsync(ul, new StringContent(myJson, Encoding.UTF8, "application/json"));
 
                 HttpContent contentRes = response.Content;
@@ -434,6 +477,7 @@ namespace APIClient
 
             using (HttpClient client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TOKEN);
                 using (HttpResponseMessage response = await client.GetAsync(urlbase + "api/usuarios/" + date))
                 {
                     HttpContent content = response.Content;
@@ -622,6 +666,7 @@ namespace APIClient
             string myJson = JsonConvert.SerializeObject(data);
             using (var client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TOKEN);
                 var response = await client.PostAsync(
                     ul,
                      new StringContent(myJson, Encoding.UTF8, "application/json"));
@@ -680,7 +725,6 @@ namespace APIClient
                 //Console.WriteLine("Envio de Usuarios Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
 
             }
-
         }
 
         class categoryResponse
@@ -701,6 +745,7 @@ namespace APIClient
 
             using (var client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TOKEN);
                 var response = await client.PostAsync(ul, new StringContent(myJson, Encoding.UTF8, "application/json"));
 
                 HttpContent contentRes = response.Content;
@@ -769,6 +814,7 @@ namespace APIClient
 
             using (var client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TOKEN);
                 var response = await client.PostAsync(ul, new StringContent(myJson, Encoding.UTF8, "application/json"));
 
                 HttpContent contentRes = response.Content;
@@ -817,6 +863,7 @@ namespace APIClient
 
             using (var client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TOKEN);
                 var response = await client.PostAsync(ul, new StringContent(myJson, Encoding.UTF8, "application/json"));
 
                 HttpContent contentRes = response.Content;
@@ -865,6 +912,7 @@ namespace APIClient
 
             using (var client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TOKEN);
                 var response = await client.PostAsync(ul, new StringContent(myJson, Encoding.UTF8, "application/json"));
 
                 HttpContent contentRes = response.Content;
@@ -894,7 +942,6 @@ namespace APIClient
 
                 //Console.WriteLine("-------");
                 //Console.WriteLine("Envio de Productos Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
-
             }
         }
 
@@ -916,24 +963,17 @@ namespace APIClient
 
             using (var client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TOKEN);
                 var response = await client.PostAsync(ul, new StringContent(myJson, Encoding.UTF8, "application/json"));
 
                 HttpContent contentRes = response.Content;
                 string mycontent = await contentRes.ReadAsStringAsync();
-                
-               
-
+                               
                 var RootObjects = JsonConvert.DeserializeObject<List<tipoclientResponse>>(mycontent);
                
-                //using (BDADMSURTIOFFICEEntities db = new BDADMSURTIOFFICEEntities())
-                //{
-
-                //}
-
                 int actualizado = (from c in RootObjects where (c.status == "Updated") select c).Count();
                 int guardado = (from c in RootObjects where (c.status == "Created") select c).Count();
               
-
                 using (StreamWriter file = new StreamWriter(@"log.txt", true))
                 {
                     //Console.WriteLine(actualizado);
