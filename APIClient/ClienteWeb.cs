@@ -31,6 +31,7 @@ namespace APIClient
         public string ruc { get; set; }
         public string idtipo { get; set; }
         public string ingreso { get; set; }
+        public string canton { get; set; }
     }
 
     class ClienteRes

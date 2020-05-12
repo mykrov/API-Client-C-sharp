@@ -38,11 +38,11 @@ namespace APIClient
         public Nullable<double> PORDES2 { get; set; }
         public string TIPOPEDIDO { get; set; }
         public string DETALLE { get; set; }
-        public string codigo_doc { get; set; }
         public Nullable<System.DateTime> fechaela { get; set; }
         public Nullable<System.DateTime> fechaven { get; set; }
-        public string lista { get; set; }
         public string lote { get; set; }
+        public string codigo_doc { get; set; }
         public string tipoproducto { get; set; }
+        public string lista { get; set; }
     }
 }

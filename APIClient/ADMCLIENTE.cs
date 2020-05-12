@@ -107,24 +107,24 @@ namespace APIClient
         public string VENDEDORAUX { get; set; }
         public string CANAL { get; set; }
         public string SUBCANAL { get; set; }
-        public string EWEB { get; set; }
-        public Nullable<decimal> ANTICIPO { get; set; }
-        public string barrio { get; set; }
-        public string CIUDAD { get; set; }
-        public string CODIGOSAP { get; set; }
-        public string CodShip { get; set; }
-        public string coordenada { get; set; }
-        public string DEUDAS { get; set; }
-        public string FACTURABLE { get; set; }
         public string grupocliente { get; set; }
         public string grupocredito { get; set; }
-        public string latitud { get; set; }
-        public string longuitud { get; set; }
+        public string EWEB { get; set; }
         public string nombre { get; set; }
-        public string numero { get; set; }
+        public string FACTURABLE { get; set; }
+        public string DEUDAS { get; set; }
+        public Nullable<decimal> ANTICIPO { get; set; }
+        public string CIUDAD { get; set; }
+        public string coordenada { get; set; }
+        public string barrio { get; set; }
         public string tipodocumento { get; set; }
+        public string CODIGOSAP { get; set; }
+        public string CodShip { get; set; }
+        public string longuitud { get; set; }
+        public string latitud { get; set; }
         public string TipoLocalidad { get; set; }
-        public string correoCarro { get; set; }
-        public string claveCarro { get; set; }
+        public string numero { get; set; }
+        public string CORREOCARRO { get; set; }
+        public string CLAVECARRO { get; set; }
     }
 }

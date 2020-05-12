@@ -59,9 +59,9 @@ namespace APIClient
         public string NOAUTOSRIRET { get; set; }
         public string BODATS { get; set; }
         public int NOCONTROLPACIENTE { get; set; }
-        public string CODIGO_BODEGA { get; set; }
-        public decimal NOIMPORTACION { get; set; }
         public decimal numguiaremisionpos { get; set; }
         public string TELEFONO { get; set; }
+        public string CODIGO_BODEGA { get; set; }
+        public decimal NOIMPORTACION { get; set; }
     }
 }

@@ -4,9 +4,9 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="BDADMSURTIOFFICEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="GUIDOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMBODEGA' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'GUIDOELECTRONIC.dbo.ADMBODEGA' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="ADMBODEGA">
           <Key>
             <PropertyRef Name="NOCARGAEGRESO" />
@@ -16,8 +16,8 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMBODEGA' no tiene def
             <PropertyRef Name="SERIE" />
             <PropertyRef Name="BODATS" />
             <PropertyRef Name="NOCONTROLPACIENTE" />
-            <PropertyRef Name="NOIMPORTACION" />
             <PropertyRef Name="numguiaremisionpos" />
+            <PropertyRef Name="NOIMPORTACION" />
           </Key>
           <Property Name="CODIGO" Type="int" />
           <Property Name="NOMBRE" Type="varchar" MaxLength="80" />
@@ -64,10 +64,10 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMBODEGA' no tiene def
           <Property Name="NOAUTOSRIRET" Type="varchar" MaxLength="50" />
           <Property Name="BODATS" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="NOCONTROLPACIENTE" Type="int" Nullable="false" />
-          <Property Name="CODIGO_BODEGA" Type="varchar" MaxLength="10" />
-          <Property Name="NOIMPORTACION" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="numguiaremisionpos" Type="decimal" Precision="10" Scale="0" Nullable="false" />
           <Property Name="TELEFONO" Type="varchar" MaxLength="20" />
+          <Property Name="CODIGO_BODEGA" Type="varchar" MaxLength="10" />
+          <Property Name="NOIMPORTACION" Type="decimal" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
         <EntityType Name="ADMCABPEDIDO">
           <Key>
@@ -109,8 +109,20 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMBODEGA' no tiene def
           <Property Name="SECAUTOPEDMOVIL" Type="varchar" MaxLength="30" />
           <Property Name="SERIEPOLOCLUB" Type="varchar" MaxLength="6" Nullable="false" />
           <Property Name="CODIGORETAILPRO" Type="varchar" MaxLength="100" />
-          <Property Name="NUMEROPLANTILLA" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="numeroplantilla" Type="decimal" Precision="10" Scale="0" Nullable="false" />
           <Property Name="CODIGOPEDIDO" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="ADMCANTON">
+          <Key>
+            <PropertyRef Name="codigo" />
+            <PropertyRef Name="provincia" />
+          </Key>
+          <Property Name="codigo" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="provincia" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+          <Property Name="estado" Type="char" MaxLength="1" />
+          <Property Name="CODIGOSAP" Type="varchar" MaxLength="10" />
+          <Property Name="codigo_sap_provincia" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="ADMCATEGORIA">
           <Key>
@@ -219,35 +231,26 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMBODEGA' no tiene def
           <Property Name="VENDEDORAUX" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="CANAL" Type="varchar" MaxLength="10" />
           <Property Name="SUBCANAL" Type="varchar" MaxLength="10" />
-          <Property Name="EWEB" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="ANTICIPO" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="barrio" Type="varchar" MaxLength="50" />
-          <Property Name="CIUDAD" Type="varchar" MaxLength="50" />
-          <Property Name="CODIGOSAP" Type="varchar" MaxLength="20" />
-          <Property Name="CodShip" Type="varchar" MaxLength="100" />
-          <Property Name="coordenada" Type="varchar" MaxLength="50" />
-          <Property Name="DEUDAS" Type="varchar" MaxLength="50" />
-          <Property Name="FACTURABLE" Type="varchar" MaxLength="50" />
           <Property Name="grupocliente" Type="char" MaxLength="20" Nullable="false" />
           <Property Name="grupocredito" Type="char" MaxLength="20" Nullable="false" />
-          <Property Name="latitud" Type="varchar" MaxLength="50" />
-          <Property Name="longuitud" Type="varchar" MaxLength="50" />
+          <Property Name="EWEB" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="50" />
-          <Property Name="numero" Type="varchar" MaxLength="10" />
+          <Property Name="FACTURABLE" Type="varchar" MaxLength="50" />
+          <Property Name="DEUDAS" Type="varchar" MaxLength="50" />
+          <Property Name="ANTICIPO" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CIUDAD" Type="varchar" MaxLength="50" />
+          <Property Name="coordenada" Type="varchar" MaxLength="50" />
+          <Property Name="barrio" Type="varchar" MaxLength="50" />
           <Property Name="tipodocumento" Type="varchar" MaxLength="5" />
+          <Property Name="CODIGOSAP" Type="varchar" MaxLength="20" />
+          <Property Name="CodShip" Type="varchar" MaxLength="100" />
+          <Property Name="longuitud" Type="varchar" MaxLength="50" />
+          <Property Name="latitud" Type="varchar" MaxLength="50" />
           <Property Name="TipoLocalidad" Type="varchar" MaxLength="50" />
-          <Property Name="correoCarro" Type="varchar" MaxLength="100" />
-          <Property Name="claveCarro" Type="varchar" MaxLength="200" />
+          <Property Name="numero" Type="varchar" MaxLength="10" />
+          <Property Name="CORREOCARRO" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CLAVECARRO" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6013: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMCLIPRECIO' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
-        <EntityType Name="ADMCLIPRECIO">
-          <Property Name="PRECIO" Type="numeric" Precision="1" Scale="0" />
-          <Property Name="TIPO" Type="char" MaxLength="3" />
-          <Property Name="FECHA" Type="datetime" />
-          <Property Name="OPERADOR" Type="char" MaxLength="3" />
-          <Property Name="ORDEN" Type="int" />
-        </EntityType>-->
         <EntityType Name="ADMDETPEDIDO">
           <Key>
             <PropertyRef Name="LINEA" />
@@ -278,12 +281,12 @@ advertencia 6013: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMCLIPRECIO' no tiene 
           <Property Name="PORDES2" Type="float" />
           <Property Name="TIPOPEDIDO" Type="varchar" MaxLength="10" />
           <Property Name="DETALLE" Type="varchar" MaxLength="200" Nullable="false" />
-          <Property Name="codigo_doc" Type="varchar" MaxLength="50" />
           <Property Name="fechaela" Type="smalldatetime" />
           <Property Name="fechaven" Type="smalldatetime" />
-          <Property Name="lista" Type="varchar" MaxLength="50" />
           <Property Name="lote" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="codigo_doc" Type="varchar" MaxLength="50" />
           <Property Name="tipoproducto" Type="varchar" MaxLength="50" />
+          <Property Name="lista" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="ADMFAMILIA">
           <Key>
@@ -319,6 +322,7 @@ advertencia 6013: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMCLIPRECIO' no tiene 
           <Property Name="STOCKMA" Type="decimal" Precision="12" Scale="0" />
           <Property Name="PESO" Type="float" />
           <Property Name="VOLUMEN" Type="float" />
+          <Property Name="PRECIO0" Type="float" />
           <Property Name="PRECIO1" Type="float" />
           <Property Name="PRECIO2" Type="float" />
           <Property Name="PRECIO3" Type="float" />
@@ -340,10 +344,11 @@ advertencia 6013: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMCLIPRECIO' no tiene 
           <Property Name="CODBARRA" Type="varchar" MaxLength="20" />
           <Property Name="CANFRA" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="STOCKMAY" Type="int" Nullable="false" />
+          <Property Name="PORUTIPRE0" Type="float" Nullable="false" />
           <Property Name="PORUTIPRE1" Type="float" Nullable="false" />
           <Property Name="PORUTIPRE2" Type="float" Nullable="false" />
           <Property Name="PORUTIPRE3" Type="float" Nullable="false" />
-          <Property Name="PORUTIPRE4" Type="float" />
+          <Property Name="PORUTIPRE4" Type="float" Nullable="false" />
           <Property Name="PORUTIPRE5" Type="float" Nullable="false" />
           <Property Name="LITROS" Type="float" Nullable="false" />
           <Property Name="WEB" Type="char" MaxLength="10" Nullable="false" />
@@ -368,13 +373,11 @@ advertencia 6013: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMCLIPRECIO' no tiene 
           <Property Name="percha" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="REGSANITARIO" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="EWEB" Type="char" MaxLength="1" />
+          <Property Name="TIPOPRODUCTO" Type="char" MaxLength="3" />
           <Property Name="cantidadxcaja" Type="decimal" Precision="18" Scale="0" />
           <Property Name="CodShip" Type="varchar" MaxLength="50" />
           <Property Name="descripcion" Type="varchar" MaxLength="50" />
-          <Property Name="PORUTIPRE0" Type="float" Nullable="false" />
-          <Property Name="PRECIO0" Type="float" />
           <Property Name="subcategoria" Type="varchar" MaxLength="50" />
-          <Property Name="TIPOPRODUCTO" Type="char" MaxLength="3" />
           <Property Name="CARRO" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="ESTAENCARRO" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
@@ -392,7 +395,7 @@ advertencia 6013: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMCLIPRECIO' no tiene 
           <Property Name="CODIGOSAP" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROC' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'GUIDOELECTRONIC.dbo.ADMPARAMETROC' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="ADMPARAMETROC">
           <Key>
             <PropertyRef Name="CREDDEF" />
@@ -410,13 +413,14 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROC' no tiene
             <PropertyRef Name="NUMCONTRATO" />
             <PropertyRef Name="NUMENVIOLAB" />
             <PropertyRef Name="NUMDOCTOR" />
-            <PropertyRef Name="controlcupofvd" />
             <PropertyRef Name="diasgraciavencuota" />
+            <PropertyRef Name="interes" />
             <PropertyRef Name="generandb" />
             <PropertyRef Name="generapagondb" />
-            <PropertyRef Name="interes" />
             <PropertyRef Name="porintmoradia" />
+            <PropertyRef Name="controlcupofvd" />
             <PropertyRef Name="posbloqueofaccre" />
+            <PropertyRef Name="CLIENTEMODELOCARRO" />
           </Key>
           <Property Name="MODULO" Type="char" MaxLength="80" />
           <Property Name="NOMBRECIA" Type="char" MaxLength="80" />
@@ -458,17 +462,17 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROC' no tiene
           <Property Name="NUMCONTRATO" Type="int" Nullable="false" />
           <Property Name="NUMENVIOLAB" Type="int" Nullable="false" />
           <Property Name="NUMDOCTOR" Type="int" Nullable="false" />
-          <Property Name="controlcupofvd" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="diasgraciavencuota" Type="int" Nullable="false" />
+          <Property Name="interes" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="generandb" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="generapagondb" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="interes" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="porintmoradia" Type="float" Nullable="false" />
+          <Property Name="controlcupofvd" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="posbloqueofaccre" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="CLIENTEMODELOCARRO" Type="char" MaxLength="10" />
+          <Property Name="CLIENTEMODELOCARRO" Type="char" MaxLength="10" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'GUIDOELECTRONIC.dbo.ADMPARAMETROV' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="ADMPARAMETROV">
           <Key>
             <PropertyRef Name="CAMPRECIO" />
@@ -538,29 +542,30 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
             <PropertyRef Name="imprimecodigopos" />
             <PropertyRef Name="UNILEVER" />
             <PropertyRef Name="CODDISTRIBUIDOR" />
+            <PropertyRef Name="tipodocventa" />
+            <PropertyRef Name="itemcredihogar" />
+            <PropertyRef Name="porintcreditomensual" />
+            <PropertyRef Name="nedetel" />
+            <PropertyRef Name="facnedetel" />
+            <PropertyRef Name="ESNOTAVENTA" />
+            <PropertyRef Name="controlcomisariato" />
+            <PropertyRef Name="CAMPRECIOPOS" />
             <PropertyRef Name="campremantenimiento" />
-            <PropertyRef Name="FACNEDETEL" />
+            <PropertyRef Name="FACSERSOS" />
+            <PropertyRef Name="numeroplantilla" />
+            <PropertyRef Name="DATOSCLIPOS" />
+            <PropertyRef Name="INGPREAJI" />
+            <PropertyRef Name="cambiavenpos" />
+            <PropertyRef Name="POSGENERAANTNCR" />
+            <PropertyRef Name="ESRANCHO" />
+            <PropertyRef Name="posmostrarmarca" />
+            <PropertyRef Name="POSCONSERVICIO" />
+            <PropertyRef Name="posconalumno" />
             <PropertyRef Name="POSDOSLINEAS" />
             <PropertyRef Name="poscontrolpreciocosto" />
             <PropertyRef Name="posvendedor" />
-            <PropertyRef Name="cambiavenpos" />
-            <PropertyRef Name="CAMPRECIOPOS" />
             <PropertyRef Name="cartera" />
-            <PropertyRef Name="controlcomisariato" />
-            <PropertyRef Name="DATOSCLIPOS" />
-            <PropertyRef Name="ESNOTAVENTA" />
-            <PropertyRef Name="ESRANCHO" />
-            <PropertyRef Name="FACSERSOS" />
-            <PropertyRef Name="INGPREAJI" />
-            <PropertyRef Name="itemcredihogar" />
-            <PropertyRef Name="nedetel" />
-            <PropertyRef Name="numeroplantilla" />
-            <PropertyRef Name="porintcreditomensual" />
-            <PropertyRef Name="posconalumno" />
-            <PropertyRef Name="POSCONSERVICIO" />
-            <PropertyRef Name="POSGENERAANTNCR" />
-            <PropertyRef Name="posmostrarmarca" />
-            <PropertyRef Name="tipodocventa" />
+            <PropertyRef Name="USACARROCOMPRA" />
           </Key>
           <Property Name="NOMBRECIA" Type="char" MaxLength="80" />
           <Property Name="MODULO" Type="char" MaxLength="80" />
@@ -703,43 +708,51 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
           <Property Name="imprimecodigopos" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="UNILEVER" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="CODDISTRIBUIDOR" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="tipodocventa" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="itemcredihogar" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="porintcreditomensual" Type="float" Nullable="false" />
+          <Property Name="nedetel" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="facnedetel" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ESNOTAVENTA" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="odbcempresa" Type="varchar" MaxLength="10" />
+          <Property Name="controlcomisariato" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="CAMPRECIOPOS" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="campremantenimiento" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="FACNEDETEL" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="FACSERSOS" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="numeroplantilla" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="DATOSCLIPOS" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="INGPREAJI" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="cambiavenpos" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="POSGENERAANTNCR" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ESRANCHO" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="posmostrarmarca" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="POSCONSERVICIO" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="posconalumno" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="POSDOSLINEAS" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="poscontrolpreciocosto" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="posvendedor" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="cambiavenpos" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="CAMPRECIOPOS" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="cartera" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="controlcomisariato" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="DATOSCLIPOS" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="ESNOTAVENTA" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="ESRANCHO" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="FACSERSOS" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="INGPREAJI" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="itemcredihogar" Type="char" MaxLength="15" Nullable="false" />
-          <Property Name="nedetel" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="numeroplantilla" Type="decimal" Precision="10" Scale="0" Nullable="false" />
-          <Property Name="odbcempresa" Type="varchar" MaxLength="10" />
-          <Property Name="porintcreditomensual" Type="float" Nullable="false" />
-          <Property Name="posconalumno" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="POSCONSERVICIO" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="POSGENERAANTNCR" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="posmostrarmarca" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="tipodocventa" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="USACARROCOMPRA" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
-        <Function Name="CARROPRO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Action" Type="nvarchar" Mode="In" />
-          <Parameter Name="num" Type="decimal" Mode="In" />
-        </Function>
-        <EntityContainer Name="BDADMSURTIOFFICEModelStoreContainer">
+        <EntityType Name="ADMPROVINCIA">
+          <Key>
+            <PropertyRef Name="codigo" />
+          </Key>
+          <Property Name="codigo" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="30" />
+          <Property Name="estado" Type="char" MaxLength="1" />
+          <Property Name="codigosap" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityContainer Name="GUIDOModelStoreContainer">
           <EntitySet Name="ADMCABPEDIDO" EntityType="Self.ADMCABPEDIDO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ADMCANTON" EntityType="Self.ADMCANTON" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ADMCATEGORIA" EntityType="Self.ADMCATEGORIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ADMCLIENTE" EntityType="Self.ADMCLIENTE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ADMDETPEDIDO" EntityType="Self.ADMDETPEDIDO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ADMFAMILIA" EntityType="Self.ADMFAMILIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ADMITEM" EntityType="Self.ADMITEM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ADMMARCA" EntityType="Self.ADMMARCA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ADMPROVINCIA" EntityType="Self.ADMPROVINCIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ADMBODEGA" EntityType="Self.ADMBODEGA" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [ADMBODEGA].[CODIGO] AS [CODIGO], 
@@ -787,10 +800,10 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
     [ADMBODEGA].[NOAUTOSRIRET] AS [NOAUTOSRIRET], 
     [ADMBODEGA].[BODATS] AS [BODATS], 
     [ADMBODEGA].[NOCONTROLPACIENTE] AS [NOCONTROLPACIENTE], 
-    [ADMBODEGA].[CODIGO_BODEGA] AS [CODIGO_BODEGA], 
-    [ADMBODEGA].[NOIMPORTACION] AS [NOIMPORTACION], 
     [ADMBODEGA].[numguiaremisionpos] AS [numguiaremisionpos], 
-    [ADMBODEGA].[TELEFONO] AS [TELEFONO]
+    [ADMBODEGA].[TELEFONO] AS [TELEFONO], 
+    [ADMBODEGA].[CODIGO_BODEGA] AS [CODIGO_BODEGA], 
+    [ADMBODEGA].[NOIMPORTACION] AS [NOIMPORTACION]
     FROM [dbo].[ADMBODEGA] AS [ADMBODEGA]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ADMPARAMETROC" EntityType="Self.ADMPARAMETROC" store:Type="Tables" store:Schema="dbo">
@@ -835,12 +848,12 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
     [ADMPARAMETROC].[NUMCONTRATO] AS [NUMCONTRATO], 
     [ADMPARAMETROC].[NUMENVIOLAB] AS [NUMENVIOLAB], 
     [ADMPARAMETROC].[NUMDOCTOR] AS [NUMDOCTOR], 
-    [ADMPARAMETROC].[controlcupofvd] AS [controlcupofvd], 
     [ADMPARAMETROC].[diasgraciavencuota] AS [diasgraciavencuota], 
+    [ADMPARAMETROC].[interes] AS [interes], 
     [ADMPARAMETROC].[generandb] AS [generandb], 
     [ADMPARAMETROC].[generapagondb] AS [generapagondb], 
-    [ADMPARAMETROC].[interes] AS [interes], 
     [ADMPARAMETROC].[porintmoradia] AS [porintmoradia], 
+    [ADMPARAMETROC].[controlcupofvd] AS [controlcupofvd], 
     [ADMPARAMETROC].[posbloqueofaccre] AS [posbloqueofaccre], 
     [ADMPARAMETROC].[CLIENTEMODELOCARRO] AS [CLIENTEMODELOCARRO]
     FROM [dbo].[ADMPARAMETROC] AS [ADMPARAMETROC]</DefiningQuery>
@@ -988,37 +1001,38 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
     [ADMPARAMETROV].[imprimecodigopos] AS [imprimecodigopos], 
     [ADMPARAMETROV].[UNILEVER] AS [UNILEVER], 
     [ADMPARAMETROV].[CODDISTRIBUIDOR] AS [CODDISTRIBUIDOR], 
+    [ADMPARAMETROV].[tipodocventa] AS [tipodocventa], 
+    [ADMPARAMETROV].[itemcredihogar] AS [itemcredihogar], 
+    [ADMPARAMETROV].[porintcreditomensual] AS [porintcreditomensual], 
+    [ADMPARAMETROV].[nedetel] AS [nedetel], 
+    [ADMPARAMETROV].[facnedetel] AS [facnedetel], 
+    [ADMPARAMETROV].[ESNOTAVENTA] AS [ESNOTAVENTA], 
+    [ADMPARAMETROV].[odbcempresa] AS [odbcempresa], 
+    [ADMPARAMETROV].[controlcomisariato] AS [controlcomisariato], 
+    [ADMPARAMETROV].[CAMPRECIOPOS] AS [CAMPRECIOPOS], 
     [ADMPARAMETROV].[campremantenimiento] AS [campremantenimiento], 
-    [ADMPARAMETROV].[FACNEDETEL] AS [FACNEDETEL], 
+    [ADMPARAMETROV].[FACSERSOS] AS [FACSERSOS], 
+    [ADMPARAMETROV].[numeroplantilla] AS [numeroplantilla], 
+    [ADMPARAMETROV].[DATOSCLIPOS] AS [DATOSCLIPOS], 
+    [ADMPARAMETROV].[INGPREAJI] AS [INGPREAJI], 
+    [ADMPARAMETROV].[cambiavenpos] AS [cambiavenpos], 
+    [ADMPARAMETROV].[POSGENERAANTNCR] AS [POSGENERAANTNCR], 
+    [ADMPARAMETROV].[ESRANCHO] AS [ESRANCHO], 
+    [ADMPARAMETROV].[posmostrarmarca] AS [posmostrarmarca], 
+    [ADMPARAMETROV].[POSCONSERVICIO] AS [POSCONSERVICIO], 
+    [ADMPARAMETROV].[posconalumno] AS [posconalumno], 
     [ADMPARAMETROV].[POSDOSLINEAS] AS [POSDOSLINEAS], 
     [ADMPARAMETROV].[poscontrolpreciocosto] AS [poscontrolpreciocosto], 
     [ADMPARAMETROV].[posvendedor] AS [posvendedor], 
-    [ADMPARAMETROV].[cambiavenpos] AS [cambiavenpos], 
-    [ADMPARAMETROV].[CAMPRECIOPOS] AS [CAMPRECIOPOS], 
     [ADMPARAMETROV].[cartera] AS [cartera], 
-    [ADMPARAMETROV].[controlcomisariato] AS [controlcomisariato], 
-    [ADMPARAMETROV].[DATOSCLIPOS] AS [DATOSCLIPOS], 
-    [ADMPARAMETROV].[ESNOTAVENTA] AS [ESNOTAVENTA], 
-    [ADMPARAMETROV].[ESRANCHO] AS [ESRANCHO], 
-    [ADMPARAMETROV].[FACSERSOS] AS [FACSERSOS], 
-    [ADMPARAMETROV].[INGPREAJI] AS [INGPREAJI], 
-    [ADMPARAMETROV].[itemcredihogar] AS [itemcredihogar], 
-    [ADMPARAMETROV].[nedetel] AS [nedetel], 
-    [ADMPARAMETROV].[numeroplantilla] AS [numeroplantilla], 
-    [ADMPARAMETROV].[odbcempresa] AS [odbcempresa], 
-    [ADMPARAMETROV].[porintcreditomensual] AS [porintcreditomensual], 
-    [ADMPARAMETROV].[posconalumno] AS [posconalumno], 
-    [ADMPARAMETROV].[POSCONSERVICIO] AS [POSCONSERVICIO], 
-    [ADMPARAMETROV].[POSGENERAANTNCR] AS [POSGENERAANTNCR], 
-    [ADMPARAMETROV].[posmostrarmarca] AS [posmostrarmarca], 
-    [ADMPARAMETROV].[tipodocventa] AS [tipodocventa]
+    [ADMPARAMETROV].[USACARROCOMPRA] AS [USACARROCOMPRA]
     FROM [dbo].[ADMPARAMETROV] AS [ADMPARAMETROV]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="BDADMSURTIOFFICEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="GUIDOModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="ADMCABPEDIDO">
           <Key>
             <PropertyRef Name="SECUENCIAL" />
@@ -1059,7 +1073,7 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
           <Property Name="SECAUTOPEDMOVIL" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="SERIEPOLOCLUB" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CODIGORETAILPRO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="NUMEROPLANTILLA" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="numeroplantilla" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
           <Property Name="CODIGOPEDIDO" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="ADMCATEGORIA">
@@ -1169,25 +1183,25 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
           <Property Name="VENDEDORAUX" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CANAL" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="SUBCANAL" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="EWEB" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="ANTICIPO" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="barrio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CIUDAD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CODIGOSAP" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="CodShip" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="coordenada" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DEUDAS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FACTURABLE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="grupocliente" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="grupocredito" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="latitud" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="longuitud" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EWEB" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="numero" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="FACTURABLE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DEUDAS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ANTICIPO" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CIUDAD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="coordenada" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="barrio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="tipodocumento" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="CODIGOSAP" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CodShip" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="longuitud" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="latitud" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TipoLocalidad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="correoCarro" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="claveCarro" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="numero" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CORREOCARRO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CLAVECARRO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="ADMDETPEDIDO">
           <Key>
@@ -1219,12 +1233,12 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
           <Property Name="PORDES2" Type="Double" />
           <Property Name="TIPOPEDIDO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="DETALLE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="codigo_doc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="fechaela" Type="DateTime" Precision="0" />
           <Property Name="fechaven" Type="DateTime" Precision="0" />
-          <Property Name="lista" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="lote" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="codigo_doc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="tipoproducto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="lista" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ADMFAMILIA">
           <Key>
@@ -1260,6 +1274,7 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
           <Property Name="STOCKMA" Type="Decimal" Precision="12" Scale="0" />
           <Property Name="PESO" Type="Double" />
           <Property Name="VOLUMEN" Type="Double" />
+          <Property Name="PRECIO0" Type="Double" />
           <Property Name="PRECIO1" Type="Double" />
           <Property Name="PRECIO2" Type="Double" />
           <Property Name="PRECIO3" Type="Double" />
@@ -1281,10 +1296,11 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
           <Property Name="CODBARRA" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="CANFRA" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="STOCKMAY" Type="Int32" Nullable="false" />
+          <Property Name="PORUTIPRE0" Type="Double" Nullable="false" />
           <Property Name="PORUTIPRE1" Type="Double" Nullable="false" />
           <Property Name="PORUTIPRE2" Type="Double" Nullable="false" />
           <Property Name="PORUTIPRE3" Type="Double" Nullable="false" />
-          <Property Name="PORUTIPRE4" Type="Double" />
+          <Property Name="PORUTIPRE4" Type="Double" Nullable="false" />
           <Property Name="PORUTIPRE5" Type="Double" Nullable="false" />
           <Property Name="LITROS" Type="Double" Nullable="false" />
           <Property Name="WEB" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
@@ -1309,15 +1325,13 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
           <Property Name="percha" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="REGSANITARIO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="EWEB" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="TIPOPRODUCTO" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
           <Property Name="cantidadxcaja" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="CodShip" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PORUTIPRE0" Type="Double" Nullable="false" />
-          <Property Name="PRECIO0" Type="Double" />
           <Property Name="subcategoria" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="TIPOPRODUCTO" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
           <Property Name="CARRO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="ESTAENCARRO" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ESTAENCARRO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="ADMMARCA">
           <Key>
@@ -1341,8 +1355,8 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
             <PropertyRef Name="SERIE" />
             <PropertyRef Name="BODATS" />
             <PropertyRef Name="NOCONTROLPACIENTE" />
-            <PropertyRef Name="NOIMPORTACION" />
             <PropertyRef Name="numguiaremisionpos" />
+            <PropertyRef Name="NOIMPORTACION" />
           </Key>
           <Property Name="CODIGO" Type="Int32" />
           <Property Name="NOMBRE" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
@@ -1389,10 +1403,10 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
           <Property Name="NOAUTOSRIRET" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="BODATS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="NOCONTROLPACIENTE" Type="Int32" Nullable="false" />
-          <Property Name="CODIGO_BODEGA" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="NOIMPORTACION" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="numguiaremisionpos" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
           <Property Name="TELEFONO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CODIGO_BODEGA" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NOIMPORTACION" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
         <EntityType Name="ADMPARAMETROC">
           <Key>
@@ -1411,13 +1425,14 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
             <PropertyRef Name="NUMCONTRATO" />
             <PropertyRef Name="NUMENVIOLAB" />
             <PropertyRef Name="NUMDOCTOR" />
-            <PropertyRef Name="controlcupofvd" />
             <PropertyRef Name="diasgraciavencuota" />
+            <PropertyRef Name="interes" />
             <PropertyRef Name="generandb" />
             <PropertyRef Name="generapagondb" />
-            <PropertyRef Name="interes" />
             <PropertyRef Name="porintmoradia" />
+            <PropertyRef Name="controlcupofvd" />
             <PropertyRef Name="posbloqueofaccre" />
+            <PropertyRef Name="CLIENTEMODELOCARRO" />
           </Key>
           <Property Name="MODULO" Type="String" MaxLength="80" FixedLength="true" Unicode="false" />
           <Property Name="NOMBRECIA" Type="String" MaxLength="80" FixedLength="true" Unicode="false" />
@@ -1459,14 +1474,14 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
           <Property Name="NUMCONTRATO" Type="Int32" Nullable="false" />
           <Property Name="NUMENVIOLAB" Type="Int32" Nullable="false" />
           <Property Name="NUMDOCTOR" Type="Int32" Nullable="false" />
-          <Property Name="controlcupofvd" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="diasgraciavencuota" Type="Int32" Nullable="false" />
+          <Property Name="interes" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="generandb" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="generapagondb" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="interes" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="porintmoradia" Type="Double" Nullable="false" />
+          <Property Name="controlcupofvd" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="posbloqueofaccre" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="CLIENTEMODELOCARRO" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="CLIENTEMODELOCARRO" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="ADMPARAMETROV">
           <Key>
@@ -1537,29 +1552,30 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
             <PropertyRef Name="imprimecodigopos" />
             <PropertyRef Name="UNILEVER" />
             <PropertyRef Name="CODDISTRIBUIDOR" />
+            <PropertyRef Name="tipodocventa" />
+            <PropertyRef Name="itemcredihogar" />
+            <PropertyRef Name="porintcreditomensual" />
+            <PropertyRef Name="nedetel" />
+            <PropertyRef Name="facnedetel" />
+            <PropertyRef Name="ESNOTAVENTA" />
+            <PropertyRef Name="controlcomisariato" />
+            <PropertyRef Name="CAMPRECIOPOS" />
             <PropertyRef Name="campremantenimiento" />
-            <PropertyRef Name="FACNEDETEL" />
+            <PropertyRef Name="FACSERSOS" />
+            <PropertyRef Name="numeroplantilla" />
+            <PropertyRef Name="DATOSCLIPOS" />
+            <PropertyRef Name="INGPREAJI" />
+            <PropertyRef Name="cambiavenpos" />
+            <PropertyRef Name="POSGENERAANTNCR" />
+            <PropertyRef Name="ESRANCHO" />
+            <PropertyRef Name="posmostrarmarca" />
+            <PropertyRef Name="POSCONSERVICIO" />
+            <PropertyRef Name="posconalumno" />
             <PropertyRef Name="POSDOSLINEAS" />
             <PropertyRef Name="poscontrolpreciocosto" />
             <PropertyRef Name="posvendedor" />
-            <PropertyRef Name="cambiavenpos" />
-            <PropertyRef Name="CAMPRECIOPOS" />
             <PropertyRef Name="cartera" />
-            <PropertyRef Name="controlcomisariato" />
-            <PropertyRef Name="DATOSCLIPOS" />
-            <PropertyRef Name="ESNOTAVENTA" />
-            <PropertyRef Name="ESRANCHO" />
-            <PropertyRef Name="FACSERSOS" />
-            <PropertyRef Name="INGPREAJI" />
-            <PropertyRef Name="itemcredihogar" />
-            <PropertyRef Name="nedetel" />
-            <PropertyRef Name="numeroplantilla" />
-            <PropertyRef Name="porintcreditomensual" />
-            <PropertyRef Name="posconalumno" />
-            <PropertyRef Name="POSCONSERVICIO" />
-            <PropertyRef Name="POSGENERAANTNCR" />
-            <PropertyRef Name="posmostrarmarca" />
-            <PropertyRef Name="tipodocventa" />
+            <PropertyRef Name="USACARROCOMPRA" />
           </Key>
           <Property Name="NOMBRECIA" Type="String" MaxLength="80" FixedLength="true" Unicode="false" />
           <Property Name="MODULO" Type="String" MaxLength="80" FixedLength="true" Unicode="false" />
@@ -1702,30 +1718,31 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
           <Property Name="imprimecodigopos" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="UNILEVER" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="CODDISTRIBUIDOR" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tipodocventa" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="itemcredihogar" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="porintcreditomensual" Type="Double" Nullable="false" />
+          <Property Name="nedetel" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="facnedetel" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ESNOTAVENTA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="odbcempresa" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="controlcomisariato" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CAMPRECIOPOS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="campremantenimiento" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="FACNEDETEL" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="FACSERSOS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="numeroplantilla" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="DATOSCLIPOS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="INGPREAJI" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="cambiavenpos" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="POSGENERAANTNCR" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ESRANCHO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="posmostrarmarca" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="POSCONSERVICIO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="posconalumno" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="POSDOSLINEAS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="poscontrolpreciocosto" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="posvendedor" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="cambiavenpos" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="CAMPRECIOPOS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="cartera" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="controlcomisariato" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="DATOSCLIPOS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="ESNOTAVENTA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="ESRANCHO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="FACSERSOS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="INGPREAJI" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="itemcredihogar" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="nedetel" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="numeroplantilla" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
-          <Property Name="odbcempresa" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="porintcreditomensual" Type="Double" Nullable="false" />
-          <Property Name="posconalumno" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="POSCONSERVICIO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="POSGENERAANTNCR" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="posmostrarmarca" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="tipodocventa" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="USACARROCOMPRA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityContainer Name="BDADMSURTIOFFICEEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ADMCABPEDIDO" EntityType="Self.ADMCABPEDIDO" />
@@ -1738,19 +1755,49 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
           <EntitySet Name="ADMBODEGA" EntityType="Self.ADMBODEGA" />
           <EntitySet Name="ADMPARAMETROC" EntityType="Self.ADMPARAMETROC" />
           <EntitySet Name="ADMPARAMETROV" EntityType="Self.ADMPARAMETROV" />
-          <FunctionImport Name="CARROPRO">
+          <FunctionImport Name="CARROPRO" ReturnType="Collection(GUIDOModel.CARROPRO_Result)">
             <Parameter Name="Action" Mode="In" Type="String" />
             <Parameter Name="num" Mode="In" Type="Decimal" />
           </FunctionImport>
+          <EntitySet Name="ADMCANTON" EntityType="GUIDOModel.ADMCANTON" />
+          <EntitySet Name="ADMPROVINCIA" EntityType="GUIDOModel.ADMPROVINCIA" />
         </EntityContainer>
+        <ComplexType Name="CARROPRO_Result">
+          <Property Type="Decimal" Name="PRECIO" Nullable="true" Precision="1" Scale="0" />
+          <Property Type="String" Name="TIPO" Nullable="true" MaxLength="3" />
+          <Property Type="DateTime" Name="FECHA" Nullable="true" Precision="23" />
+          <Property Type="String" Name="OPERADOR" Nullable="true" MaxLength="3" />
+          <Property Type="Int32" Name="ORDEN" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="ADMCANTON">
+          <Key>
+            <PropertyRef Name="codigo" />
+            <PropertyRef Name="provincia" />
+          </Key>
+          <Property Name="codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="provincia" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CODIGOSAP" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="codigo_sap_provincia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ADMPROVINCIA">
+          <Key>
+            <PropertyRef Name="codigo" />
+          </Key>
+          <Property Name="codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="codigosap" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="BDADMSURTIOFFICEModelStoreContainer" CdmEntityContainer="BDADMSURTIOFFICEEntities">
+        <EntityContainerMapping StorageEntityContainer="GUIDOModelStoreContainer" CdmEntityContainer="BDADMSURTIOFFICEEntities">
           <EntitySetMapping Name="ADMCABPEDIDO">
-            <EntityTypeMapping TypeName="BDADMSURTIOFFICEModel.ADMCABPEDIDO">
+            <EntityTypeMapping TypeName="GUIDOModel.ADMCABPEDIDO">
               <MappingFragment StoreEntitySet="ADMCABPEDIDO">
                 <ScalarProperty Name="SECAUTO" ColumnName="SECAUTO" />
                 <ScalarProperty Name="TIPO" ColumnName="TIPO" />
@@ -1788,13 +1835,13 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
                 <ScalarProperty Name="SECAUTOPEDMOVIL" ColumnName="SECAUTOPEDMOVIL" />
                 <ScalarProperty Name="SERIEPOLOCLUB" ColumnName="SERIEPOLOCLUB" />
                 <ScalarProperty Name="CODIGORETAILPRO" ColumnName="CODIGORETAILPRO" />
-                <ScalarProperty Name="NUMEROPLANTILLA" ColumnName="NUMEROPLANTILLA" />
+                <ScalarProperty Name="numeroplantilla" ColumnName="numeroplantilla" />
                 <ScalarProperty Name="CODIGOPEDIDO" ColumnName="CODIGOPEDIDO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ADMCATEGORIA">
-            <EntityTypeMapping TypeName="BDADMSURTIOFFICEModel.ADMCATEGORIA">
+            <EntityTypeMapping TypeName="GUIDOModel.ADMCATEGORIA">
               <MappingFragment StoreEntitySet="ADMCATEGORIA">
                 <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
                 <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
@@ -1805,7 +1852,7 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ADMCLIENTE">
-            <EntityTypeMapping TypeName="BDADMSURTIOFFICEModel.ADMCLIENTE">
+            <EntityTypeMapping TypeName="GUIDOModel.ADMCLIENTE">
               <MappingFragment StoreEntitySet="ADMCLIENTE">
                 <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
                 <ScalarProperty Name="RAZONSOCIAL" ColumnName="RAZONSOCIAL" />
@@ -1900,30 +1947,30 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
                 <ScalarProperty Name="VENDEDORAUX" ColumnName="VENDEDORAUX" />
                 <ScalarProperty Name="CANAL" ColumnName="CANAL" />
                 <ScalarProperty Name="SUBCANAL" ColumnName="SUBCANAL" />
-                <ScalarProperty Name="EWEB" ColumnName="EWEB" />
-                <ScalarProperty Name="ANTICIPO" ColumnName="ANTICIPO" />
-                <ScalarProperty Name="barrio" ColumnName="barrio" />
-                <ScalarProperty Name="CIUDAD" ColumnName="CIUDAD" />
-                <ScalarProperty Name="CODIGOSAP" ColumnName="CODIGOSAP" />
-                <ScalarProperty Name="CodShip" ColumnName="CodShip" />
-                <ScalarProperty Name="coordenada" ColumnName="coordenada" />
-                <ScalarProperty Name="DEUDAS" ColumnName="DEUDAS" />
-                <ScalarProperty Name="FACTURABLE" ColumnName="FACTURABLE" />
                 <ScalarProperty Name="grupocliente" ColumnName="grupocliente" />
                 <ScalarProperty Name="grupocredito" ColumnName="grupocredito" />
-                <ScalarProperty Name="latitud" ColumnName="latitud" />
-                <ScalarProperty Name="longuitud" ColumnName="longuitud" />
+                <ScalarProperty Name="EWEB" ColumnName="EWEB" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="FACTURABLE" ColumnName="FACTURABLE" />
+                <ScalarProperty Name="DEUDAS" ColumnName="DEUDAS" />
+                <ScalarProperty Name="ANTICIPO" ColumnName="ANTICIPO" />
+                <ScalarProperty Name="CIUDAD" ColumnName="CIUDAD" />
+                <ScalarProperty Name="coordenada" ColumnName="coordenada" />
+                <ScalarProperty Name="barrio" ColumnName="barrio" />
                 <ScalarProperty Name="tipodocumento" ColumnName="tipodocumento" />
+                <ScalarProperty Name="CODIGOSAP" ColumnName="CODIGOSAP" />
+                <ScalarProperty Name="CodShip" ColumnName="CodShip" />
+                <ScalarProperty Name="longuitud" ColumnName="longuitud" />
+                <ScalarProperty Name="latitud" ColumnName="latitud" />
                 <ScalarProperty Name="TipoLocalidad" ColumnName="TipoLocalidad" />
-                <ScalarProperty Name="correoCarro" ColumnName="correoCarro" />
-                <ScalarProperty Name="claveCarro" ColumnName="claveCarro" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="CORREOCARRO" ColumnName="CORREOCARRO" />
+                <ScalarProperty Name="CLAVECARRO" ColumnName="CLAVECARRO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ADMDETPEDIDO">
-            <EntityTypeMapping TypeName="BDADMSURTIOFFICEModel.ADMDETPEDIDO">
+            <EntityTypeMapping TypeName="GUIDOModel.ADMDETPEDIDO">
               <MappingFragment StoreEntitySet="ADMDETPEDIDO">
                 <ScalarProperty Name="LINEA" ColumnName="LINEA" />
                 <ScalarProperty Name="SECUENCIAL" ColumnName="SECUENCIAL" />
@@ -1949,17 +1996,17 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
                 <ScalarProperty Name="PORDES2" ColumnName="PORDES2" />
                 <ScalarProperty Name="TIPOPEDIDO" ColumnName="TIPOPEDIDO" />
                 <ScalarProperty Name="DETALLE" ColumnName="DETALLE" />
-                <ScalarProperty Name="codigo_doc" ColumnName="codigo_doc" />
                 <ScalarProperty Name="fechaela" ColumnName="fechaela" />
                 <ScalarProperty Name="fechaven" ColumnName="fechaven" />
-                <ScalarProperty Name="lista" ColumnName="lista" />
                 <ScalarProperty Name="lote" ColumnName="lote" />
+                <ScalarProperty Name="codigo_doc" ColumnName="codigo_doc" />
                 <ScalarProperty Name="tipoproducto" ColumnName="tipoproducto" />
+                <ScalarProperty Name="lista" ColumnName="lista" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ADMFAMILIA">
-            <EntityTypeMapping TypeName="BDADMSURTIOFFICEModel.ADMFAMILIA">
+            <EntityTypeMapping TypeName="GUIDOModel.ADMFAMILIA">
               <MappingFragment StoreEntitySet="ADMFAMILIA">
                 <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
                 <ScalarProperty Name="CATEGORIA" ColumnName="CATEGORIA" />
@@ -1970,9 +2017,8 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ADMITEM">
-            <EntityTypeMapping TypeName="BDADMSURTIOFFICEModel.ADMITEM">
+            <EntityTypeMapping TypeName="GUIDOModel.ADMITEM">
               <MappingFragment StoreEntitySet="ADMITEM">
-                <ScalarProperty Name="ESTAENCARRO" ColumnName="ESTAENCARRO" />
                 <ScalarProperty Name="ITEM" ColumnName="ITEM" />
                 <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
                 <ScalarProperty Name="NOMBRECORTO" ColumnName="NOMBRECORTO" />
@@ -1992,6 +2038,7 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
                 <ScalarProperty Name="STOCKMA" ColumnName="STOCKMA" />
                 <ScalarProperty Name="PESO" ColumnName="PESO" />
                 <ScalarProperty Name="VOLUMEN" ColumnName="VOLUMEN" />
+                <ScalarProperty Name="PRECIO0" ColumnName="PRECIO0" />
                 <ScalarProperty Name="PRECIO1" ColumnName="PRECIO1" />
                 <ScalarProperty Name="PRECIO2" ColumnName="PRECIO2" />
                 <ScalarProperty Name="PRECIO3" ColumnName="PRECIO3" />
@@ -2013,6 +2060,7 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
                 <ScalarProperty Name="CODBARRA" ColumnName="CODBARRA" />
                 <ScalarProperty Name="CANFRA" ColumnName="CANFRA" />
                 <ScalarProperty Name="STOCKMAY" ColumnName="STOCKMAY" />
+                <ScalarProperty Name="PORUTIPRE0" ColumnName="PORUTIPRE0" />
                 <ScalarProperty Name="PORUTIPRE1" ColumnName="PORUTIPRE1" />
                 <ScalarProperty Name="PORUTIPRE2" ColumnName="PORUTIPRE2" />
                 <ScalarProperty Name="PORUTIPRE3" ColumnName="PORUTIPRE3" />
@@ -2041,19 +2089,18 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
                 <ScalarProperty Name="percha" ColumnName="percha" />
                 <ScalarProperty Name="REGSANITARIO" ColumnName="REGSANITARIO" />
                 <ScalarProperty Name="EWEB" ColumnName="EWEB" />
+                <ScalarProperty Name="TIPOPRODUCTO" ColumnName="TIPOPRODUCTO" />
                 <ScalarProperty Name="cantidadxcaja" ColumnName="cantidadxcaja" />
                 <ScalarProperty Name="CodShip" ColumnName="CodShip" />
                 <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="PORUTIPRE0" ColumnName="PORUTIPRE0" />
-                <ScalarProperty Name="PRECIO0" ColumnName="PRECIO0" />
                 <ScalarProperty Name="subcategoria" ColumnName="subcategoria" />
-                <ScalarProperty Name="TIPOPRODUCTO" ColumnName="TIPOPRODUCTO" />
                 <ScalarProperty Name="CARRO" ColumnName="CARRO" />
+                <ScalarProperty Name="ESTAENCARRO" ColumnName="ESTAENCARRO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ADMMARCA">
-            <EntityTypeMapping TypeName="BDADMSURTIOFFICEModel.ADMMARCA">
+            <EntityTypeMapping TypeName="GUIDOModel.ADMMARCA">
               <MappingFragment StoreEntitySet="ADMMARCA">
                 <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
                 <ScalarProperty Name="CATEGORIA" ColumnName="CATEGORIA" />
@@ -2067,7 +2114,7 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ADMBODEGA">
-            <EntityTypeMapping TypeName="BDADMSURTIOFFICEModel.ADMBODEGA">
+            <EntityTypeMapping TypeName="GUIDOModel.ADMBODEGA">
               <MappingFragment StoreEntitySet="ADMBODEGA">
                 <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
                 <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
@@ -2114,15 +2161,15 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
                 <ScalarProperty Name="NOAUTOSRIRET" ColumnName="NOAUTOSRIRET" />
                 <ScalarProperty Name="BODATS" ColumnName="BODATS" />
                 <ScalarProperty Name="NOCONTROLPACIENTE" ColumnName="NOCONTROLPACIENTE" />
-                <ScalarProperty Name="CODIGO_BODEGA" ColumnName="CODIGO_BODEGA" />
-                <ScalarProperty Name="NOIMPORTACION" ColumnName="NOIMPORTACION" />
                 <ScalarProperty Name="numguiaremisionpos" ColumnName="numguiaremisionpos" />
                 <ScalarProperty Name="TELEFONO" ColumnName="TELEFONO" />
+                <ScalarProperty Name="CODIGO_BODEGA" ColumnName="CODIGO_BODEGA" />
+                <ScalarProperty Name="NOIMPORTACION" ColumnName="NOIMPORTACION" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ADMPARAMETROC">
-            <EntityTypeMapping TypeName="BDADMSURTIOFFICEModel.ADMPARAMETROC">
+            <EntityTypeMapping TypeName="GUIDOModel.ADMPARAMETROC">
               <MappingFragment StoreEntitySet="ADMPARAMETROC">
                 <ScalarProperty Name="MODULO" ColumnName="MODULO" />
                 <ScalarProperty Name="NOMBRECIA" ColumnName="NOMBRECIA" />
@@ -2164,19 +2211,19 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
                 <ScalarProperty Name="NUMCONTRATO" ColumnName="NUMCONTRATO" />
                 <ScalarProperty Name="NUMENVIOLAB" ColumnName="NUMENVIOLAB" />
                 <ScalarProperty Name="NUMDOCTOR" ColumnName="NUMDOCTOR" />
-                <ScalarProperty Name="controlcupofvd" ColumnName="controlcupofvd" />
                 <ScalarProperty Name="diasgraciavencuota" ColumnName="diasgraciavencuota" />
+                <ScalarProperty Name="interes" ColumnName="interes" />
                 <ScalarProperty Name="generandb" ColumnName="generandb" />
                 <ScalarProperty Name="generapagondb" ColumnName="generapagondb" />
-                <ScalarProperty Name="interes" ColumnName="interes" />
                 <ScalarProperty Name="porintmoradia" ColumnName="porintmoradia" />
+                <ScalarProperty Name="controlcupofvd" ColumnName="controlcupofvd" />
                 <ScalarProperty Name="posbloqueofaccre" ColumnName="posbloqueofaccre" />
                 <ScalarProperty Name="CLIENTEMODELOCARRO" ColumnName="CLIENTEMODELOCARRO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ADMPARAMETROV">
-            <EntityTypeMapping TypeName="BDADMSURTIOFFICEModel.ADMPARAMETROV">
+            <EntityTypeMapping TypeName="GUIDOModel.ADMPARAMETROV">
               <MappingFragment StoreEntitySet="ADMPARAMETROV">
                 <ScalarProperty Name="NOMBRECIA" ColumnName="NOMBRECIA" />
                 <ScalarProperty Name="MODULO" ColumnName="MODULO" />
@@ -2319,34 +2366,56 @@ advertencia 6002: La tabla o vista 'BDADMSURTIOFFICE.dbo.ADMPARAMETROV' no tiene
                 <ScalarProperty Name="imprimecodigopos" ColumnName="imprimecodigopos" />
                 <ScalarProperty Name="UNILEVER" ColumnName="UNILEVER" />
                 <ScalarProperty Name="CODDISTRIBUIDOR" ColumnName="CODDISTRIBUIDOR" />
+                <ScalarProperty Name="tipodocventa" ColumnName="tipodocventa" />
+                <ScalarProperty Name="itemcredihogar" ColumnName="itemcredihogar" />
+                <ScalarProperty Name="porintcreditomensual" ColumnName="porintcreditomensual" />
+                <ScalarProperty Name="nedetel" ColumnName="nedetel" />
+                <ScalarProperty Name="facnedetel" ColumnName="facnedetel" />
+                <ScalarProperty Name="ESNOTAVENTA" ColumnName="ESNOTAVENTA" />
+                <ScalarProperty Name="odbcempresa" ColumnName="odbcempresa" />
+                <ScalarProperty Name="controlcomisariato" ColumnName="controlcomisariato" />
+                <ScalarProperty Name="CAMPRECIOPOS" ColumnName="CAMPRECIOPOS" />
                 <ScalarProperty Name="campremantenimiento" ColumnName="campremantenimiento" />
-                <ScalarProperty Name="FACNEDETEL" ColumnName="FACNEDETEL" />
+                <ScalarProperty Name="FACSERSOS" ColumnName="FACSERSOS" />
+                <ScalarProperty Name="numeroplantilla" ColumnName="numeroplantilla" />
+                <ScalarProperty Name="DATOSCLIPOS" ColumnName="DATOSCLIPOS" />
+                <ScalarProperty Name="INGPREAJI" ColumnName="INGPREAJI" />
+                <ScalarProperty Name="cambiavenpos" ColumnName="cambiavenpos" />
+                <ScalarProperty Name="POSGENERAANTNCR" ColumnName="POSGENERAANTNCR" />
+                <ScalarProperty Name="ESRANCHO" ColumnName="ESRANCHO" />
+                <ScalarProperty Name="posmostrarmarca" ColumnName="posmostrarmarca" />
+                <ScalarProperty Name="POSCONSERVICIO" ColumnName="POSCONSERVICIO" />
+                <ScalarProperty Name="posconalumno" ColumnName="posconalumno" />
                 <ScalarProperty Name="POSDOSLINEAS" ColumnName="POSDOSLINEAS" />
                 <ScalarProperty Name="poscontrolpreciocosto" ColumnName="poscontrolpreciocosto" />
                 <ScalarProperty Name="posvendedor" ColumnName="posvendedor" />
-                <ScalarProperty Name="cambiavenpos" ColumnName="cambiavenpos" />
-                <ScalarProperty Name="CAMPRECIOPOS" ColumnName="CAMPRECIOPOS" />
                 <ScalarProperty Name="cartera" ColumnName="cartera" />
-                <ScalarProperty Name="controlcomisariato" ColumnName="controlcomisariato" />
-                <ScalarProperty Name="DATOSCLIPOS" ColumnName="DATOSCLIPOS" />
-                <ScalarProperty Name="ESNOTAVENTA" ColumnName="ESNOTAVENTA" />
-                <ScalarProperty Name="ESRANCHO" ColumnName="ESRANCHO" />
-                <ScalarProperty Name="FACSERSOS" ColumnName="FACSERSOS" />
-                <ScalarProperty Name="INGPREAJI" ColumnName="INGPREAJI" />
-                <ScalarProperty Name="itemcredihogar" ColumnName="itemcredihogar" />
-                <ScalarProperty Name="nedetel" ColumnName="nedetel" />
-                <ScalarProperty Name="numeroplantilla" ColumnName="numeroplantilla" />
-                <ScalarProperty Name="odbcempresa" ColumnName="odbcempresa" />
-                <ScalarProperty Name="porintcreditomensual" ColumnName="porintcreditomensual" />
-                <ScalarProperty Name="posconalumno" ColumnName="posconalumno" />
-                <ScalarProperty Name="POSCONSERVICIO" ColumnName="POSCONSERVICIO" />
-                <ScalarProperty Name="POSGENERAANTNCR" ColumnName="POSGENERAANTNCR" />
-                <ScalarProperty Name="posmostrarmarca" ColumnName="posmostrarmarca" />
-                <ScalarProperty Name="tipodocventa" ColumnName="tipodocventa" />
+                <ScalarProperty Name="USACARROCOMPRA" ColumnName="USACARROCOMPRA" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="CARROPRO" FunctionName="BDADMSURTIOFFICEModel.Store.CARROPRO" />
+          <EntitySetMapping Name="ADMCANTON">
+            <EntityTypeMapping TypeName="GUIDOModel.ADMCANTON">
+              <MappingFragment StoreEntitySet="ADMCANTON">
+                <ScalarProperty Name="codigo_sap_provincia" ColumnName="codigo_sap_provincia" />
+                <ScalarProperty Name="CODIGOSAP" ColumnName="CODIGOSAP" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="provincia" ColumnName="provincia" />
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ADMPROVINCIA">
+            <EntityTypeMapping TypeName="GUIDOModel.ADMPROVINCIA">
+              <MappingFragment StoreEntitySet="ADMPROVINCIA">
+                <ScalarProperty Name="codigosap" ColumnName="codigosap" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

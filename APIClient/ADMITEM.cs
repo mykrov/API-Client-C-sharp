@@ -33,6 +33,7 @@ namespace APIClient
         public Nullable<decimal> STOCKMA { get; set; }
         public Nullable<double> PESO { get; set; }
         public Nullable<double> VOLUMEN { get; set; }
+        public Nullable<double> PRECIO0 { get; set; }
         public Nullable<double> PRECIO1 { get; set; }
         public Nullable<double> PRECIO2 { get; set; }
         public Nullable<double> PRECIO3 { get; set; }
@@ -54,10 +55,11 @@ namespace APIClient
         public string CODBARRA { get; set; }
         public string CANFRA { get; set; }
         public int STOCKMAY { get; set; }
+        public double PORUTIPRE0 { get; set; }
         public double PORUTIPRE1 { get; set; }
         public double PORUTIPRE2 { get; set; }
         public double PORUTIPRE3 { get; set; }
-        public Nullable<double> PORUTIPRE4 { get; set; }
+        public double PORUTIPRE4 { get; set; }
         public double PORUTIPRE5 { get; set; }
         public double LITROS { get; set; }
         public string WEB { get; set; }
@@ -82,13 +84,11 @@ namespace APIClient
         public string percha { get; set; }
         public string REGSANITARIO { get; set; }
         public string EWEB { get; set; }
+        public string TIPOPRODUCTO { get; set; }
         public Nullable<decimal> cantidadxcaja { get; set; }
         public string CodShip { get; set; }
         public string descripcion { get; set; }
-        public double PORUTIPRE0 { get; set; }
-        public Nullable<double> PRECIO0 { get; set; }
         public string subcategoria { get; set; }
-        public string TIPOPRODUCTO { get; set; }
         public string CARRO { get; set; }
         public string ESTAENCARRO { get; set; }
     }

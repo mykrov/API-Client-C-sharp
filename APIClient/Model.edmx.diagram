@@ -4,17 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d9f008d71b6043fa995c3decaec27627" Name="Diagram1" ZoomLevel="63">
-        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMCABPEDIDO" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMCATEGORIA" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMCLIENTE" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMDETPEDIDO" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMFAMILIA" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMITEM" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMMARCA" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMBODEGA" Width="1.5" PointX="8.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMPARAMETROC" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BDADMSURTIOFFICEModel.ADMPARAMETROV" Width="1.5" PointX="10.75" PointY="11.75" IsExpanded="true" />
+      <Diagram DiagramId="ccca3c5070c94fa8938a5d0adc02d22e" Name="Diagram1" ZoomLevel="61">
+        <EntityTypeShape EntityType="GUIDOModel.ADMCABPEDIDO" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GUIDOModel.ADMCATEGORIA" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GUIDOModel.ADMCLIENTE" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GUIDOModel.ADMDETPEDIDO" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GUIDOModel.ADMFAMILIA" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GUIDOModel.ADMITEM" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GUIDOModel.ADMMARCA" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GUIDOModel.ADMBODEGA" Width="1.5" PointX="8.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GUIDOModel.ADMPARAMETROC" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GUIDOModel.ADMPARAMETROV" Width="1.5" PointX="10.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GUIDOModel.ADMCANTON" Width="1.5" PointX="13.375" PointY="0.75" />
+        <EntityTypeShape EntityType="GUIDOModel.ADMPROVINCIA" Width="1.5" PointX="13.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

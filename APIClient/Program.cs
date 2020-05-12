@@ -43,8 +43,8 @@ namespace APIClient
                     cliw.activacion = "habilitar";
                     cliw.nombre = item.RAZONSOCIAL.Trim();
                     cliw.apellido = item.RAZONSOCIAL.Trim();
-                    cliw.contrasenia = item.claveCarro;
-                    cliw.correo = item.correoCarro;
+                    cliw.contrasenia = item.CLAVECARRO;
+                    cliw.correo = item.CORREOCARRO;
                     cliw.identificacion = "RUC";
                     cliw.numero_identificacion = item.RUC.Trim();
                     if (item.DIRECCION.Trim().Length > 45)
@@ -103,6 +103,17 @@ namespace APIClient
                     marcalist.Add(marcasin);
 
                 }
+
+                //Listado de Provincias
+                List<ADMPROVINCIA> provincias = (from c in db.ADMPROVINCIA 
+                                                 where (c.estado == "A") 
+                                                 select c).ToList();
+
+                //Listado de Cantones
+                List<ADMCANTON> cantones = (from c in db.ADMCANTON
+                                                 where (c.estado == "A")
+                                                 select c).ToList();
+
 
                 //listado de Productos
                 List<ADMITEM> productos = (from c in db.ADMITEM
@@ -168,6 +179,8 @@ namespace APIClient
                 Uri uMarca = new Uri(urlbase + "api/marca");
                 Uri uProducto = new Uri(urlbase + "api/productos");
                 Uri uTipoCliente = new Uri(urlbase + "api/tipocliente");
+                Uri postCantones = new Uri(urlbase + "api/cantones");
+                Uri postProvincias = new Uri(urlbase + "api/provincias");
 
 
                 //Chequear que el servidor de API web esta Up.
@@ -202,27 +215,33 @@ namespace APIClient
                             string userPassword = ConfigurationManager.AppSettings.Get("userPassword");
                             Uri lin = new Uri(urlbase + "api/login");
 
+                           
+
                             if (TOKEN == "")
                             {
+                               
                                 //una tarea se ejecuta al finalizar la predecesora.
                                 Task<string> tokenValid = Task.Run(() => LoginApi(lin, userEmail, userPassword));
-                                Task usuarios = tokenValid.ContinueWith(x => GetUsuarios(DateTime.Now.Date.ToString("dd-MM-yyyy")));
+                                Task a = tokenValid.ContinueWith(x => PostCategorias(listacate, uCate));
+                                Task c = a.ContinueWith(x => PostMarcas(marcalist, uMarca));
+                                Task e = c.ContinueWith(x => PostClientePrecio(clientePrecios, uTipoCliente));
+                                Task b = e.ContinueWith(x => PostClientes(usuariosw, uClien));
+                                Task usuarios = e.ContinueWith(x => GetUsuarios(DateTime.Now.Date.ToString("dd-MM-yyyy")));
                                 Task pedidos = usuarios.ContinueWith(x => GetPedidos());
-                                Task a = pedidos.ContinueWith(x => PostCategorias(listacate, uCate));
-                                Task b = a.ContinueWith(x => PostClientes(usuariosw, uClien));
-                                Task c = b.ContinueWith(x => PostMarcas(marcalist, uMarca));
-                                Task d = c.ContinueWith(x => PostProducto(listaPro, uProducto));
-                                Task e = d.ContinueWith(x => PostClientePrecio(clientePrecios, uTipoCliente));
+                                Task d = b.ContinueWith(x => PostProducto(listaPro, uProducto));
+                                Task f = d.ContinueWith(x => PostProvincias(provincias, postProvincias));
+                                Task g = f.ContinueWith(x => PostCantones(cantones, postCantones));
+
                             }
-                            
-                                HttpResponseMessage response = getTask.Result;
+
+                            HttpResponseMessage response = getTask.Result;
                         }
                     });
 
                 //GetUsuarios("12-07-2019");
                 //Console.ReadKey();
 
-                Thread.Sleep(20000);
+                Thread.Sleep(22000);
 
             }
         }
@@ -254,6 +273,7 @@ namespace APIClient
                 TOKEN = RootObjects.token;
                 using (StreamWriter file = new StreamWriter(@"log.txt", true))
                 {
+                    Console.WriteLine(TOKEN);
                     file.WriteLine("Token Usado: " + TOKEN);
                     file.Close();
                 }
@@ -298,109 +318,115 @@ namespace APIClient
                                 foreach (var pedido in RootObjects.pedidos)
                                 {
                                     var Cliente = (from c in db.ADMCLIENTE where (c.RUC == pedido.ruc) select c).FirstOrDefault();
-
-                                    ADMCABPEDIDO ped = new ADMCABPEDIDO();
-                                    ped.TIPO = "PED";
-                                    ped.BODEGA = parametroV.BODFAC.Value;
-                                    ped.NUMERO = Numfactura + 1;
-                                    ped.SECUENCIAL = secuencial + 1;
-                                    ped.CLIENTE = Cliente.CODIGO;
-                                    ped.VENDEDOR = parametroC.CODVENPOS;
-                                    ped.FECHA = DateTime.ParseExact(pedido.fecha, "dd/MM/yyyy", culture); ;
-                                    ped.ESTADO = "CAR";
-                                    ped.SUBTOTAL = pedido.subtotal;
-                                    ped.DESCUENTO = 0;
-                                    ped.IVA = pedido.iva;
-                                    ped.NETO = pedido.total;
-                                    ped.PESO = 0;
-                                    ped.VOLUMEN = 0;
-                                    ped.OPERADOR = "ADM";
-                                    ped.COMENTARIO = "Gracias-web";
-                                    ped.OBSERVACION = "Pedido-Web";
-                                    ped.FACTURA = null;
-                                    ped.GUIA = null;
-                                    ped.DOCFAC = "FAC";
-                                    ped.DIASCRED = "99";
-                                    ped.GRAVAIVA = pedido.Graba_iva;
-                                    ped.CREDITO = "N";
-                                    ped.NUMCUOTAS = null;
-                                    ped.FECHALIBERACION = null;
-                                    ped.HORALIBERACION = null;
-                                    ped.OPERLIBERACION = null;
-                                    ped.TRANSPORTE = 0;
-                                    ped.RECARGO = 0;
-                                    ped.TIPOCLIENTE = Cliente.TIPO;
-                                    ped.SUCURSAL = "";
-                                    ped.ESMOVIL = "N";
-                                    ped.SECAUTOPEDMOVIL = null;
-                                    ped.SERIEPOLOCLUB = "000000";
-                                    ped.CODIGORETAILPRO = null;
-                                    ped.NUMEROPLANTILLA = 0;
-                                    ped.CODIGOPEDIDO = 0;
-
-                                    db.ADMCABPEDIDO.Add(ped);
-                                    contadorCabeceras++;
-                                    Numfactura++;
-                                    secuencial++;
-
-                                    pedido.estado = "P";
-                                    //pedido.idusuario = pedido.idusuario;
-                                    CabecerasProcesados.Add(pedido);
-
-                                    //Lista Detalles de la Actual Cabecera para almacenar en ADM.
-                                    List<DetalleWeb> detalles = (from c in RootObjects.detalles where (c.idventa == pedido.idventas) select c).ToList();
-                                    int linea = 0;
-                                    foreach (var detaw in detalles)
+                                    if (Cliente != null)
                                     {
-                                        string idPro = Convert.ToString(detaw.idproducto);
-                                        ADMITEM producto = (from c in db.ADMITEM where (c.ITEM == idPro) select c).First();
-                                        decimal factor = producto.FACTOR.Value;
-                                        decimal res = detaw.cantidad / factor;
+                                        ADMCABPEDIDO ped = new ADMCABPEDIDO();
+                                        ped.TIPO = "PED";
+                                        ped.BODEGA = parametroV.BODFAC.Value;
+                                        ped.NUMERO = Numfactura + 1;
+                                        ped.SECUENCIAL = secuencial + 1;
+                                        ped.CLIENTE = Cliente.CODIGO;
+                                        ped.VENDEDOR = parametroC.CODVENPOS;
+                                        ped.FECHA = DateTime.ParseExact(pedido.fecha, "dd/MM/yyyy", culture);
+                                        ped.ESTADO = "WEB";
+                                        ped.SUBTOTAL = pedido.subtotal;
+                                        ped.DESCUENTO = 0;
+                                        ped.IVA = pedido.iva;
+                                        ped.NETO = pedido.total;
+                                        ped.PESO = 0;
+                                        ped.VOLUMEN = 0;
+                                        ped.OPERADOR = "ADM";
+                                        ped.COMENTARIO = "Gracias-web";
+                                        ped.OBSERVACION = "Pedido-Web";
+                                        ped.FACTURA = null;
+                                        ped.GUIA = null;
+                                        ped.DOCFAC = "FAC";
+                                        ped.DIASCRED = "99";
+                                        ped.GRAVAIVA = pedido.Graba_iva;
+                                        ped.CREDITO = "N";
+                                        ped.NUMCUOTAS = null;
+                                        ped.FECHALIBERACION = null;
+                                        ped.HORALIBERACION = null;
+                                        ped.OPERLIBERACION = null;
+                                        ped.TRANSPORTE = 0;
+                                        ped.RECARGO = 0;
+                                        ped.TIPOCLIENTE = Cliente.TIPO;
+                                        ped.SUCURSAL = "";
+                                        ped.ESMOVIL = "N";
+                                        ped.SECAUTOPEDMOVIL = null;
+                                        ped.SERIEPOLOCLUB = "000000";
+                                        ped.CODIGORETAILPRO = null;
+                                        //ped.NUMEROPLANTILLA = 0;
+                                        ped.CODIGOPEDIDO = 0;
 
-                                        ADMDETPEDIDO detal = new ADMDETPEDIDO();
-                                        detal.LINEA = linea + 1;
-                                        detal.SECUENCIAL = ped.SECUENCIAL;
-                                        detal.ITEM = Convert.ToString(detaw.idproducto);
+                                        db.ADMCABPEDIDO.Add(ped);
+                                        contadorCabeceras++;
+                                     
 
-                                        if (res >= 1)
+                                        pedido.estado = "P";
+                                        //pedido.idusuario = pedido.idusuario;
+                                        CabecerasProcesados.Add(pedido);
+
+                                        //Lista Detalles de la Actual Cabecera para almacenar en ADM.
+                                        List<DetalleWeb> detalles = (from c in RootObjects.detalles where (c.idventa == pedido.idventas) select c).ToList();
+                                        int linea = 0;
+                                        foreach (var detaw in detalles)
                                         {
-                                            detal.CANTIC = Convert.ToInt32(Math.Truncate(res));
+                                            string idPro = Convert.ToString(detaw.idproducto);
+                                            ADMITEM producto = (from c in db.ADMITEM where (c.ITEM == idPro) select c).First();
+                                            decimal factor = producto.FACTOR.Value;
+                                            decimal res = detaw.cantidad / factor;
+
+                                            ADMDETPEDIDO detal = new ADMDETPEDIDO();
+                                            detal.LINEA = linea + 1;
+                                            detal.SECUENCIAL = ped.SECUENCIAL;
+                                            detal.ITEM = Convert.ToString(detaw.idproducto);
+
+                                            if (res >= 1)
+                                            {
+                                                detal.CANTIC = Convert.ToInt32(Math.Truncate(res));
+                                            }
+                                            else
+                                            {
+                                                detal.CANTIC = 0;
+                                            }
+                                            detal.CANTIU = Convert.ToInt32(Math.Truncate(detaw.cantidad % factor));
+                                            detal.CANTFUN = detaw.cantidad;
+                                            detal.COSTOP = producto.COSTOP;
+                                            detal.COSTOU = producto.COSTOU;
+                                            detal.PORDES = 0;
+                                            detal.PORDES2 = 0;
+                                            detal.DESCUENTO = 0;
+                                            detal.FORMAVTA = "V";
+                                            detal.PRECIO = detaw.precio;
+                                            detal.SUBTOTAL = detaw.subtotal;
+                                            detal.IVA = detaw.iva;
+                                            detal.NETO = detaw.valor_neto;
+                                            detal.ESTADO = null;
+                                            detal.FACTURADO = null;
+                                            detal.GRAVAIVA = detaw.graba_iva;
+                                            detal.TIPOPEDIDO = null;
+                                            detal.TIPOITEM = "B";
+                                            detal.LINGENCONDICION = 0;
+                                            detal.DETALLE = "Pedido Web";
+                                            detal.lote = "";
+                                            db.ADMDETPEDIDO.Add(detal);
+                                            linea++;
                                         }
-                                        else
-                                        {
-                                            detal.CANTIC = 0;
-                                        }
-                                        detal.CANTIU = Convert.ToInt32(Math.Truncate(detaw.cantidad % factor));
-                                        detal.CANTFUN = detaw.cantidad;
-                                        detal.COSTOP = producto.COSTOP;
-                                        detal.COSTOU = producto.COSTOU;
-                                        detal.PORDES = 0;
-                                        detal.PORDES2 = 0;
-                                        detal.DESCUENTO = 0;
-                                        detal.FORMAVTA = "V";
-                                        detal.PRECIO = detaw.precio;
-                                        detal.SUBTOTAL = detaw.subtotal;
-                                        detal.IVA = detaw.iva;
-                                        detal.NETO = detaw.valor_neto;
-                                        detal.ESTADO = null;
-                                        detal.FACTURADO = null;
-                                        detal.GRAVAIVA = detaw.graba_iva;
-                                        detal.TIPOPEDIDO = null;
-                                        detal.TIPOITEM = "B";
-                                        detal.LINGENCONDICION = 0;
-                                        detal.DETALLE = "Pedido Web";
-                                        detal.lote = "";
-                                        db.ADMDETPEDIDO.Add(detal);
-                                        linea++;
+                                        detalles.Clear();
+
+                                        //db.CARROPRO("Secuencial", secuencial);
+                                        //db.CARROPRO("NumeroFactura", Numfactura);
+                                        Numfactura++;
+                                        secuencial++;
+                                        db.Database.ExecuteSqlCommand("UPDATE ADMPARAMETROV set SECUENCIAL = @num", new SqlParameter("@num", secuencial));
+                                        db.Database.ExecuteSqlCommand("UPDATE ADMBODEGA set NOFACTURA = @num", new SqlParameter("@num", Numfactura));
+                                        db.SaveChanges();
+                                        
+
                                     }
-                                    detalles.Clear();
+                                    
                                 }
-
-                                int res1 = db.CARROPRO("Secuencial", secuencial);
-                                int res2 = db.CARROPRO("NumeroFactura", Numfactura);
-                                //db.Database.ExecuteSqlCommand("UPDATE ADMPARAMETROV set SECUENCIAL = @num", new SqlParameter("@num", secuencial));
-                                //db.Database.ExecuteSqlCommand("UPDATE ADMBODEGA set NOFACTURA = @num", new SqlParameter("@num", Numfactura));
-                                db.SaveChanges();
                                 trans.Commit();
 
                                 //Envio de Cabeceras para actualizar en WEB.
@@ -409,6 +435,7 @@ namespace APIClient
 
                                 using (StreamWriter file = new StreamWriter(@"log.txt", true))
                                 {
+                                    Console.WriteLine("Se obtuvieron: " + RootObjects.pedidos.Count() + " Pedidos, Guardados : " + contadorCabeceras);
                                     file.WriteLine("Se obtuvieron: " + RootObjects.pedidos.Count() + " Pedidos, Guardados : " + contadorCabeceras);
                                     file.Close();
                                 }
@@ -419,14 +446,17 @@ namespace APIClient
                             }
                             catch (Exception e)
                             {
-                                trans.Rollback();
+                                Console.WriteLine("Error en almancenar pedidos:" + e);
+                                Console.WriteLine(e);
+                                //trans.Rollback();
                                 using (StreamWriter file = new StreamWriter(@"log.txt", true))
                                 {
+                                 
                                     file.WriteLine("Error en almancenar pedidos:" + e);
                                     file.Close();
                                 }
                                 //Console.WriteLine("Error en almancenar pedidos");
-                                //Console.WriteLine(e);
+                                
                             }
                         }
                     }
@@ -459,6 +489,7 @@ namespace APIClient
 
                 using (StreamWriter file = new StreamWriter(@"log.txt", true))
                 {
+                    Console.WriteLine("Actualizacion de pedido en web Finalizado, total: " + actualizados + ", No Actualizados: " + noActualizado);
                     file.WriteLine("Actualizacion de pedido en web Finalizado, total: " + actualizados + ", No Actualizados: " + noActualizado);
                     file.Close();
                 }
@@ -523,64 +554,76 @@ namespace APIClient
                                         nUser.CODIGO = clienteLetra + numeroTemp;
                                         nUser.RAZONSOCIAL = usuario.nombre + " " + usuario.apellido;
                                         nUser.CLIENTEWEB = baseCli.CLIENTEWEB;
-                                        nUser.CLIENTEDOMI = baseCli.CLIENTEDOMI;
-                                        nUser.NEGOCIO = baseCli.NEGOCIO;
+                                        nUser.CLIENTEDOMI = baseCli.CLIENTEDOMI.Trim();
+                                        nUser.NEGOCIO = baseCli.NEGOCIO.Trim();
                                         nUser.REPRESENTA = usuario.nombre + " " + usuario.apellido;
-                                        nUser.RUC = usuario.numero_identificacion;
-                                        nUser.DIRECCION = usuario.direccion;
-                                        nUser.TELEFONOS = usuario.celular1;
-                                        nUser.EMAIL = usuario.correo;
-                                        nUser.TIPO = usuario.idtipo;
-                                        nUser.PROVINCIA = baseCli.PROVINCIA;
-                                        nUser.CANTON = baseCli.CANTON;
-                                        nUser.PARROQUIA = baseCli.PARROQUIA;
-                                        nUser.SECTOR = baseCli.SECTOR;
-                                        nUser.TIPONEGO = baseCli.TIPONEGO;
-                                        nUser.RUTA = baseCli.RUTA;
+                                        nUser.RUC = usuario.numero_identificacion.Trim();
+                                        nUser.DIRECCION = usuario.direccion.Trim();
+                                        nUser.TELEFONOS = usuario.celular1.Trim();
+                                        nUser.EMAIL = usuario.correo.Trim();
+                                        nUser.TIPO = usuario.idtipo.Trim();
+                                        nUser.PROVINCIA = usuario.ciudad;
+                                        nUser.CANTON = usuario.canton;
+                                        nUser.PARROQUIA = baseCli.PARROQUIA.Trim();
+                                        nUser.SECTOR = baseCli.SECTOR.Trim();
+                                        nUser.TIPONEGO = baseCli.TIPONEGO.Trim();
+                                        nUser.RUTA = baseCli.RUTA.Trim();
                                         nUser.FECHAING = Convert.ToDateTime(usuario.ingreso);
                                         nUser.FECNAC = Convert.ToDateTime(usuario.ingreso);
-                                        nUser.ESTADO = baseCli.ESTADO;
-                                        nUser.VENDEDOR = parametroC.CODVENPOS;
-                                        nUser.FORMAPAG = baseCli.FORMAPAG;
-                                        nUser.IVA = baseCli.IVA;
-                                        nUser.BACKORDER = baseCli.BACKORDER;
-                                        nUser.RETENPED = baseCli.RETENPED;
-                                        nUser.RETIENEFUENTE = baseCli.RETIENEFUENTE;
-                                        nUser.RETIENEIVA = baseCli.RETIENEIVA;
+                                        nUser.ESTADO = baseCli.ESTADO.Trim();
+                                        nUser.VENDEDOR = parametroC.CODVENPOS.Trim();
+                                        nUser.FORMAPAG = baseCli.FORMAPAG.Trim();
+                                        nUser.IVA = baseCli.IVA.Trim();
+                                        nUser.BACKORDER = baseCli.BACKORDER.Trim();
+                                        nUser.RETENPED = baseCli.RETENPED.Trim();
+                                        nUser.RETIENEFUENTE = baseCli.RETIENEFUENTE.Trim();
+                                        nUser.RETIENEIVA = baseCli.RETIENEIVA.Trim();
                                         nUser.PORDESSUGERIDO = baseCli.PORDESSUGERIDO;
-                                        nUser.CONFINAL = baseCli.CONFINAL;
-                                        nUser.CLASE = baseCli.CLASE;
-                                        nUser.OBSERVACION = baseCli.OBSERVACION;
+                                        nUser.CONFINAL = baseCli.CONFINAL.Trim();
+                                        nUser.CLASE = baseCli.CLASE.Trim();
+                                        nUser.OBSERVACION = baseCli.OBSERVACION.Trim();
                                         nUser.FACTURAELECTRONICA = baseCli.FACTURAELECTRONICA;
-                                        nUser.CLAVEFE = baseCli.CLAVEFE;
-                                        nUser.SUBIRWEB = baseCli.SUBIRWEB;
-                                        nUser.TDCREDITO = baseCli.TDCREDITO;
+                                        nUser.CLAVEFE = baseCli.CLAVEFE.Trim();
+                                        nUser.SUBIRWEB = baseCli.SUBIRWEB.Trim();
+                                        nUser.TDCREDITO = baseCli.TDCREDITO.Trim();
                                         nUser.DIASCREDIT = baseCli.DIASCREDIT;
-                                        nUser.TIPOCUENTA = baseCli.TIPOCUENTA;
-                                        nUser.TIPOPERSONA = baseCli.TIPOPERSONA;
-
-                                        nUser.ZONA = baseCli.ZONA;
-                                        nUser.TIPOPERSONAADICIONAL = baseCli.TIPOPERSONAADICIONAL;
-                                        nUser.PAGOCUOTAS = baseCli.PAGOCUOTAS;
-                                        nUser.SEXO = baseCli.SEXO;
-                                        nUser.ESTADOPARAWEB = baseCli.ESTADOPARAWEB;
-                                        nUser.CLIRELACIONADO = baseCli.CLIRELACIONADO;
-                                        nUser.VENDEDORAUX = baseCli.VENDEDORAUX;
+                                        nUser.TIPOCUENTA = baseCli.TIPOCUENTA.Trim();
+                                        nUser.TIPOPERSONA = baseCli.TIPOPERSONA.Trim();
+                                        nUser.ZONA = baseCli.ZONA.Trim();
+                                        nUser.TIPOPERSONAADICIONAL = baseCli.TIPOPERSONAADICIONAL.Trim();
+                                        nUser.PAGOCUOTAS = baseCli.PAGOCUOTAS.Trim();
+                                        nUser.SEXO = baseCli.SEXO.Trim();
+                                        nUser.ESTADOPARAWEB = baseCli.ESTADOPARAWEB.Trim();
+                                        nUser.CLIRELACIONADO = baseCli.CLIRELACIONADO.Trim();
+                                        nUser.VENDEDORAUX = baseCli.VENDEDORAUX.Trim();
                                         nUser.TIPODOC = usuario.identificacion.Substring(0, 1).ToUpper();
-                                        nUser.TIPOCONTRIBUYENTE = baseCli.TIPOCONTRIBUYENTE;
-                                        nUser.EWEB = baseCli.EWEB;
+                                        nUser.TIPOCONTRIBUYENTE = baseCli.TIPOCONTRIBUYENTE.Trim();
+                                        nUser.EWEB = "S"; //baseCli.EWEB.Trim();
                                         nUser.CUPO = baseCli.CUPO;
-                                        nUser.GRUPO = baseCli.GRUPO;
+                                        nUser.GRUPO = baseCli.GRUPO.Trim();
                                         nUser.ORDEN = baseCli.ORDEN;
-                                        nUser.CODFRE = baseCli.CODFRE;
-                                        nUser.CREDITO = baseCli.CREDITO;
-                                        nUser.FAX = baseCli.FAX;
+                                        nUser.CODFRE = baseCli.CODFRE.Trim();
+                                        nUser.CREDITO = baseCli.CREDITO.Trim();
+                                        nUser.FAX = baseCli.FAX.Trim();
                                         nUser.DIA = baseCli.DIA;
                                         nUser.FECMOD = Convert.ToDateTime(usuario.ingreso);
                                         nUser.FECDESDE = Convert.ToDateTime(usuario.ingreso);
-                                        nUser.CTACLIENTE = baseCli.CTACLIENTE;
-                                        nUser.grupocliente = baseCli.grupocliente;
-                                        nUser.grupocredito = baseCli.grupocredito;
+                                        nUser.CTACLIENTE = baseCli.CTACLIENTE.Trim();
+                                        nUser.grupocliente = baseCli.grupocliente.Trim();
+                                        nUser.grupocredito = baseCli.grupocredito.Trim();
+                                        nUser.CORREOCARRO = usuario.correo.Trim();
+                                        nUser.CodShip = "Carro";
+
+                                        if (usuario.contrasenia == null)
+                                        {
+                                            nUser.CLAVECARRO = "";
+                                        }
+                                        else
+                                        {
+                                            nUser.CLAVECARRO = usuario.contrasenia;
+                                        }
+
+
 
                                         db.ADMCLIENTE.Add(nUser);
                                         db.SaveChanges();
@@ -602,14 +645,14 @@ namespace APIClient
                                             //si ha transcurrido 1 hora desde la ultima actualizacion
                                             if (lapso >= 1)
                                             {
-                                                cliente.claveCarro = usuario.contrasenia;
-                                                cliente.correoCarro = usuario.correo;
+                                                cliente.CLAVECARRO = usuario.contrasenia;
+                                                cliente.CORREOCARRO = usuario.correo;
                                             }
                                         }
                                         else
                                         {
-                                            cliente.claveCarro = usuario.contrasenia;
-                                            cliente.correoCarro = usuario.correo;
+                                            cliente.CLAVECARRO = usuario.contrasenia;
+                                            cliente.CORREOCARRO = usuario.correo;
                                             cliente.FECMOD = DateTime.Now;
                                         }
                                         db.SaveChanges();
@@ -617,8 +660,8 @@ namespace APIClient
                                     }
 
                                 }
-                                int res3 = db.CARROPRO("NumeroCliente", numCliente);
-                                //db.Database.ExecuteSqlCommand("UPDATE ADMPARAMETROC set NUMCLIENTE = @num", new SqlParameter("@num", numCliente));
+                                //db.CARROPRO("NumeroCliente", numCliente);
+                                db.Database.ExecuteSqlCommand("UPDATE ADMPARAMETROC set NUMCLIENTE = @num", new SqlParameter("@num", numCliente));
                                 db.SaveChanges();
                                 trans.Commit();
 
@@ -630,12 +673,14 @@ namespace APIClient
                                 //Console.WriteLine(e);
                                 using (StreamWriter file = new StreamWriter(@"log.txt", true))
                                 {
+                                    Console.WriteLine("Error GetUsuarios: " + e);
                                     file.WriteLine("Error GetUsuarios: " + e);
                                     file.Close();
                                 }
                             }
                             using (StreamWriter file = new StreamWriter(@"log.txt", true))
                             {
+                                Console.WriteLine("Se obtuvieron " + totalUsersGet + " Usuarios de la Web, " + savedUsers + " nuevos fueron almacenados en ADM; " + repeatRuc + " RUC repetidos/Actualizados.");
                                 file.WriteLine("Se obtuvieron " + totalUsersGet + " Usuarios de la Web, " + savedUsers + " nuevos fueron almacenados en ADM; " + repeatRuc + " RUC repetidos/Actualizados.");
                                 file.Close();
                             }
@@ -721,8 +766,8 @@ namespace APIClient
                     file.Close();
                 }
 
-                //Console.WriteLine("-------");
-                //Console.WriteLine("Envio de Usuarios Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
+                Console.WriteLine("-------");
+                Console.WriteLine("Envio de Usuarios Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
 
             }
         }
@@ -770,8 +815,8 @@ namespace APIClient
                         file.WriteLine("Envio de Categorias Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
                         file.Close();
                     }
-                    //Console.WriteLine("-------");
-                    //Console.WriteLine("Envio de Categorias Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
+                    Console.WriteLine("-------");
+                    Console.WriteLine("Envio de Categorias Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
                     string urlbase = ConfigurationManager.AppSettings.Get("urlbase");
 
                     //Listado de Categorias
@@ -816,19 +861,19 @@ namespace APIClient
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TOKEN);
                 var response = await client.PostAsync(ul, new StringContent(myJson, Encoding.UTF8, "application/json"));
-
                 HttpContent contentRes = response.Content;
                 string mycontent = await contentRes.ReadAsStringAsync();
+                Console.WriteLine(mycontent);
 
                 var RootObjects = JsonConvert.DeserializeObject<List<familyResponse>>(mycontent);
 
-                using (BDADMSURTIOFFICEEntities db = new BDADMSURTIOFFICEEntities())
+                using (BDADMSURTIOFFICEEntities db2 = new BDADMSURTIOFFICEEntities())
                 {
                     foreach (var famiRes in RootObjects)
                     {
-                        ADMCATEGORIA result = db.ADMCATEGORIA.Find(famiRes.familia);
-                        result.EWEB = "S";
-                        db.SaveChanges();
+                        ADMFAMILIA resultf = (from c in db2.ADMFAMILIA where (c.CODIGO == famiRes.familia) select c).FirstOrDefault();
+                        resultf.EWEB = "S";
+                        db2.SaveChanges();
                     }
                 }
 
@@ -840,8 +885,98 @@ namespace APIClient
                     file.WriteLine("Envio de Familias Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
                     file.Close();
                 }
-                //Console.WriteLine("-------");
-                //Console.WriteLine("Envio de Familias Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
+                Console.WriteLine("-------");
+                Console.WriteLine("Envio de Familias Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
+
+            }
+        }
+
+
+        //Envio de Provincias
+        private static async Task PostProvincias(object content, Uri ul)
+        {
+            var data = new
+            {
+                provincias = content
+            };
+
+            string myJson = JsonConvert.SerializeObject(data);
+
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TOKEN);
+                var response = await client.PostAsync(ul, new StringContent(myJson, Encoding.UTF8, "application/json"));
+                HttpContent contentRes = response.Content;
+                string mycontent = await contentRes.ReadAsStringAsync();
+                //Console.WriteLine(mycontent);
+
+                var RootObjects = JsonConvert.DeserializeObject<List<familyResponse>>(mycontent);
+
+                //using (BDADMSURTIOFFICEEntities db2 = new BDADMSURTIOFFICEEntities())
+                //{
+                //    foreach (var proviRes in RootObjects)
+                //    {
+                //        ADMFAMILIA resultf = (from c in db2.ADMFAMILIA where (c.CODIGO == famiRes.familia) select c).FirstOrDefault();
+                //        resultf.EWEB = "S";
+                //        db2.SaveChanges();
+                //    }
+                //}
+
+                //int noGuardado = (from c in RootObjects where (c.status == "NoSaved") select c).Count();
+                //int guardado = (from c in RootObjects where (c.status == "OK") select c).Count();
+
+                using (StreamWriter file = new StreamWriter(@"log.txt", true))
+                {
+                    file.WriteLine("Envio de Provincas Finalizado");
+                    file.Close();
+                }
+                Console.WriteLine("-------");
+                Console.WriteLine("Envio de Provincias Finalizado");
+
+            }
+        }
+
+        //envio de Cantones
+
+        private static async Task PostCantones(object content, Uri ul)
+        {
+            var data = new
+            {
+                cantones = content
+            };
+
+            string myJson = JsonConvert.SerializeObject(data);
+
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TOKEN);
+                var response = await client.PostAsync(ul, new StringContent(myJson, Encoding.UTF8, "application/json"));
+                HttpContent contentRes = response.Content;
+                string mycontent = await contentRes.ReadAsStringAsync();
+                Console.WriteLine(mycontent);
+
+                var RootObjects = JsonConvert.DeserializeObject<List<familyResponse>>(mycontent);
+
+                //using (BDADMSURTIOFFICEEntities db2 = new BDADMSURTIOFFICEEntities())
+                //{
+                //    foreach (var proviRes in RootObjects)
+                //    {
+                //        ADMFAMILIA resultf = (from c in db2.ADMFAMILIA where (c.CODIGO == famiRes.familia) select c).FirstOrDefault();
+                //        resultf.EWEB = "S";
+                //        db2.SaveChanges();
+                //    }
+                //}
+
+                //int noGuardado = (from c in RootObjects where (c.status == "NoSaved") select c).Count();
+                //int guardado = (from c in RootObjects where (c.status == "OK") select c).Count();
+
+                using (StreamWriter file = new StreamWriter(@"log.txt", true))
+                {
+                    file.WriteLine("Envio de Cantones Finalizado");
+                    file.Close();
+                }
+                Console.WriteLine("-------");
+                Console.WriteLine("Envio de Cantones Finalizado");
 
             }
         }
@@ -888,8 +1023,8 @@ namespace APIClient
                     file.WriteLine("Envio de Marcas Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
                     file.Close();
                 }
-                //Console.WriteLine("-------");
-                //Console.WriteLine("Envio de Marcas Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
+                Console.WriteLine("-------");
+                Console.WriteLine("Envio de Marcas Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
 
             }
         }
@@ -917,7 +1052,7 @@ namespace APIClient
 
                 HttpContent contentRes = response.Content;
                 string mycontent = await contentRes.ReadAsStringAsync();
-                //Console.WriteLine(mycontent);
+                Console.WriteLine(mycontent);
 
                 var RootObjects = JsonConvert.DeserializeObject<List<productResponse>>(mycontent);
 
@@ -940,8 +1075,8 @@ namespace APIClient
                     file.Close();
                 }
 
-                //Console.WriteLine("-------");
-                //Console.WriteLine("Envio de Productos Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
+                Console.WriteLine("-------");
+                Console.WriteLine("Envio de Productos Finalizado, total Guardado: " + guardado + ", No Guardados: " + noGuardado);
             }
         }
 

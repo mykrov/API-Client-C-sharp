@@ -33,7 +33,7 @@ namespace APIClient
         public double costo_envio { get; set; }
         public double envio_gratuio { get; set; }
         public int iddetalle_venta { get; set; }
-        public int idproducto { get; set; }
+        public string idproducto { get; set; }
         public double valor_neto { get; set; }
         public string graba_iva { get; set; }
         public string idusuario { get; set; }

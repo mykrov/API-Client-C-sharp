@@ -155,29 +155,30 @@ namespace APIClient
         public string imprimecodigopos { get; set; }
         public string UNILEVER { get; set; }
         public string CODDISTRIBUIDOR { get; set; }
+        public string tipodocventa { get; set; }
+        public string itemcredihogar { get; set; }
+        public double porintcreditomensual { get; set; }
+        public string nedetel { get; set; }
+        public string facnedetel { get; set; }
+        public string ESNOTAVENTA { get; set; }
+        public string odbcempresa { get; set; }
+        public string controlcomisariato { get; set; }
+        public string CAMPRECIOPOS { get; set; }
         public string campremantenimiento { get; set; }
-        public string FACNEDETEL { get; set; }
+        public string FACSERSOS { get; set; }
+        public decimal numeroplantilla { get; set; }
+        public string DATOSCLIPOS { get; set; }
+        public string INGPREAJI { get; set; }
+        public string cambiavenpos { get; set; }
+        public string POSGENERAANTNCR { get; set; }
+        public string ESRANCHO { get; set; }
+        public string posmostrarmarca { get; set; }
+        public string POSCONSERVICIO { get; set; }
+        public string posconalumno { get; set; }
         public string POSDOSLINEAS { get; set; }
         public string poscontrolpreciocosto { get; set; }
         public string posvendedor { get; set; }
-        public string cambiavenpos { get; set; }
-        public string CAMPRECIOPOS { get; set; }
         public string cartera { get; set; }
-        public string controlcomisariato { get; set; }
-        public string DATOSCLIPOS { get; set; }
-        public string ESNOTAVENTA { get; set; }
-        public string ESRANCHO { get; set; }
-        public string FACSERSOS { get; set; }
-        public string INGPREAJI { get; set; }
-        public string itemcredihogar { get; set; }
-        public string nedetel { get; set; }
-        public decimal numeroplantilla { get; set; }
-        public string odbcempresa { get; set; }
-        public double porintcreditomensual { get; set; }
-        public string posconalumno { get; set; }
-        public string POSCONSERVICIO { get; set; }
-        public string POSGENERAANTNCR { get; set; }
-        public string posmostrarmarca { get; set; }
-        public string tipodocventa { get; set; }
+        public string USACARROCOMPRA { get; set; }
     }
 }

@@ -50,7 +50,7 @@ namespace APIClient
         public string SECAUTOPEDMOVIL { get; set; }
         public string SERIEPOLOCLUB { get; set; }
         public string CODIGORETAILPRO { get; set; }
-        public decimal NUMEROPLANTILLA { get; set; }
+        public decimal numeroplantilla { get; set; }
         public Nullable<decimal> CODIGOPEDIDO { get; set; }
     }
 }

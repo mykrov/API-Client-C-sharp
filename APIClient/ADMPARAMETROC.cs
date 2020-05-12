@@ -54,12 +54,12 @@ namespace APIClient
         public int NUMCONTRATO { get; set; }
         public int NUMENVIOLAB { get; set; }
         public int NUMDOCTOR { get; set; }
-        public string controlcupofvd { get; set; }
         public int diasgraciavencuota { get; set; }
+        public string interes { get; set; }
         public string generandb { get; set; }
         public string generapagondb { get; set; }
-        public string interes { get; set; }
         public double porintmoradia { get; set; }
+        public string controlcupofvd { get; set; }
         public string posbloqueofaccre { get; set; }
         public string CLIENTEMODELOCARRO { get; set; }
     }

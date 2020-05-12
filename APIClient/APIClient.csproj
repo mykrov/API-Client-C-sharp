@@ -63,6 +63,9 @@
     <Compile Include="ADMCABPEDIDO.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="ADMCANTON.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="ADMCATEGORIA.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -86,6 +89,12 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="ADMPARAMETROV.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ADMPROVINCIA.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CARROPRO_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="CatagoriaWeb.cs" />

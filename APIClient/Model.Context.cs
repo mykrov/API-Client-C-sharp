@@ -37,9 +37,10 @@ namespace APIClient
         public virtual DbSet<ADMBODEGA> ADMBODEGA { get; set; }
         public virtual DbSet<ADMPARAMETROC> ADMPARAMETROC { get; set; }
         public virtual DbSet<ADMPARAMETROV> ADMPARAMETROV { get; set; }
-       
+        public virtual DbSet<ADMCANTON> ADMCANTON { get; set; }
+        public virtual DbSet<ADMPROVINCIA> ADMPROVINCIA { get; set; }
     
-        public virtual int CARROPRO(string action, Nullable<decimal> num)
+        public virtual ObjectResult<CARROPRO_Result> CARROPRO(string action, Nullable<decimal> num)
         {
             var actionParameter = action != null ?
                 new ObjectParameter("Action", action) :
@@ -49,7 +50,7 @@ namespace APIClient
                 new ObjectParameter("num", num) :
                 new ObjectParameter("num", typeof(decimal));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CARROPRO", actionParameter, numParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CARROPRO_Result>("CARROPRO", actionParameter, numParameter);
         }
     }
 }
