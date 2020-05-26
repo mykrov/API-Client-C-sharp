@@ -4,9 +4,9 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="GUIDOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'GUIDOELECTRONIC.dbo.ADMBODEGA' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+    <Schema Namespace="GUIDOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GUIDOELECTRONIC.dbo.ADMBODEGA' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ADMBODEGA">
           <Key>
             <PropertyRef Name="NOCARGAEGRESO" />
@@ -381,6 +381,17 @@ advertencia 6002: La tabla o vista 'GUIDOELECTRONIC.dbo.ADMBODEGA' no tiene defi
           <Property Name="CARRO" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="ESTAENCARRO" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
+        <EntityType Name="ADMITEMBOD">
+          <Key>
+            <PropertyRef Name="BODEGA" />
+            <PropertyRef Name="ITEM" />
+          </Key>
+          <Property Name="BODEGA" Type="int" Nullable="false" />
+          <Property Name="ITEM" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="STOCK" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="ULTFECING" Type="datetime" />
+          <Property Name="ULTFECEGR" Type="datetime" />
+        </EntityType>
         <EntityType Name="ADMMARCA">
           <Key>
             <PropertyRef Name="CODIGO" />
@@ -394,8 +405,8 @@ advertencia 6002: La tabla o vista 'GUIDOELECTRONIC.dbo.ADMBODEGA' no tiene defi
           <Property Name="EWEB" Type="char" MaxLength="1" />
           <Property Name="CODIGOSAP" Type="varchar" MaxLength="50" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'GUIDOELECTRONIC.dbo.ADMPARAMETROC' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GUIDOELECTRONIC.dbo.ADMPARAMETROC' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ADMPARAMETROC">
           <Key>
             <PropertyRef Name="CREDDEF" />
@@ -471,8 +482,8 @@ advertencia 6002: La tabla o vista 'GUIDOELECTRONIC.dbo.ADMPARAMETROC' no tiene 
           <Property Name="posbloqueofaccre" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="CLIENTEMODELOCARRO" Type="char" MaxLength="10" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'GUIDOELECTRONIC.dbo.ADMPARAMETROV' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GUIDOELECTRONIC.dbo.ADMPARAMETROV' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ADMPARAMETROV">
           <Key>
             <PropertyRef Name="CAMPRECIO" />
@@ -734,6 +745,22 @@ advertencia 6002: La tabla o vista 'GUIDOELECTRONIC.dbo.ADMPARAMETROV' no tiene 
           <Property Name="cartera" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="USACARROCOMPRA" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
+        <EntityType Name="ADMPARROQUIA">
+          <Key>
+            <PropertyRef Name="codigo" />
+            <PropertyRef Name="provincia" />
+            <PropertyRef Name="canton" />
+          </Key>
+          <Property Name="codigo" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="provincia" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="canton" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+          <Property Name="estado" Type="char" MaxLength="1" />
+          <Property Name="pdomi" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="codigosap_canton" Type="char" MaxLength="10" />
+          <Property Name="codigosap_parroquia" Type="char" MaxLength="10" />
+          <Property Name="codigosap_provincia" Type="char" MaxLength="10" />
+        </EntityType>
         <EntityType Name="ADMPROVINCIA">
           <Key>
             <PropertyRef Name="codigo" />
@@ -751,7 +778,9 @@ advertencia 6002: La tabla o vista 'GUIDOELECTRONIC.dbo.ADMPARAMETROV' no tiene 
           <EntitySet Name="ADMDETPEDIDO" EntityType="Self.ADMDETPEDIDO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ADMFAMILIA" EntityType="Self.ADMFAMILIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ADMITEM" EntityType="Self.ADMITEM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ADMITEMBOD" EntityType="Self.ADMITEMBOD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ADMMARCA" EntityType="Self.ADMMARCA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ADMPARROQUIA" EntityType="Self.ADMPARROQUIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ADMPROVINCIA" EntityType="Self.ADMPROVINCIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ADMBODEGA" EntityType="Self.ADMBODEGA" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1761,6 +1790,8 @@ advertencia 6002: La tabla o vista 'GUIDOELECTRONIC.dbo.ADMPARAMETROV' no tiene 
           </FunctionImport>
           <EntitySet Name="ADMCANTON" EntityType="GUIDOModel.ADMCANTON" />
           <EntitySet Name="ADMPROVINCIA" EntityType="GUIDOModel.ADMPROVINCIA" />
+          <EntitySet Name="ADMITEMBOD" EntityType="GUIDOModel.ADMITEMBOD" />
+          <EntitySet Name="ADMPARROQUIA" EntityType="GUIDOModel.ADMPARROQUIA" />
         </EntityContainer>
         <ComplexType Name="CARROPRO_Result">
           <Property Type="Decimal" Name="PRECIO" Nullable="true" Precision="1" Scale="0" />
@@ -1789,6 +1820,33 @@ advertencia 6002: La tabla o vista 'GUIDOELECTRONIC.dbo.ADMPARAMETROV' no tiene 
           <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="codigosap" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ADMITEMBOD">
+          <Key>
+            <PropertyRef Name="BODEGA" />
+            <PropertyRef Name="ITEM" />
+          </Key>
+          <Property Name="BODEGA" Type="Int32" Nullable="false" />
+          <Property Name="ITEM" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="STOCK" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="ULTFECING" Type="DateTime" Precision="3" />
+          <Property Name="ULTFECEGR" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="ADMPARROQUIA">
+          <Key>
+            <PropertyRef Name="codigo" />
+            <PropertyRef Name="provincia" />
+            <PropertyRef Name="canton" />
+          </Key>
+          <Property Name="codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="provincia" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="canton" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="pdomi" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="codigosap_canton" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="codigosap_parroquia" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="codigosap_provincia" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2412,6 +2470,32 @@ advertencia 6002: La tabla o vista 'GUIDOELECTRONIC.dbo.ADMPARAMETROV' no tiene 
                 <ScalarProperty Name="codigosap" ColumnName="codigosap" />
                 <ScalarProperty Name="estado" ColumnName="estado" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ADMITEMBOD">
+            <EntityTypeMapping TypeName="GUIDOModel.ADMITEMBOD">
+              <MappingFragment StoreEntitySet="ADMITEMBOD">
+                <ScalarProperty Name="ULTFECEGR" ColumnName="ULTFECEGR" />
+                <ScalarProperty Name="ULTFECING" ColumnName="ULTFECING" />
+                <ScalarProperty Name="STOCK" ColumnName="STOCK" />
+                <ScalarProperty Name="ITEM" ColumnName="ITEM" />
+                <ScalarProperty Name="BODEGA" ColumnName="BODEGA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ADMPARROQUIA">
+            <EntityTypeMapping TypeName="GUIDOModel.ADMPARROQUIA">
+              <MappingFragment StoreEntitySet="ADMPARROQUIA">
+                <ScalarProperty Name="codigosap_provincia" ColumnName="codigosap_provincia" />
+                <ScalarProperty Name="codigosap_parroquia" ColumnName="codigosap_parroquia" />
+                <ScalarProperty Name="codigosap_canton" ColumnName="codigosap_canton" />
+                <ScalarProperty Name="pdomi" ColumnName="pdomi" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="canton" ColumnName="canton" />
+                <ScalarProperty Name="provincia" ColumnName="provincia" />
                 <ScalarProperty Name="codigo" ColumnName="codigo" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -12,12 +12,16 @@ namespace APIClient
     using System;
     using System.Collections.Generic;
     
-    public partial class ADMFAMILIA
+    public partial class ADMPARROQUIA
     {
-        public string CODIGO { get; set; }
-        public string CATEGORIA { get; set; }
-        public string NOMBRE { get; set; }
-        public string ESTADO { get; set; }
-        public string EWEB { get; set; }
+        public string codigo { get; set; }
+        public string provincia { get; set; }
+        public string canton { get; set; }
+        public string nombre { get; set; }
+        public string estado { get; set; }
+        public string pdomi { get; set; }
+        public string codigosap_canton { get; set; }
+        public string codigosap_parroquia { get; set; }
+        public string codigosap_provincia { get; set; }
     }
 }

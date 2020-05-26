@@ -82,6 +82,9 @@
     <Compile Include="ADMITEM.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="ADMITEMBOD.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="ADMMARCA.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -89,6 +92,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="ADMPARAMETROV.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ADMPARROQUIA.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="ADMPROVINCIA.cs">

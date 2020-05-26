@@ -32,6 +32,7 @@ namespace APIClient
         public string idtipo { get; set; }
         public string ingreso { get; set; }
         public string canton { get; set; }
+        public char sincronizado { get; set; }
     }
 
     class ClienteRes

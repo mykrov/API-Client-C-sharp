@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ccca3c5070c94fa8938a5d0adc02d22e" Name="Diagram1" ZoomLevel="61">
+      <Diagram DiagramId="ccca3c5070c94fa8938a5d0adc02d22e" Name="Diagram1" ZoomLevel="59">
         <EntityTypeShape EntityType="GUIDOModel.ADMCABPEDIDO" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="GUIDOModel.ADMCATEGORIA" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="GUIDOModel.ADMCLIENTE" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
@@ -17,6 +17,7 @@
         <EntityTypeShape EntityType="GUIDOModel.ADMPARAMETROV" Width="1.5" PointX="10.75" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="GUIDOModel.ADMCANTON" Width="1.5" PointX="13.375" PointY="0.75" />
         <EntityTypeShape EntityType="GUIDOModel.ADMPROVINCIA" Width="1.5" PointX="13.375" PointY="3.75" />
+        <EntityTypeShape EntityType="GUIDOModel.ADMPARROQUIA" Width="1.5" PointX="13.375" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

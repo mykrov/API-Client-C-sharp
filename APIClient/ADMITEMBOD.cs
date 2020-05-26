@@ -12,12 +12,12 @@ namespace APIClient
     using System;
     using System.Collections.Generic;
     
-    public partial class ADMFAMILIA
+    public partial class ADMITEMBOD
     {
-        public string CODIGO { get; set; }
-        public string CATEGORIA { get; set; }
-        public string NOMBRE { get; set; }
-        public string ESTADO { get; set; }
-        public string EWEB { get; set; }
+        public int BODEGA { get; set; }
+        public string ITEM { get; set; }
+        public Nullable<decimal> STOCK { get; set; }
+        public Nullable<System.DateTime> ULTFECING { get; set; }
+        public Nullable<System.DateTime> ULTFECEGR { get; set; }
     }
 }
